@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { StyleSheet, SafeAreaView } from "react-native";
 
-import ProfileButton from "./ProfileButton";
+import ProfileButton from "../ProfileButton";
 
 function HomeScreen({ navigation }) {
   return (
