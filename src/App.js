@@ -73,6 +73,7 @@ const App = () => {
       <AuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
           <Drawer.Navigator
+            screenOptions={{ headerShown: false }}
             drawerContent={props => <DrawerContent {...props} />}>
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
             <Drawer.Screen name="SupportScreen" component={SupportScreen} />

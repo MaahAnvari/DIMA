@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AuthContext } from './context';
 
-function DrawerContent(props) {
+export function DrawerContent(props) {
   const paperTheme = useTheme();
 
   const { toggleTheme } = React.useContext(AuthContext);
@@ -108,8 +108,6 @@ function DrawerContent(props) {
   );
 }
 
-export default DrawerContent;
-
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
@@ -125,20 +123,6 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 14,
     lineHeight: 14,
-  },
-  row: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  paragraph: {
-    fontWeight: 'bold',
-    marginRight: 3,
   },
   drawerSection: {
     marginTop: 15,

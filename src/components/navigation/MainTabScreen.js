@@ -78,7 +78,7 @@ const HomeStackScreen = ({ navigation }) => (
       },
     }}>
     <HomeStack.Screen
-      name="Home"
+      name="HomeStack"
       component={HomeScreen}
       options={{
         title: 'Overview',
@@ -106,7 +106,7 @@ const BookStackScreen = ({ navigation }) => (
       },
     }}>
     <BookStack.Screen
-      name="Book"
+      name="BookStack"
       component={BookScreen}
       options={{
         headerLeft: () => (
