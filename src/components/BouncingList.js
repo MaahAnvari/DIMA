@@ -3,6 +3,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Image,
   Text,
   View,
   Animated, 
@@ -13,40 +14,14 @@ const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
 // const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 // const BACKDROP_HEIGHT = height * 0.65;
-
-
-
-
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d98',
-      title: 'Forth Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29g76',
-      title: 'Fifth Item',
-    },
-  ];
   
 
-const BouncingList =({}) => {
+const BouncingList =(props) => {
     const scrollX = React.useRef( new Animated.Value(0)).current;
 
     renderItem = ({ item, index }) => 
   {
-    console.log('indeeex: ', index)
+    // console.log('indeeex: ', index)
     const inputRange = [
       ( index - 1 ) * ITEM_SIZE,
       index * ITEM_SIZE,
@@ -58,12 +33,13 @@ const BouncingList =({}) => {
       outputRange: [ 0, -50, 0]
     })
     return(
-      <View style ={{width: ITEM_SIZE}}>
+      <View style ={{width: ITEM_SIZE, paddingTop:5,}}>
       <Animated.View style ={{
           transform:[{translateY}],
-          fontFamily:'Roboto',
+          
+          // fontFamily:'Roboto',
           height:ITEM_SIZE*1.2,
-          backgroundColor: '#fff',
+          // backgroundColor: '#fff',
           borderRadius:20,
           marginVertical: 8,
           marginHorizontal: 10,
@@ -75,7 +51,13 @@ const BouncingList =({}) => {
           width: 1
       }
       }}>
-        <Text style={{color:'#000', fontSize: 20,}}>{item.title}</Text>
+        {/* {console.log(item.artworkUrl100)} */}
+        <Image style={{height:ITEM_SIZE*1.3, width: ITEM_SIZE*0.9, borderRadius:20}}
+          source={{
+            uri: item.artworkUrl100,
+          }}
+        ></Image>
+        <Text style={{color:'#fff', fontSize: 15, alignSelf:'center'}}>{item.trackName}</Text>
       </Animated.View>
       </View>
     );
@@ -89,10 +71,10 @@ const BouncingList =({}) => {
              
              <Animated.FlatList
                  showsHorizontalScrollIndicator={false}
-                 data={DATA}
+                 data={props.data}
                  renderItem={renderItem}
                  horizontal={true}
-                 keyExtractor={item => item.id}
+                 keyExtractor={item => item.trackId}
                  snapToInterval={ITEM_SIZE}
                  snapToAlignment='center'
                  decelerationRate={0}
@@ -112,7 +94,7 @@ const BouncingList =({}) => {
 
 
 const mapStateToProps = ({ auth }) => {
-    console.log('state',auth)
+    // console.log('state',auth)
     const { email, password, error } = auth;
 
     return { email, password, error };
