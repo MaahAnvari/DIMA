@@ -15,17 +15,32 @@ import reducers from './reducers';
 import Router from './Router';
 
 const App = () => {
-
-
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
-
-    return (
-      < Provider store={store}  style={{backgroundColor: '#001120'}}>
-        
-        <Router />
-      </ Provider>
-    );
+  return (
+    <Provider store={store} style={{ backgroundColor: '#001120' }}>
+      <Router />
+    </Provider>
+  );
 };
 
 export default App;
+
+/*
+import React from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import AppStack from './navigation/AppStack';
+
+function App() {
+  return (
+    <NavigationContainer>
+      <AppStack />
+    </NavigationContainer>
+  );
+}
+
+export default App;
+*/
