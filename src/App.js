@@ -3,15 +3,36 @@
  * https://github.com/facebook/react-native
  *
  * @format
- * @flow
+ * @flow strict-local
  */
 
+import React from 'react';
+import { View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import Router from './Router';
+
+const App = () => {
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
+  return (
+    <Provider store={store} style={{ backgroundColor: '#001120' }}>
+      <Router />
+    </Provider>
+  );
+};
+
+export default App;
+
+/*
 import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import AppStack from './src/navigation/AppStack';
+import AppStack from './navigation/AppStack';
 
 function App() {
   return (
@@ -22,3 +43,4 @@ function App() {
 }
 
 export default App;
+*/

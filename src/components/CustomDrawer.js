@@ -20,39 +20,35 @@ const CustomDrawer = props => {
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={{ backgroundColor: '#8200d6' }}>
-        <ImageBackground
-          source={require('../assets/images/menu-bg.jpeg')}
-          style={{ padding: 20 }}>
-          <Image
-            source={require('../assets/images/boy.png')}
-            style={{
-              height: 80,
-              width: 80,
-              borderRadius: 40,
-              marginBottom: 10,
-            }}
-          />
+        <Image
+          source={require('../assets/images/boy.png')}
+          style={{
+            height: 80,
+            width: 80,
+            borderRadius: 40,
+            marginBottom: 10,
+          }}
+        />
+        <Text
+          style={{
+            color: '#fff',
+            fontSize: 18,
+            fontFamily: 'Roboto-Medium',
+            marginBottom: 5,
+          }}>
+          TOMMY
+        </Text>
+        <View style={{ flexDirection: 'row' }}>
           <Text
             style={{
               color: '#fff',
-              fontSize: 18,
-              fontFamily: 'Roboto-Medium',
-              marginBottom: 5,
+              fontFamily: 'Roboto-Regular',
+              marginRight: 5,
             }}>
-            TOMMY
+            tommaso@email.com
           </Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                color: '#fff',
-                fontFamily: 'Roboto-Regular',
-                marginRight: 5,
-              }}>
-              tommaso@email.com
-            </Text>
-            <FontAwesome5 name="coins" size={14} color="#fff" />
-          </View>
-        </ImageBackground>
+          <FontAwesome5 name="coins" size={14} color="#fff" />
+        </View>
         <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
           <DrawerItemList {...props} />
         </View>
