@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text } from "react-native";
 
 import { SafeAreaView } from "react-native";
-import FiveStar from "./FiveStar";
+import FiveStar from "../FiveStar";
 
 function ProfileScreen({ route }) {
   return (
