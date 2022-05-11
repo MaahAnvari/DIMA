@@ -2,18 +2,16 @@ import React from 'react';
 import {
   View,
   Text,
-  ImageBackground,
   TouchableOpacity,
   Image,
   ScrollView,
   Animated,
 } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
-import { FONTS, COLORS, SIZES, images } from '../constants';
+import { FONTS, COLORS, SIZES, images } from './constants';
 
 const BookPage = () => {
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
@@ -21,6 +19,8 @@ const BookPage = () => {
     React.useState(0);
 
   const indicator = new Animated.Value(0);
+
+  const [likeBook, setLikeBook] = React.useState(false);
 
   function renderBookInfoSection() {
     return (
@@ -299,8 +299,15 @@ const BookPage = () => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => console.log('Bookmark')}>
-          <Feather name="bookmark" size={25} color="#FFFFFF" />
+          onPress={() => {
+            setLikeBook(!likeBook);
+            console.log('Bookmark');
+          }}>
+          <AntDesign
+            name={likeBook ? 'heart' : 'hearto'}
+            size={25}
+            color="#FFFFFF"
+          />
         </TouchableOpacity>
 
         {/* Read Now */}
