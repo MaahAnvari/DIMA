@@ -4,6 +4,7 @@ import HomePage from './components/HomePage';
 import LoginForm from './components/LoginForm';
 import ProfileForm from './components/ProfileForm';
 import CustomNavBar from './components/CustomNavBar';
+import BookPage from './components/BookPage';
 
 const RouterComponent = () => {
   return (
@@ -30,8 +31,23 @@ const RouterComponent = () => {
           // onRight={() => Actions.createDevice()}
           // titleStyle={{ paddingLeft: 75 }}
 
+          //initial
+        />
+        <Scene
+          key="bookPage"
+          component={BookPage}
+          title="BOOK"
+          titleStyle={{ paddingLeft: 120, color: '#fff' }}
+          // key="deviceList"
+          // component={DeviceList}
+          // title="Active Device"
+          // rightTitle="Add"
+          // onRight={() => Actions.createDevice()}
+          // titleStyle={{ paddingLeft: 75 }}
+
           initial
         />
+
         <Scene
           key="profile"
           component={ProfileForm}

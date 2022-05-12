@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { FONTS, COLORS, SIZES, images } from './constants';
+import { FONTS, COLORS, SIZES, images } from '../constants';
 
 const BookPage = () => {
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
@@ -335,7 +335,8 @@ const BookPage = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{ backgroundColor: '#001120', justifyContent: 'center', flex: 1 }}>
       {/* Book Cover Section */}
       <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 
