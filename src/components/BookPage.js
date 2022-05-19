@@ -7,8 +7,8 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
-import Icon, { Icons } from '../constants/Icons';
 
+import Icon, { Icons } from '../constants/Icons';
 import { FONTS, COLORS, SIZES, images } from '../constants';
 
 const BookPage = () => {

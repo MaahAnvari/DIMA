@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import Icon, { Icons } from '../constants/Icons';
-import { FONTS, COLORS, SIZES, images } from '../constants';
+import { COLORS } from '../constants';
 
 const TabIcon = props => {
   const item = props;
@@ -28,7 +28,7 @@ const TabIcon = props => {
         ref={viewRef}
         style={[
           StyleSheet.absoluteFillObject,
-          { backgroundColor: COLORS.button, borderRadius: 16 },
+          { backgroundColor: COLORS.button, borderRadius: 15 },
         ]}
       />
       <View
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
-    borderRadius: 16,
+    borderRadius: 15,
   },
 });
 

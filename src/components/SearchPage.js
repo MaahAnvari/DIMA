@@ -1,12 +1,56 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import List from './List';
+import SearchBar from './SearchBar';
 
 const SearchPage = () => {
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [clicked, setClicked] = useState(false);
+  const [fakeData, setFakeData] = useState();
+
+  // get data from the fake api endpoint
+  useEffect(() => {
+    const getData = async () => {
+      const apiResponse = await fetch(
+        'https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages',
+      );
+      const data = await apiResponse.json();
+      setFakeData(data);
+    };
+    getData();
+  }, []);
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search Screen</Text>
-    </View>
+    <SafeAreaView style={styles.root}>
+      {!clicked && <Text style={styles.title}>Programming Languages</Text>}
+      <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
+
+      <List
+        searchPhrase={searchPhrase}
+        data={fakeData}
+        setClicked={setClicked}
+      />
+    </SafeAreaView>
   );
 };
 
 export default SearchPage;
+
+const styles = StyleSheet.create({
+  root: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    width: '100%',
+    marginTop: 20,
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginLeft: '10%',
+  },
+});
