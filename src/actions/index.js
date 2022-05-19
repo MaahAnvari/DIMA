@@ -1,3 +1,3 @@
 export * from './AuthActoins';
-export * from './EBookActions';
+export * from './BookActions';
 export * from './ProfileActions';
