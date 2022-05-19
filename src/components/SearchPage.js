@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import { COLORS } from '../constants';
 import List from './List';
 import SearchBar from './SearchBar';
 
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
   root: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.primary,
   },
   title: {
     width: '100%',
@@ -52,5 +54,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     marginLeft: '10%',
+    color: COLORS.orange,
   },
 });

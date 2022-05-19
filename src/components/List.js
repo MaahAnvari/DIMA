@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { COLORS } from '../constants';
 
 // definition of the Item, which will be rendered in the FlatList
 const Item = ({ name, details }) => (
@@ -70,5 +71,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     fontStyle: 'italic',
+    color: COLORS.orange,
+  },
+  details: {
+    fontSize: 15,
+    color: COLORS.orange,
   },
 });

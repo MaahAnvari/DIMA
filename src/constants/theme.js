@@ -7,6 +7,8 @@ export const COLORS = {
   secondary: '#122A41',
 
   button: '#EE1520',
+  searchBar: '#D4D5D6',
+  searchBarItems: '#282C35',
 
   // colors
   black: '#1E1B26',
