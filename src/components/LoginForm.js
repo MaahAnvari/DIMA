@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged } from '../actions';
+import { emailChanged, passwordChanged, createUser,signIn } from '../actions';
+import auth from '@react-native-firebase/auth';
 
 import ProfileButton from "./ProfileButton";
   
 
 class LoginForm extends Component {
+
+    
 
     onUsernameChange(text) {
         this.props.emailChanged(text); 
@@ -20,6 +23,7 @@ class LoginForm extends Component {
     }
 
     onSubButtonPress() {
+        this.props.signIn({email:this.props.email, password: this.props.password})
         Actions.homePage();
     }
 
@@ -47,10 +51,19 @@ class LoginForm extends Component {
         // );
     }
 
-    
-
-
     render() {
+        // const [initializing, setInitializing] = useState(true);
+        // const [user, setUser] = useState();
+        // function onAuthStateChanged(user) {
+        //     setUser(user);
+        //     if (initializing) setInitializing(false);
+        // }
+        
+        // useEffect(() => {
+        //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        //     return subscriber; // unsubscribe on unmount
+        // }, []);
+
         return (
            <View style={{backgroundColor: '#001120', height:'100%'}}>
 
@@ -151,5 +164,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged}
+    {emailChanged, passwordChanged, createUser,signIn}
     )(LoginForm);
