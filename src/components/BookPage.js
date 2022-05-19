@@ -7,9 +7,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon, { Icons } from '../constants/Icons';
 
 import { FONTS, COLORS, SIZES, images } from '../constants';
 
@@ -37,7 +35,12 @@ const BookPage = () => {
             style={{ marginLeft: SIZES.base }}
             onPress={() => console.log('Back')} //navigation.goBack()
           >
-            <MaterialIcons name="arrow-back-ios" size={25} color="#FFFFFF" />
+            <Icon
+              type={Icons.MaterialIcons}
+              name="arrow-back-ios"
+              size={25}
+              color="#FFFFFF"
+            />
           </TouchableOpacity>
 
           <View
@@ -48,7 +51,12 @@ const BookPage = () => {
           <TouchableOpacity
             style={{ marginRigth: SIZES.base }}
             onPress={() => console.log('Click More')}>
-            <Feather name="more-horizontal" size={25} color="#FFFFFF" />
+            <Icon
+              type={Icons.Feather}
+              name="more-horizontal"
+              size={25}
+              color="#FFFFFF"
+            />
           </TouchableOpacity>
         </View>
 
@@ -303,7 +311,8 @@ const BookPage = () => {
             setLikeBook(!likeBook);
             console.log('Bookmark');
           }}>
-          <AntDesign
+          <Icon
+            type={Icons.AntDesign}
             name={likeBook ? 'heart' : 'hearto'}
             size={25}
             color="#FFFFFF"

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Component, Text, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Router, Scene } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Feather';
 
 import LoginForm from './components/LoginForm';
 import CustomNavBar from './components/CustomNavBar';
@@ -12,72 +11,10 @@ import FavoritePage from './components/FavoritePage';
 import ProfileForm from './components/ProfileForm';
 import BookPage from './components/BookPage';
 
+import TabIcon from './components/TabIcon';
+import { COLORS } from './constants';
+
 const RouterComponent = () => {
-  function HomeTab(props) {
-    let textColor = props.focused ? '#333333' : '#999999';
-    let borderColor = 'red';
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderTopColor: borderColor,
-          borderTopWidth: 4,
-          padding: 5,
-        }}>
-        {props.focused ? (
-          <Ionicons
-            name="home-outline"
-            size={25}
-            style={{ color: borderColor }}
-          />
-        ) : (
-          <Ionicons
-            name="home-sharp"
-            size={25}
-            style={{ color: borderColor }}
-          />
-        )}
-        <Text style={{ color: textColor }}>Home</Text>
-      </View>
-    );
-  }
-
-  //Create a dedicated class that will manage the tabBar icon
-  class TabIcon extends React.Component {
-    render() {
-      var color = '#FFFFFF';
-      var backgroundColor = this.props.selected ? '#B90020' : '#301c2a';
-
-      return (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: backgroundColor,
-            flexDirection: 'row',
-            alignItems: 'center',
-            alignSelf: 'center',
-            justifyContent: 'center',
-          }}>
-          <Icon
-            style={{ color: color }}
-            name={this.props.iconName || 'circle'}
-            size={25}
-          />
-          {this.props.selected ? (
-            <Text style={{ color: color, fontSize: 14 }}>
-              {this.props.title}
-            </Text>
-          ) : (
-            <View />
-          )}
-        </View>
-      );
-    }
-  }
-
   return (
     <Router>
       <Scene key="root">
@@ -188,11 +125,13 @@ const RouterComponent = () => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 50,
-    borderTopColor: 'darkgrey',
-    borderTopWidth: 1,
-    opacity: 0.98,
-    justifyContent: 'space-between',
+    height: 60,
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    left: 10,
+    borderRadius: 15,
+    backgroundColor: COLORS.secondary,
   },
 });
 
