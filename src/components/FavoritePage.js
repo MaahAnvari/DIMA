@@ -1,12 +1,24 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
-const FavoritePage = () => {
+//TODO: MODIFY HOMEPAGE AND SEARCH PAGE LIKE MAIN
+//TODO: MODIFY ROUTER LIKE APP
+const FavoritePage = props => {
+  const favoriteBooks = props;
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Favorite Screen</Text>
-    </View>
+    <SafeAreaView style={styles.root}>
+      {favoriteBooks.length === 0 && <Text>Cart is empty</Text>}
+      <List searchPhrase={''} data={favoriteBooks} setClicked={false} />
+    </SafeAreaView>
   );
 };
 
 export default FavoritePage;
+
+const styles = StyleSheet.create({
+  root: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+  },
+});

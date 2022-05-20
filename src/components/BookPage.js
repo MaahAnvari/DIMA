@@ -11,7 +11,9 @@ import {
 import Icon, { Icons } from '../constants/Icons';
 import { FONTS, COLORS, SIZES, images } from '../constants';
 
-const BookPage = () => {
+const BookPage = props => {
+  const { book, onAdd, onRemove } = props;
+
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
     React.useState(0);
@@ -309,6 +311,9 @@ const BookPage = () => {
           }}
           onPress={() => {
             setLikeBook(!likeBook);
+            {
+              likeBook ? onRemove(book) : onAdd(book);
+            }
             console.log('Bookmark');
           }}>
           <Icon
