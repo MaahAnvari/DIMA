@@ -44,6 +44,7 @@ const List = props => {
           setClicked(false);
         }}>
         <FlatList
+          //numColumns={2}
           data={data}
           renderItem={renderItem}
           keyExtractor={item => item.id}

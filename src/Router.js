@@ -9,6 +9,7 @@ import HomePage from './components/HomePage';
 import SearchPage from './components/SearchPage';
 import FavoritePage from './components/FavoritePage';
 import ProfileForm from './components/ProfileForm';
+import AboutPage from './components/AboutPage';
 import BookPage from './components/BookPage';
 
 import TabIcon from './components/TabIcon';
@@ -104,6 +105,20 @@ const RouterComponent = () => {
             //initial
           />
         </Scene>
+        <Scene
+          key="aboutPage"
+          component={AboutPage}
+          title="ABOUT"
+          titleStyle={{ paddingLeft: 120, color: '#fff' }}
+          // key="deviceList"
+          // component={DeviceList}
+          // title="Active Device"
+          // rightTitle="Add"
+          // onRight={() => Actions.createDevice()}
+          // titleStyle={{ paddingLeft: 75 }}
+
+          //initial
+        />
         <Scene
           key="bookPage"
           component={BookPage}
