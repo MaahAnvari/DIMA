@@ -1,5 +1,9 @@
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed'; 
+export const CONFIRM_PASSWORD_CHANGED = 'confirm_password_changed'; 
+
+export const SEARCH_CHANGED = 'search_changed';
+export const GET_SEARCH = 'get_search';
 
 export const CREATE_USER = 'create_user'; 
 export const USER_EMAIL_EXIST = 'user_email_exist'; 

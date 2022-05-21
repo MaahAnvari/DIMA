@@ -3,11 +3,9 @@ import {
     GET_SEARCH_EBOOK,
     GET_TOP_TEN_EBOOK,
     GET_COUNTRY_EBOOK,
-    GET_TOP_TEN_AUDIOBOOK,
-    GET_GENRE_AUDIOBOOK,
-    GET_SEARCH_AUDIOBOOK,
-    GET_COUNTRY_AUDIOBOOK,
     GET_NEW_EBOOK,
+    SEARCH_CHANGED,
+    GET_SEARCH
 } from '../actions/types';
 
 const INITIAL_STATE = { 
@@ -34,8 +32,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, country: action.payload.results }; 
         case GET_NEW_EBOOK:
             return { ...state, newB: action.payload.results }; 
-        case GET_COUNTRY_EBOOK:
+        case SEARCH_CHANGED:
             return { ...state, searchKey: action.payload }; 
+        case GET_SEARCH:
+            return { ...state, search: action.payload }; 
         default:
             return state;
     }

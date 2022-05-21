@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { FONTS, COLORS, SIZES, images } from '../../constants';
 
-const BookPage = () => {
+const BookPage = (props) => {
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
     React.useState(0);
@@ -26,7 +26,7 @@ const BookPage = () => {
     return (
       <View style={{ flex: 1 }}>
         {/* Navigation header */}
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             paddingHorizontal: SIZES.radius,
@@ -50,7 +50,7 @@ const BookPage = () => {
             onPress={() => console.log('Click More')}>
             <Feather name="more-horizontal" size={25} color="#FFFFFF" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
           {/* Book Cover */}
@@ -64,11 +64,11 @@ const BookPage = () => {
               alignItems: 'center',
             }}>
             <Image
-              source={images.theTinyDragon}
+              source={{uri: props.item.artworkUrl100}}
               resizeMode="contain"
               style={{
                 flex: 1,
-                height: 'auto',
+                height:250, width:150
               }}
             />
           </View>
@@ -93,7 +93,7 @@ const BookPage = () => {
                   ...FONTS.h2,
                   color: COLORS.white,
                 }}>
-                TITLE
+                {props.item.trackCensoredName}
               </Text>
             </View>
 
@@ -110,7 +110,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  Kendra Elliot
+                {props.item.artistName}
                 </Text>
               </View>
             </View>
@@ -122,7 +122,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-                  LANGUAGE
+                  Avg. Rating
                 </Text>
               </View>
               <View
@@ -130,7 +130,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  English
+                {props.item.averageUserRating}
                 </Text>
               </View>
             </View>
@@ -150,7 +150,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  2021
+                {props.item.releaseDate}
                 </Text>
               </View>
             </View>
@@ -168,7 +168,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  Action
+                {props.item.genres}
                 </Text>
               </View>
             </View>
@@ -186,7 +186,7 @@ const BookPage = () => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  FREE
+                {props.item.price} $
                 </Text>
               </View>
             </View>
@@ -273,11 +273,7 @@ const BookPage = () => {
                 ...FONTS.body2,
                 color: COLORS.lightGray,
               }}>
-              While walking home from work one evening, Jeff Manning is struck
-              by a car and killed. Two women fall to pieces at the news: His
-              wife, Claire, and his co-worker Tish. Reeling from her loss,
-              dasdasd asd asd aasdn asxòka sd assd asjd as dja dams dmas dknans
-              dadas daaj dxasxajs xas xans xoajs cas c aoj cja sxknas xojas x
+              {props.item.description}
             </Text>
           </ScrollView>
         </View>
@@ -343,4 +339,11 @@ const BookPage = () => {
   );
 };
 
-export default BookPage;
+const mapStateToProps = (state) => {
+  console.log('state',state)
+  return {};
+};
+
+export default connect(mapStateToProps, 
+  {}
+  )(BookPage);

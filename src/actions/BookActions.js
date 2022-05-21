@@ -12,6 +12,7 @@ import {
     GET_COUNTRY_AUDIOBOOK,
     GET_NEW_AUDIOBOOK,
     GET_FREE_AUDIOBOOK,
+    GET_SEARCH_EBOOK,
     
 } from './types';
 
@@ -24,7 +25,7 @@ export const searchChanged = (text) => {
     };
 };
 
-export const searchBook = ({media, entity, attribute, term, sort, country}) => {//{entity, term, limit, attribute}
+export const searchBook = ({media, entity, attribute, term, sort, country, searchKey}) => {//{entity, term, limit, attribute}
     console.log('hello books')
     // axios({
     //     method: 'get',
@@ -55,7 +56,13 @@ export const searchBook = ({media, entity, attribute, term, sort, country}) => {
         .then((response) => response.json())
             .then((results)=> {
                 // console.log('resultssss:    ', results)
-                if(media == 'ebook') {
+                if(searchKey== '1') {
+                    dispatch({ 
+                        type: GET_SEARCH_EBOOK,
+                        payload: results
+                    })
+                }
+                else if(media == 'ebook') {
                     if(attribute == 'genreIndex'){
                         dispatch({ 
                             type: GET_GENRE_EBOOK,

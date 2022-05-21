@@ -4,13 +4,13 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, createUser,signIn } from '../actions';
+import { emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged } from '../actions';
 import auth from '@react-native-firebase/auth';
 
 import ProfileButton from "./ProfileButton";
   
 
-class LoginForm extends Component {
+class SignUpForm extends Component {
 
     
 
@@ -22,8 +22,12 @@ class LoginForm extends Component {
         this.props.passwordChanged(text);
     }
 
+    onConfirmPasswordChange(text) {
+        this.props.confirmpasswordChanged(text);
+    }
+
     onSubButtonPress() {
-        this.props.signIn({email:this.props.email, password: this.props.password})
+        this.props.createUser({email:this.props.email, password: this.props.password, cpassword: this.props.cpassword})
         Actions.homePage();
     }
 
@@ -65,9 +69,8 @@ class LoginForm extends Component {
         // }, []);
 
         return (
-           <View style={{backgroundColor: '#001120', height:'100%', justifyContent:'space-around'}}>
-              
-              <View>
+           <View style={{backgroundColor: '#001120', height:'100%',  justifyContent:'space-around'}}>
+               <View>
                 <View style ={{ paddingHorizontal:50, paddingVertical:20}}>
                         <TextInput
                         clear
@@ -100,7 +103,39 @@ class LoginForm extends Component {
                         <TextInput
                         clear
                         value={this.props.password}
-                        placeholder="*********"
+                        placeholder="password ..."
+                        
+                        placeholderTextColor={'#fff'}
+                        style=
+                        {{
+                            padding:10, 
+                            borderWidth:1, 
+                            width: 300, 
+                            borderRadius:12, 
+                            fontFamily:'Ornalia',
+                            fontSize:20,
+                            justifyContent:'center', alignItems:'center',
+                            backgroundColor:'#A0131A',
+                            borderColor:'#000', 
+                            shadowColor: '#3D1214',
+                            shadowOpacity: 0.26,
+                            shadowOffset: { width: 10, height: 5},
+                            shadowRadius: 10,
+                            elevation: 20, }}
+                        // {{}}
+                        last= 'true'
+                        //   type='text'
+                        maxLength= {30}
+                        secureTextEntry={true}
+                        onChangeText={this.onPasswordChange.bind(this)}
+                        //   onFocus ={() => this.setState({value : 1 })}
+                        />
+                </View>
+                <View style ={{ paddingHorizontal:50, paddingVertical:1}}>
+                        <TextInput
+                        clear
+                        value={this.props.cpassword}
+                        placeholder="confirm password ...."
                         
                         placeholderTextColor={'#fff'}
                         style=
@@ -124,7 +159,7 @@ class LoginForm extends Component {
                         //   type='text'
                         maxLength= {30}
                         secureTextEntry={true}
-                        onChangeText={this.onPasswordChange.bind(this)}
+                        onChangeText={this.onConfirmPasswordChange.bind(this)}
                         //   onFocus ={() => this.setState({value : 1 })}
                         />
                 </View>
@@ -142,14 +177,12 @@ class LoginForm extends Component {
                             onPress={this.onSubButtonPress.bind(this)} />
                         {/* Actions.homePage() */}
                 </View>
-            
-               </View>
-               <View style={{ alignItems:'flex-end', alignSelf:'center'}}>
-                   <TouchableOpacity onPress={() => Actions.signup()}>
-                       <Text style={{ fontFamily:'Ornalia', fontSize:30, color: '#A0131A', borderBottomColor:'#A0131A', borderBottomWidth:1}}> Register</Text>
+            </View>
+            <View style={{ alignItems:'flex-end', alignSelf:'center'}}>
+                   <TouchableOpacity onPress={() => Actions.login()}>
+                       <Text style={{ fontFamily:'Ornalia',fontSize:30,color: '#A0131A', borderBottomColor:'#A0131A', borderBottomWidth:1}}> Login</Text>
                    </TouchableOpacity>
                </View>
-               
                
            </View>
         );
@@ -169,11 +202,11 @@ const styles = {
 
 const mapStateToProps = (state) => {
     console.log('state',state.auth)
-    const { email, password, error } = state.auth;
+    const { email, password, error, cpassword } = state.auth;
 
-    return { email, password, error };
+    return { email, password, error, cpassword };
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged, createUser,signIn}
-    )(LoginForm);
+    {emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged}
+    )(SignUpForm);
