@@ -1,5 +1,8 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { COLORS } from '../constants';
+
+import List from './List';
 
 //TODO: MODIFY HOMEPAGE AND SEARCH PAGE LIKE MAIN
 //TODO: MODIFY ROUTER LIKE APP
