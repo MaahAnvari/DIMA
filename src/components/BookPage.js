@@ -53,7 +53,7 @@ const BookPage = props => {
           </View>
 
           <TouchableOpacity
-            style={{ marginRigth: SIZES.base }}
+            style={{ marginRight: SIZES.base }}
             onPress={() => console.log('Click More')}>
             <Icon
               type={Icons.Feather}
@@ -76,11 +76,12 @@ const BookPage = props => {
               alignItems: 'center',
             }}>
             <Image
-              source={{uri: props.item.artworkUrl100}}
+              source={{ uri: props.item.artworkUrl100 }}
               resizeMode="contain"
               style={{
                 flex: 1,
-                height:250, width:150
+                height: 250,
+                width: 150,
               }}
             />
           </View>
@@ -122,7 +123,7 @@ const BookPage = props => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.artistName}
+                  {props.item.artistName}
                 </Text>
               </View>
             </View>
@@ -142,7 +143,7 @@ const BookPage = props => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.averageUserRating}
+                  {props.item.averageUserRating}
                 </Text>
               </View>
             </View>
@@ -162,7 +163,7 @@ const BookPage = props => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.releaseDate}
+                  {props.item.releaseDate}
                 </Text>
               </View>
             </View>
@@ -180,7 +181,7 @@ const BookPage = props => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.genres}
+                  {props.item.genres}
                 </Text>
               </View>
             </View>
@@ -198,7 +199,7 @@ const BookPage = props => {
                   flex: 1,
                 }}>
                 <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.price} $
+                  {props.item.price} $
                 </Text>
               </View>
             </View>
@@ -363,11 +364,9 @@ const BookPage = props => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log('state',state)
+const mapStateToProps = state => {
+  console.log('state', state);
   return {};
 };
 
-export default connect(mapStateToProps, 
-  {}
-  )(BookPage);
+export default connect(mapStateToProps, {})(BookPage);
