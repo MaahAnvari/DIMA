@@ -9,9 +9,13 @@ import {
   Animated, 
   Dimensions
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
+
 // const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 // const BACKDROP_HEIGHT = height * 0.65;
   
@@ -33,15 +37,15 @@ const BouncingList =(props) => {
       outputRange: [ 0, -50, 0]
     })
     return(
-      <View style ={{width: ITEM_SIZE, paddingTop:5,}}>
+      <View style ={{width: ITEM_SIZE, paddingTop:5, flexDirection:'row'}}>
       <Animated.View style ={{
           transform:[{translateY}],
           
           // fontFamily:'Roboto',
-          height:ITEM_SIZE*1.2,
+          height:ITEM_SIZE,
           // backgroundColor: '#fff',
           borderRadius:20,
-          marginVertical: 8,
+          // marginVertical: 8,
           marginHorizontal: 10,
           shadowColor: "#000000",
           shadowOpacity: 0.8,
@@ -51,13 +55,16 @@ const BouncingList =(props) => {
           width: 1
       }
       }}>
-        {/* {console.log(item.artworkUrl100)} */}
-        <Image style={{height:ITEM_SIZE*1.3, width: ITEM_SIZE*0.9, borderRadius:20}}
+        <TouchableOpacity onPress={() => Actions.bookPage({item: item}) }>
+        <Image style={{height:ITEM_SIZE, width: ITEM_SIZE*0.9, borderRadius:20}}
           source={{
             uri: item.artworkUrl100,
           }}
         ></Image>
         <Text style={{color:'#fff', fontSize: 15, alignSelf:'center'}}>{item.trackName}</Text>
+        </TouchableOpacity>
+        {/* {console.log(item.artworkUrl100)} */}
+        
       </Animated.View>
       </View>
     );
@@ -66,8 +73,7 @@ const BouncingList =(props) => {
 
     return (
         <View >
-            <Text style={{color:'#000'}}>Trending</Text>
-             <View style={{height:ITEM_SIZE*1.2 +100}}>
+             <View style={{height:ITEM_SIZE*1.3}}>
              
              <Animated.FlatList
                  showsHorizontalScrollIndicator={false}

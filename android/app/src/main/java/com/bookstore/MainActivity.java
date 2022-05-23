@@ -2,8 +2,6 @@ package com.bookstore;
 
 import com.facebook.react.ReactActivity;
 
-import android.os.Bundle;
-
 public class MainActivity extends ReactActivity {
 
   /**
@@ -15,8 +13,4 @@ public class MainActivity extends ReactActivity {
     return "BookStore";
   }
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(null);
-  }
 }

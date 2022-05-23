@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { nameChanged, usernameChanged, sexChanged, addGenre } from '../actions';
 
+import Feather from 'react-native-vector-icons/Feather';
   
 
 const { width, height } = Dimensions.get('window');
@@ -100,7 +101,10 @@ class ProfileForm extends Component {
         return (
            <View style={{backgroundColor: '#001120', height:'100%', padding:20}}>
 
-               <View style={{backgroundColor:'gray', borderColor:'red', borderWidth:5, borderRadius:ITEM_SIZE*0.5, height:ITEM_SIZE*0.5, width:ITEM_SIZE*0.5, alignSelf:'center'}}></View>
+               <View style={{justifyContent:'center', borderColor:'#A0131A', borderWidth:5, borderRadius:ITEM_SIZE*0.5, height:ITEM_SIZE*0.5, width:ITEM_SIZE*0.5, alignSelf:'center'}}>
+               <Feather name="user" style={{ alignSelf:'center' }} size={ITEM_SIZE*0.3} color="#fff" />
+               
+               </View>
                
                <Text style={{color:'#fff',fontSize:20, alignSelf:'center', marginTop: 5, marginBottom:20}}>{this.props.username}</Text>
                <View style ={{  paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
