@@ -2,23 +2,18 @@ import React from 'react';
 import {
   View,
   Text,
+  ImageBackground,
   TouchableOpacity,
   Image,
   ScrollView,
   Animated,
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-<<<<<<< HEAD
-
-import { FONTS, COLORS, SIZES, images } from '../constants';
-=======
 import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { FONTS, COLORS, SIZES, images } from '../../constants';
->>>>>>> b4f36e2f084692d4fe5e9c03a8cbfa8161e93285
 
 const BookPage = (props) => {
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
@@ -26,8 +21,6 @@ const BookPage = (props) => {
     React.useState(0);
 
   const indicator = new Animated.Value(0);
-
-  const [likeBook, setLikeBook] = React.useState(false);
 
   function renderBookInfoSection() {
     return (
@@ -302,15 +295,8 @@ const BookPage = (props) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => {
-            setLikeBook(!likeBook);
-            console.log('Bookmark');
-          }}>
-          <AntDesign
-            name={likeBook ? 'heart' : 'hearto'}
-            size={25}
-            color="#FFFFFF"
-          />
+          onPress={() => console.log('Bookmark')}>
+          <Feather name="bookmark" size={25} color="#FFFFFF" />
         </TouchableOpacity>
 
         {/* Read Now */}
@@ -338,8 +324,7 @@ const BookPage = (props) => {
   }
 
   return (
-    <View
-      style={{ backgroundColor: '#001120', justifyContent: 'center', flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {/* Book Cover Section */}
       <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 

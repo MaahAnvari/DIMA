@@ -1,7 +1,4 @@
 export const EMAIL_CHANGED = 'email_changed';
-<<<<<<< HEAD
-export const PASSWORD_CHANGED = 'password_changed'; 
-=======
 export const PASSWORD_CHANGED = 'password_changed'; 
 export const CONFIRM_PASSWORD_CHANGED = 'confirm_password_changed'; 
 
@@ -37,4 +34,3 @@ export const FAILED_SEARCH_AUDIOBOOK = 'failed_search_audiobook';
 
 export const ERROR = 'error';
 
->>>>>>> b4f36e2f084692d4fe5e9c03a8cbfa8161e93285
