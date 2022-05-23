@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { FONTS, COLORS, SIZES, images } from '../../constants';
+import Icon, { Icons } from '../constants/Icons';
 
 const BookPage = props => {
   const { book, onAdd, onRemove } = props;
