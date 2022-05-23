@@ -6,6 +6,7 @@ import {
     INVALID_EMAIL,
     WEAK_PASSWORD,
     SIGNIN_USER,
+    CONFIRM_PASSWORD_CHANGED,
 
 } from '../actions/types';
 
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
     user: null,
     email: '',
     password: '',
+    cpassword:'',
     error:'',
 };
 
@@ -23,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, email: action.payload, error:'' };
         case PASSWORD_CHANGED: 
             return { ...state, password: action.payload, error:'' }; 
+        case CONFIRM_PASSWORD_CHANGED: 
+            return { ...state, cpassword: action.payload, error:'' }; 
         case CREATE_USER: 
             return { ...state, user: action.payload, error:'' }; 
         case SIGNIN_USER: 

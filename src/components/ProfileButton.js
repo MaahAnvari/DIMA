@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     marginBottom: 4,
+    fontFamily:'Ornalia',
+    fontSize:20,
     // marginLeft: 10,
   },
   iconSeparator: {

@@ -9,9 +9,13 @@ import {
   Animated, 
   Dimensions
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
+
 // const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 // const BACKDROP_HEIGHT = height * 0.65;
   
@@ -51,13 +55,16 @@ const BouncingList =(props) => {
           width: 1
       }
       }}>
-        {/* {console.log(item.artworkUrl100)} */}
+        <TouchableOpacity onPress={() => Actions.bookPage({item: item}) }>
         <Image style={{height:ITEM_SIZE, width: ITEM_SIZE*0.9, borderRadius:20}}
           source={{
             uri: item.artworkUrl100,
           }}
         ></Image>
         <Text style={{color:'#fff', fontSize: 15, alignSelf:'center'}}>{item.trackName}</Text>
+        </TouchableOpacity>
+        {/* {console.log(item.artworkUrl100)} */}
+        
       </Animated.View>
       </View>
     );

@@ -11,6 +11,7 @@ import FavoritePage from './components/FavoritePage';
 import ProfileForm from './components/ProfileForm';
 import AboutPage from './components/AboutPage';
 import BookPage from './components/BookPage';
+import SignUpForm from './components/SignUpForm';
 
 import TabIcon from './components/TabIcon';
 import { COLORS } from './constants';
@@ -18,16 +19,33 @@ import { COLORS } from './constants';
 const RouterComponent = () => {
   return (
     <Router>
-      <Scene key="root">
+      <Scene key="root" navigationBarStyle={{ backgroundColor: '#001120' }}>
         <Scene key="auth" headerMode={'none'}>
           <Scene
             key="login"
             component={LoginForm}
-            title="Please Login"
-            titleStyle={{ paddingLeft: 110, color: '#fff' }}
+            title="Please Login "
+            titleStyle={{
+              alignSelf: 'center',
+              color: '#fff',
+              fontFamily: 'Abduco',
+            }}
             // hideNavBar
-            navBar={CustomNavBar}
-            //initial
+            // navBar={CustomNavBar}
+            initial
+          />
+          <Scene
+            key="signup"
+            component={SignUpForm}
+            title="Please Register "
+            titleStyle={{
+              alignSelf: 'center',
+              color: '#fff',
+              fontFamily: 'Abduco',
+            }}
+            // hideNavBar
+            // navBar={CustomNavBar}
+            //  initial
           />
         </Scene>
         <Scene
@@ -37,71 +55,54 @@ const RouterComponent = () => {
           tabBarStyle={styles.tabBar}
           default="Main">
           <Scene
-            key="home"
-            title="Home"
+            key="homePage"
+            title="PONDER"
+            titleStyle={{
+              alignSelf: 'center',
+              color: '#fff',
+              fontFamily: 'Abduco',
+              fontSize: 30,
+            }}
             iconName="home"
             icon={TabIcon}
-            hideNavBar={true}
+            //hideNavBar={true}
             component={HomePage}
 
-            // titleStyle={{ paddingLeft: 120, color: '#fff' }}
-            // key="deviceList"
-            // component={DeviceList}
-            // title="Active Device"
-            // rightTitle="Add"
-            // onRight={() => Actions.createDevice()}
-            // titleStyle={{ paddingLeft: 75 }}
             //initial
           />
           <Scene
-            key="search"
+            key="searchPage"
             title="Search"
             iconName="search"
             icon={TabIcon}
             hideNavBar={true}
             component={SearchPage}
 
-            //titleStyle={{ paddingLeft: 120, color: '#fff' }}
-            // key="deviceList"
-            // component={DeviceList}
-            // title="Active Device"
-            // rightTitle="Add"
-            // onRight={() => Actions.createDevice()}
-            // titleStyle={{ paddingLeft: 75 }}
             //initial
           />
           <Scene
-            key="favorite"
+            key="favoritePage"
             title="Favorite"
             iconName="heart"
             icon={TabIcon}
             hideNavBar={true}
             component={FavoritePage}
 
-            // titleStyle={{ paddingLeft: 120, color: '#fff' }}
-            // key="deviceList"
-            // component={DeviceList}
-            // title="Active Device"
-            // rightTitle="Add"
-            // onRight={() => Actions.createDevice()}
-            // titleStyle={{ paddingLeft: 75 }}
             //initial
           />
           <Scene
-            key="profile"
+            key="profilePage"
             title="Profile"
+            titleStyle={{
+              alignSelf: 'center',
+              color: '#fff',
+              fontFamily: 'Abduco',
+            }}
             iconName="user"
             icon={TabIcon}
             hideNavBar={true}
             component={ProfileForm}
 
-            // titleStyle={{ paddingLeft: 120, color: '#fff' }}
-            // key="deviceList"
-            // component={DeviceList}
-            // title="Active Device"
-            // rightTitle="Add"
-            // onRight={() => Actions.createDevice()}
-            // titleStyle={{ paddingLeft: 75 }}
             //initial
           />
         </Scene>
@@ -109,7 +110,7 @@ const RouterComponent = () => {
           key="aboutPage"
           component={AboutPage}
           title="ABOUT"
-          titleStyle={{ paddingLeft: 120, color: '#fff' }}
+          titleStyle={{ paddingLeft: 120, color: '#fff', fontFamily: 'Abduco' }}
           // key="deviceList"
           // component={DeviceList}
           // title="Active Device"
@@ -122,8 +123,34 @@ const RouterComponent = () => {
         <Scene
           key="bookPage"
           component={BookPage}
+          title="Book "
+          titleStyle={{
+            alignSelf: 'center',
+            color: '#fff',
+            fontFamily: 'Abduco',
+          }}
+          hideNavBar={true}
+          // key="deviceList"
+          // component={DeviceList}
+          // title="Active Device"
+          // rightTitle="Add"
+          // leftTile='back'
+          // onRight={() => Actions.createDevice()}
+          // onLeft={() => Actions.pop()}
+          // titleStyle={{ paddingLeft: 75 }}
+
+          // initial
+        />
+        <Scene
+          key="bookPage"
+          component={BookPage}
           title="BOOK"
-          titleStyle={{ paddingLeft: 120, color: '#fff' }}
+          titleStyle={{
+            alignSelf: 'center',
+            color: '#fff',
+            fontFamily: 'Abduco',
+          }}
+          hideNavBar={true}
           // key="deviceList"
           // component={DeviceList}
           // title="Active Device"

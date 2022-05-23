@@ -2,10 +2,11 @@ import React, { Component, useRef } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { searchChanged, searchEbook } from '../actions';
+import { searchChanged, searchBook } from '../actions';
 import EbookMainView from './EbookMainView';
 import AudioMainView from './AudioMainView';
 import Feather from 'react-native-vector-icons/Feather';
+import { Actions } from 'react-native-router-flux';
 
    
 class HomePage extends Component {
@@ -42,7 +43,7 @@ class HomePage extends Component {
         // const scrollX = useRef( new Animated.Value(0)).current;
         return (
           <View style={{backgroundColor: '#001120', justifyContent:'flex-start'}}>
-            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row'}}>
+            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row', justifyContent:'space-between'}}>
               <TouchableOpacity 
                 onPress={()=> this.setState({ search: ! this.state.search})}
                 style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
@@ -60,6 +61,8 @@ class HomePage extends Component {
                       paddingLeft:20, 
                       borderWidth:1, 
                       width: 200, 
+                      fontFamily:'Ornalia',
+                      fontSize:20,
                       borderRadius:30, 
                       justifyContent:'center', alignItems:'center',
                       backgroundColor:'#C3B0B0',
@@ -74,7 +77,8 @@ class HomePage extends Component {
                   //   type='text'
                   maxLength= {30}
                   onChangeText={this.onSearchChange.bind(this)}
-                  onSubmitEditing={() =>  console.log('enteeeer')}
+                  onSubmitEditing={() =>  this.props.searchBook({media: 'ebook', attribute:'', term:this.props.searchKey, country:'', sort:'', searchKey: '1'})}
+                  
                 //   onFocus ={() => this.setState({value : 1 })}
                 />
                 // <View style={{ backgroundColor:'#ADADAD', marginLeft:-ITEM_SIZE*0.2, width: ITEM_SIZE*1.3, borderColor:'#B90020', borderWidth:1, borderRadius:252}}></View>
@@ -85,19 +89,23 @@ class HomePage extends Component {
                     onPress={() => this.setState({open: 'eBook'})}
                     >
                     <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'AntDesign'}}>Ebook</Text>
-                    {/* <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'Abduco'}}>Ebook</Text>
-                    <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'Ornalia'}}>Ebook</Text>
-                    <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'Redemption'}}>Ebook</Text> */}
                   </TouchableOpacity>
                   <TouchableOpacity 
                   style={{marginTop:2, justifyContent:'center', borderRadius:20, borderWidth:(this.state.open== 'audioBook' ? 1 : 0), borderColor:'red' ,height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.5, color:'#000'}}
-                  onPress={() => this.setState({open: 'audioBook'})}
+                  
+                    onPress={() => this.setState({open: 'audioBook'})}
+                  
                   >
                     <Text style={{color:'#fff', padding: 10, alignSelf:'center', fontWeight:'300'}}>audio</Text>
                   </TouchableOpacity>
                 </View>
               }
-               
+              <TouchableOpacity 
+                onPress={()=> Actions.profile()}
+                style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
+                >
+                  <Feather name="user" style={{ alignSelf:'flex-end' }} size={25} color="#FFFFFF" />
+                </TouchableOpacity>
             </View>
             {this.state.open== 'audioBook' ? 
               <AudioMainView />
@@ -122,5 +130,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-    {searchChanged, searchEbook}
+    {searchChanged, searchBook}
     )(HomePage);
