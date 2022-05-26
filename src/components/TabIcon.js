@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-import Icon, { Icons } from '../constants/Icons';
-import { COLORS } from '../constants';
+import { COLORS } from '../../constants';
+import Icon, { Icons } from '../../constants/Icons';
 
 const TabIcon = props => {
   const item = props;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS } from '../../constants';
 
 import List from './List';
 

@@ -2,17 +2,32 @@ import React from 'react';
 import {
   View,
   Text,
+  ImageBackground,
   TouchableOpacity,
   Image,
   ScrollView,
   Animated,
 } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { FONTS, COLORS, SIZES, images } from '../../constants';
-import Icon, { Icons } from '../constants/Icons';
+import Icon, { Icons } from '../../constants/Icons';
+
+const LineDivider = () => {
+  return (
+    <View style={{ width: 1, paddingVertical: 5 }}>
+      <View
+        style={{
+          flex: 1,
+          borderLeftColor: COLORS.lightGray2,
+          borderLeftWidth: 1,
+        }}></View>
+    </View>
+  );
+};
 
 const BookPage = props => {
   const { book, onAdd, onRemove } = props;
@@ -28,6 +43,29 @@ const BookPage = props => {
   function renderBookInfoSection() {
     return (
       <View style={{ flex: 1 }}>
+        <ImageBackground
+          source={{ uri: props.item.artworkUrl100 }}
+          resizeMode="cover"
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          }}
+        />
+
+        {/* Color Overlay */}
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundColor: COLORS.secondary,
+          }}></View>
+
         {/* Navigation header */}
         {/* <View
           style={{
@@ -65,149 +103,75 @@ const BookPage = props => {
           </TouchableOpacity>
         </View> */}
 
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          {/* Book Cover */}
-          <View
+        {/* Book Cover */}
+        <View
+          style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: 'center' }}>
+          <Image
+            source={{ uri: props.item.artworkUrl100 }}
+            resizeMode="contain"
             style={{
               flex: 1,
-              marginLeft: SIZES.padding,
-              marginRight: SIZES.padding,
-              marginVertical: SIZES.base,
-              borderRadius: SIZES.radius,
-              alignItems: 'center',
-            }}>
-            <Image
-              source={{ uri: props.item.artworkUrl100 }}
-              resizeMode="contain"
-              style={{
-                flex: 1,
-                height: 250,
-                width: 150,
-              }}
-            />
+              width: 150,
+              height: 'auto',
+            }}
+          />
+        </View>
+
+        {/* Book Name and Author */}
+        <View
+          style={{ flex: 1.8, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ ...FONTS.h2, color: COLORS.white }}>
+            {props.item.trackCensoredName}
+          </Text>
+          <Text style={{ ...FONTS.body3, color: COLORS.white }}>
+            {props.item.artistName}
+          </Text>
+        </View>
+
+        {/* Book Info */}
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: 20,
+            margin: SIZES.padding,
+            borderRadius: SIZES.radius,
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          }}>
+          {/*Rating */}
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              {props.item.averageUserRating}
+            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Rating</Text>
           </View>
 
-          {/* Book Info */}
+          <LineDivider />
+
+          {/* Price */}
           <View
             style={{
               flex: 1,
+              paddingHorizontal: SIZES.radius,
+              alignItems: 'center',
             }}>
-            <View
-              style={{
-                flex: 2,
-              }}></View>
-            {/* Book Name */}
-            <View
-              style={{
-                flex: 1,
-                marginBottom: SIZES.padding2,
-              }}>
-              <Text
-                style={{
-                  ...FONTS.h2,
-                  color: COLORS.white,
-                }}>
-                {props.item.trackCensoredName}
-              </Text>
-            </View>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              {props.item.price} $
+            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>
+              Number of Page
+            </Text>
+          </View>
 
-            {/* Author */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>AUTHOR</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  {props.item.artistName}
-                </Text>
-              </View>
-            </View>
+          <LineDivider />
 
-            {/* Language */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-                  Avg. Rating
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  {props.item.averageUserRating}
-                </Text>
-              </View>
-            </View>
-
-            {/* Published */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-                  PUBLISHED
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  {props.item.releaseDate}
-                </Text>
-              </View>
-            </View>
-
-            {/* Type */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>TYPE</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  {props.item.genres}
-                </Text>
-              </View>
-            </View>
-
-            {/* Price */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>PRICE</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                  {props.item.price} $
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 4,
-              }}></View>
+          {/* Published */}
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              {props.item.releaseDate.year}
+            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>
+              Language
+            </Text>
           </View>
         </View>
       </View>
@@ -233,6 +197,7 @@ const BookPage = props => {
             ...FONTS.h2,
             color: COLORS.white,
             marginLeft: SIZES.padding,
+            marginTop: SIZES.padding,
             marginBottom: SIZES.padding,
           }}>
           Description
@@ -289,6 +254,14 @@ const BookPage = props => {
               }}>
               {props.item.description}
             </Text>
+            {/*<WebView
+              originWhitelist={['*']}
+              source={{ html: props.item.description }}
+              style={{
+                ...FONTS.body2,
+                color: COLORS.lightGray,
+              }}
+            />*/}
           </ScrollView>
         </View>
       </View>
@@ -298,7 +271,7 @@ const BookPage = props => {
   function renderBottomButton() {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        {/* Bookmark */}
+        {/* Like */}
         <TouchableOpacity
           style={{
             width: 60,
@@ -349,8 +322,7 @@ const BookPage = props => {
   }
 
   return (
-    <View
-      style={{ backgroundColor: '#001120', justifyContent: 'center', flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.primary }}>
       {/* Book Cover Section */}
       <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 
