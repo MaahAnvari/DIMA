@@ -14,12 +14,14 @@ import BookPage from './components/BookPage';
 import SignUpForm from './components/SignUpForm';
 
 import TabIcon from './components/TabIcon';
-import { COLORS } from './constants';
+import { COLORS } from '../constants';
 
 const RouterComponent = () => {
   return (
     <Router>
-      <Scene key="root" navigationBarStyle={{ backgroundColor: '#001120' }}>
+      <Scene
+        key="root"
+        navigationBarStyle={{ backgroundColor: COLORS.primary }}>
         <Scene key="auth" headerMode={'none'}>
           <Scene
             key="login"

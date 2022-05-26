@@ -6,9 +6,7 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
-import { COLORS } from '../../constants';
-
-import Icon, { Icons } from '../../constants/Icons';
+import { Icon, Icons, COLORS } from '../../constants';
 
 const SearchBar = props => {
   const { clicked, searchPhrase, setSearchPhrase, setClicked } = props;

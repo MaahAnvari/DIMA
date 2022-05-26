@@ -13,8 +13,7 @@ import { WebView } from 'react-native-webview';
 import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
-import { FONTS, COLORS, SIZES, images } from '../../constants';
-import Icon, { Icons } from '../../constants/Icons';
+import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
 
 const LineDivider = () => {
   return (
@@ -301,7 +300,7 @@ const BookPage = props => {
         <TouchableOpacity
           style={{
             flex: 1,
-            backgroundColor: COLORS.primary,
+            backgroundColor: COLORS.button,
             marginHorizontal: SIZES.base,
             marginVertical: SIZES.base,
             borderRadius: SIZES.radius,
