@@ -8,7 +8,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
-import { WebView } from 'react-native-webview';
+import HTMLView from 'react-native-htmlview';
 
 import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
@@ -156,9 +156,7 @@ const BookPage = props => {
             <Text style={{ ...FONTS.h3, color: COLORS.white }}>
               {props.item.price} $
             </Text>
-            <Text style={{ ...FONTS.body4, color: COLORS.white }}>
-              Number of Page
-            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Price</Text>
           </View>
 
           <LineDivider />
@@ -166,10 +164,10 @@ const BookPage = props => {
           {/* Published */}
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-              {props.item.releaseDate.year}
+              {props.item.releaseDate.substr(0, 4)}
             </Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>
-              Language
+              Published
             </Text>
           </View>
         </View>
@@ -253,13 +251,9 @@ const BookPage = props => {
               }}>
               {props.item.description}
             </Text>
-            {/*<WebView
-              originWhitelist={['*']}
-              source={{ html: props.item.description }}
-              style={{
-                ...FONTS.body2,
-                color: COLORS.lightGray,
-              }}
+            {/*<HTMLView
+              value={props.item.description}
+              stylesheet={{ color: COLORS.white }}
             />*/}
           </ScrollView>
         </View>
