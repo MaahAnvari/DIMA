@@ -14,6 +14,7 @@ import BookPage from './components/BookPage';
 import SignUpForm from './components/SignUpForm';
 
 import TabIcon from './components/TabIcon';
+import BackButton from './components/BackButton';
 import { COLORS } from '../constants';
 
 const RouterComponent = () => {
@@ -125,42 +126,24 @@ const RouterComponent = () => {
         <Scene
           key="bookPage"
           component={BookPage}
-          title="Book "
+          title="Book"
           titleStyle={{
             alignSelf: 'center',
             color: '#fff',
             fontFamily: 'Abduco',
           }}
-          hideNavBar={true}
+          renderBackButton={() => BackButton}
+          //hideNavBar={true}
           // key="deviceList"
           // component={DeviceList}
           // title="Active Device"
           // rightTitle="Add"
           // leftTile='back'
           // onRight={() => Actions.createDevice()}
-          // onLeft={() => Actions.pop()}
+          onLeft={() => Actions.pop()}
           // titleStyle={{ paddingLeft: 75 }}
 
           // initial
-        />
-        <Scene
-          key="bookPage"
-          component={BookPage}
-          title="BOOK"
-          titleStyle={{
-            alignSelf: 'center',
-            color: '#fff',
-            fontFamily: 'Abduco',
-          }}
-          hideNavBar={true}
-          // key="deviceList"
-          // component={DeviceList}
-          // title="Active Device"
-          // rightTitle="Add"
-          // onRight={() => Actions.createDevice()}
-          // titleStyle={{ paddingLeft: 75 }}
-
-          //initial
         />
       </Scene>
     </Router>
