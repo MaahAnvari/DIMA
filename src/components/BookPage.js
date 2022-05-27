@@ -29,7 +29,8 @@ const LineDivider = () => {
 };
 
 const BookPage = props => {
-  const { book, onAdd, onRemove } = props;
+  const { onAdd, onRemove } = props;
+  const book = props.item;
 
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
@@ -43,7 +44,7 @@ const BookPage = props => {
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
-          source={{ uri: props.item.artworkUrl100 }}
+          source={{ uri: book.artworkUrl100 }}
           resizeMode="cover"
           style={{
             position: 'absolute',
@@ -106,7 +107,7 @@ const BookPage = props => {
         <View
           style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: 'center' }}>
           <Image
-            source={{ uri: props.item.artworkUrl100 }}
+            source={{ uri: book.artworkUrl100 }}
             resizeMode="contain"
             style={{
               flex: 1,
@@ -120,10 +121,10 @@ const BookPage = props => {
         <View
           style={{ flex: 1.8, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ ...FONTS.h2, color: COLORS.white }}>
-            {props.item.trackCensoredName}
+            {book.trackCensoredName}
           </Text>
           <Text style={{ ...FONTS.body3, color: COLORS.white }}>
-            {props.item.artistName}
+            {book.artistName}
           </Text>
         </View>
 
@@ -139,7 +140,7 @@ const BookPage = props => {
           {/*Rating */}
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-              {props.item.averageUserRating}
+              {book.averageUserRating}
             </Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>Rating</Text>
           </View>
@@ -154,7 +155,7 @@ const BookPage = props => {
               alignItems: 'center',
             }}>
             <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-              {props.item.price} $
+              {book.price} $
             </Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>Price</Text>
           </View>
@@ -164,7 +165,7 @@ const BookPage = props => {
           {/* Published */}
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-              {props.item.releaseDate.substr(0, 4)}
+              {book.releaseDate.substr(0, 4)}
             </Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>
               Published
@@ -249,10 +250,10 @@ const BookPage = props => {
                 ...FONTS.body2,
                 color: COLORS.lightGray,
               }}>
-              {props.item.description}
+              {book.description}
             </Text>
             {/*<HTMLView
-              value={props.item.description}
+              value={book.description}
               stylesheet={{ color: COLORS.white }}
             />*/}
           </ScrollView>
