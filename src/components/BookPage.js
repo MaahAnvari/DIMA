@@ -7,11 +7,11 @@ import {
   Image,
   ScrollView,
   Animated,
+  Dimensions,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 
 import { connect } from 'react-redux';
-import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
 
@@ -29,7 +29,6 @@ const LineDivider = () => {
 };
 
 const BookPage = props => {
-  const { onAdd, onRemove } = props;
   const book = props.item;
 
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
@@ -67,7 +66,7 @@ const BookPage = props => {
           }}></View>
 
         {/* Navigation header */}
-        {/* <View
+        <View
           style={{
             flexDirection: 'row',
             paddingHorizontal: SIZES.radius,
@@ -76,8 +75,10 @@ const BookPage = props => {
           }}>
           <TouchableOpacity
             style={{ marginLeft: SIZES.base }}
-            onPress={() => console.log('Back')} //navigation.goBack()
-          >
+            onPress={() => {
+              //Actions.pop();
+              console.log('Back');
+            }}>
             <Icon
               type={Icons.MaterialIcons}
               name="arrow-back-ios"
@@ -101,7 +102,7 @@ const BookPage = props => {
               color="#FFFFFF"
             />
           </TouchableOpacity>
-        </View> */}
+        </View>
 
         {/* Book Cover */}
         <View
@@ -154,9 +155,13 @@ const BookPage = props => {
               paddingHorizontal: SIZES.radius,
               alignItems: 'center',
             }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-              {book.price} $
-            </Text>
+            {book.price == 0 ? (
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>FREE</Text>
+            ) : (
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+                {book.price} $
+              </Text>
+            )}
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>Price</Text>
           </View>
 
@@ -171,6 +176,65 @@ const BookPage = props => {
               Published
             </Text>
           </View>
+        </View>
+
+        {/* Genre */}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginTop: SIZES.base,
+            marginBottom: SIZES.base,
+          }}>
+          {book.genres.includes('Mysteries & Thrillers') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkGreen,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+                Mysteries & Thrillers
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Kids') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkRed,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightRed }}>
+                Kids
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Fantasy') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkBlue,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightBlue }}>
+                Fantasy
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -278,10 +342,7 @@ const BookPage = props => {
           }}
           onPress={() => {
             setLikeBook(!likeBook);
-            {
-              likeBook ? onRemove(book) : onAdd(book);
-            }
-            console.log('Bookmark');
+            console.log('Like');
           }}>
           <Icon
             type={Icons.AntDesign}

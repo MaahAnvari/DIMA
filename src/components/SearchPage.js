@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS } from '../../constants';
 import List from './List';
 import SearchBar from './SearchBar';
 

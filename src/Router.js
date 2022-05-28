@@ -133,7 +133,7 @@ const RouterComponent = () => {
             fontFamily: 'Abduco',
           }}
           renderBackButton={() => BackButton}
-          //hideNavBar={true}
+          hideNavBar={true}
           // key="deviceList"
           // component={DeviceList}
           // title="Active Device"
