@@ -3,7 +3,7 @@ import { View, Text, ImageBackground,Image, FlatList, ScrollView, TouchableHighl
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, searchBook } from '../actions';
+import { searchBook, getFreeBooks, resetFree, selectBook } from '../actions';
 import BookPage from './BookPage';
 import BouncingList from './BouncingList';
 
@@ -30,18 +30,49 @@ class EbookMainView extends Component {
   }
 
   componentWillUnmount(){ 
-    console.log('willllll');
-    this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-    this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
-    this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
-    this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+    // console.log('willllll');
+    // this.props.resetFree();
+    // this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+    // this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+
+    
+    // this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+    // this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+    // this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+    // this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+
+    // this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+    // this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+    // this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+  
   }
       
   showDetails = ({item}) => {
-    <BookPage item={item} />
+    {this.props.selectBook(item.trackCensoredName)}
+    Actions.bookPage({item})
+    // <BookPage item={item} />
   }
   renderItem = ({ item }) => (
-    <Item item={item} />
+    <TouchableHighlight style={styles.item} onPress= {() => {
+      this.props.selectBook(item.trackCensoredName)
+      Actions.bookPage({item})
+      }}>
+      <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
+          source={{
+            uri: item.artworkUrl100,
+          }}
+        ></Image>
+    </TouchableHighlight>
   );
     
   renderError() {
@@ -73,6 +104,19 @@ class EbookMainView extends Component {
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE*0.8, paddingTop: 20 }}>
                   <FlatList
                     data={this.props.top10}
+                    renderItem={this.renderItem}
+                    horizontal={true}
+                    keyExtractor={item => console.log()}
+                    showsHorizontalScrollIndicator={true}
+                  />
+                </ScrollView>
+              </View>
+
+              <View >
+                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Free Books</Text>
+                <ScrollView horizontal={true}    style={{height:ITEM_SIZE*0.8, paddingTop: 20 }}>
+                  <FlatList
+                    data={this.props.free}
                     renderItem={this.renderItem}
                     horizontal={true}
                     keyExtractor={item => console.log()}
@@ -147,11 +191,11 @@ const styles = {
 const mapStateToProps = (state) => {
     console.log('state',state)
     const { email, password, error } = state.auth;
-    const { genre, top10, search, country, newB } = state.ebook;
+    const { genre, top10, search, country, newB, free } = state.ebook;
 
-    return { email, password, error, top10, search, genre, country, newB };
+    return { email, password, error, top10, search, genre, country, newB, free };
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged, searchBook}
+    {searchBook, getFreeBooks, resetFree, selectBook}
     )(EbookMainView);

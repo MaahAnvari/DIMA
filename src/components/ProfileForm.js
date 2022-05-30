@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, Dimensions, FlatList } from 'react-native';
+import { ScrollView, TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { nameChanged, usernameChanged, sexChanged, addGenre } from '../actions';
+import { saveChanges, nameChanged, usernameChanged, sexChanged, addGenre } from '../actions';
 
 import Feather from 'react-native-vector-icons/Feather';
+import ProfileButton from './ProfileButton';
   
 
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width : width * 0.9;
+
+
+const Item = (item) => (
+  <TouchableHighlight onPress= {() => {
+    this.setState({
+      placeholderG: item.label
+  })
+  this.props.addGenre(item.value);
+  }} >
+    <View style={{flexDirection: 'row', alignItems:'center'}}>
+        <Text style={{color:'#fff', margin: 2, fontFamily:'Ornalia'}}>
+         {item.item}
+        </Text>
+        {console.log(item.item)}
+        <Feather name="delete"size={15} color="#FFFFFF" />
+    </View>
+  </TouchableHighlight>
+
+);
+
 
 class ProfileForm extends Component {
 
@@ -31,7 +52,7 @@ class ProfileForm extends Component {
     
 
     onUsernameChange(text) {
-        this.props.useقnameChanged(text); 
+        this.props.usernameChanged(text); 
     }
 
     onNameChange(text) {
@@ -43,7 +64,7 @@ class ProfileForm extends Component {
         this.setState({
             placeholderS: item.label
         })
-        // this.props.sexChanged(text);
+        this.props.sexChanged(item.value);
     }
     onGenreChange(item) {
         console.log(item)
@@ -54,8 +75,11 @@ class ProfileForm extends Component {
         // this.props.sexChanged(text);
     }
 
+    
     onSubButtonPress() {
-        Actions.homePage();
+        console.log('idddd', this.props.id)
+      this.props.saveChanges({name: this.props.name, sex:this.props.sex, id: this.props.id, genre: this.props.genre })
+      Actions.homePage();
     }
 
     renderError() {
@@ -91,96 +115,113 @@ class ProfileForm extends Component {
 
       setValue(callback) {
           console.log('set valueeee',callback)
-        // this.setState(state => ({
-        //   value: callback(state.value)
-        // }));
       }
 
+      renderItem = ({ item }) => (
+        // console.log(item)
+        <TouchableHighlight onPress= {() => {
+            this.setState({
+              placeholderG: item.label
+          })
+          this.props.addGenre(item);
+          }} >
+            <View style={{flexDirection: 'row', alignItems:'center', marginTop:20}}>
+                <Text style={{color:'#fff', margin: 10, }}>
+                {item}
+                </Text>
+                {console.log(item)}
+                <Feather name="delete"size={15} color="#FFFFFF" />
+            </View>
+        </TouchableHighlight>
+      );
 
     render() {
         return (
-           <View style={{backgroundColor: '#001120', height:'100%', padding:20}}>
+           <ScrollView style={{backgroundColor: '#001120', height:'100%', paddingBottom:100}}>
+             <View style={{backgroundColor: 'rgba(178,33,33,0.3)', borderBottomLeftRadius:20, borderBottomRightRadius:20, height:ITEM_SIZE*0.8, width: '100%', paddingVertical: -20}}></View>
 
-               <View style={{justifyContent:'center', borderColor:'#A0131A', borderWidth:5, borderRadius:ITEM_SIZE*0.5, height:ITEM_SIZE*0.5, width:ITEM_SIZE*0.5, alignSelf:'center'}}>
+             <View style={{
+                 marginTop:ITEM_SIZE*-0.4, justifyContent:'center', borderColor:'rgba(0,17, 32, 0.4)',backgroundColor:'rgba(141,27,27,0.9)', borderWidth:5, borderRadius:ITEM_SIZE*0.5, height:ITEM_SIZE*0.5, width:ITEM_SIZE*0.5, alignSelf:'center'
+                 
+             }}>
                <Feather name="user" style={{ alignSelf:'center' }} size={ITEM_SIZE*0.3} color="#fff" />
                
-               </View>
+            </View>
                
-               <Text style={{color:'#fff',fontSize:20, alignSelf:'center', marginTop: 5, marginBottom:20}}>{this.props.username}</Text>
-               <View style ={{  paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
-                   <Text style={{ alignSelf:'center', color:'#fff'}}> Name: </Text>
-                    <TextInput
+               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>this.props.name</Text>
+               <Text style={{ alignSelf:'center', color:'#7C7F81', fontFamily:'Ornalia'}}> {this.props.username} </Text>
+               <View style ={{ paddingHorizontal:10, paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
+
+                    <DropDownPicker
+                      style={{width:ITEM_SIZE*0.5}}
+                      open={this.state.openS} 
+                      labelStyle={{
+                          fontWeight: "bold"
+                        }}
+                        theme="DARK"
+                        dropDownContainerStyle={{
+                          width:ITEM_SIZE
+                        }}
+                      value={this.state.value}
+                      placeholder={this.props.sex}
+                      loading={true}
+                      listMode='SCROLLVIEW'
+                      items={[
+                          {label: '-', value: 'Nothing'},
+                          {label: 'Female', value: 'Female'},
+                          {label: 'Male', value: 'Male'},
+                        ]}
+                      setOpen={() => this.setOpenSex()}
+                      onSelectItem={(item) => {
+                          this.onSexChange(item)
+                        }}
+                      // setValue={this.setValue()}
+                      // setItems={(value)=> console.log('iteeem',value)}
+                      activityIndicatorColor="red"
+                      activityIndicatorSize={30}
+                />
+                <TextInput
                     clear
                     value={this.props.name}
-                    placeholder="write your name ..."
+                    // placeholder="write your name ..."
                     placeholderTextColor={'#fff'}
-                    style={{ color:'#fff', padding:10 , width: 150, borderRadius:12, justifyContent:'center', alignItems:'center', borderColor:'red',borderBottomWidth:2}}
+                    style={{marginLeft:-ITEM_SIZE, paddingLeft:10, color:'#fff' , width: ITEM_SIZE*0.5, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor: 'rgba(178,33,33,0.43)'}}
                         last= 'true'
                     //   type='text'
                     maxLength= {30}
                     onChangeText={this.onNameChange.bind(this)}
                     //   onFocus ={() => this.setState({value : 1 })}
                     />
-                    <DropDownPicker
-                      style={{width:100}}
-                    open={this.state.openS} 
-                    labelStyle={{
-                        fontWeight: "bold"
-                      }}
-                      theme="DARK"
-                      dropDownContainerStyle={{
-                        width:150
-                      }}
-                    value={this.state.value}
-                    placeholder={this.state.placeholderS}
-                    loading={true}
-                    listMode='SCROLLVIEW'
-                    items={[
-                        {label: '-', value: 'Nothing'},
-                        {label: 'Female', value: 'Female'},
-                        {label: 'Male', value: 'Male'},
-                      ]}
-                    setOpen={() => this.setOpenSex()}
-                    onSelectItem={(item) => {
-                        this.onSexChange(item)
-                      }}
-                    // setValue={this.setValue()}
-                    // setItems={(value)=> console.log('iteeem',value)}
-                    activityIndicatorColor="red"
-                    activityIndicatorSize={30}
-                />
                </View>
                <View style={{padding:10, }}>
                 
                </View>
-               <View style={{padding:10, }}>
-                 <Text style={{ color:'#fff', marginBottom:10}}> I am Interested in : </Text>
+               <View style={{padding:10, flexDirection: 'row', justifyContent:'space-between' }}>
+                 {/* <Text style={{ color:'#fff', marginBottom:10, fontFamily:'Ornalia'}}> I am Interested in : </Text> */}
                  <View 
                   style={{
-                    height:ITEM_SIZE*0.2, 
-                    width:ITEM_SIZE*0.9, 
-                    borderColor:'red', 
-                    borderWidth:1,
-                    borderRadius:20,
-                    marginBottom: 10
+                    width:ITEM_SIZE*0.5,
+                    borderRadius:10,
+                    backgroundColor: 'rgba(178,33,33,0.4)'
                   }}
                   >
-                    <Text style={{color:'#fff', margin: 10,}}>
-                      {this.props.genre}
-                    </Text>
+                    {console.log('genreeeee', this.props.genre)}
+                    <FlatList
+                        data={this.props.genre}
+                        renderItem={this.renderItem}
+                        // horizontal={true}
+                        keyExtractor={item => console.log()}
+                        showsHorizontalScrollIndicator={true}
+                    />
                   </View>
                   
                   
                 <DropDownPicker
-                style={{width:300,marginTop:10}}
+                style={{width:ITEM_SIZE*0.5}}
                     open={this.state.openG} 
-                    labelStyle={{
-                        fontWeight: "bold"
-                      }}
-                      theme="DARK"
-                      dropDownContainerStyle={{
-                        width:300
-                      }}
+                    labelStyle={{ fontWeight: "bold"}}
+                    theme="DARK"
+                    dropDownContainerStyle={{ width:ITEM_SIZE*0.5 }}
                     value={this.state.value}
                     // multiple={true}
                     // max={20}
@@ -216,21 +257,18 @@ class ProfileForm extends Component {
                         {label: 'True Crime', value: 'True Crime'},
                       ]}
                     setOpen={() => this.setOpenGenre()}
-                    onSelectItem={(item) => {
-                        this.onGenreChange(item)
-                        // console.log(item)
-                      }}
-                    // setValue={this.setValue()}
-                    // setItems={(value)=> console.log('iteeem',value)}
+                    onSelectItem={(item) => {this.onGenreChange(item) }}
                     activityIndicatorColor="red"
                     activityIndicatorSize={30}
                 />
                </View>
-                                                      
-                    
+                                
+               <ProfileButton 
+                            style={{justifyContent:'center', marginBottom:100, alignSelf:'flex-end', backgroundColor:'#EE1520', borderColor:'#000', borderRadius:15, shadowColor: '#3D1214', shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20, }} 
+                            Name='Save changes'
+                            onPress={this.onSubButtonPress.bind(this)} />
                
-               
-           </View>
+           </ScrollView>
         );
     }
 }
@@ -248,12 +286,12 @@ const styles = {
 
 const mapStateToProps = (state) => {
     console.log('state',state)
-    const { email, password, error } = state.auth;
-    const { genre, name, username } = state.user;
+    const { email, password, error, name, sex, id, username, genre } = state.auth;
+    // const {  } = state.user;
 
-    return { email, password, error, genre, name, username };
+    return { email, password, error, genre, name, sex, id, username };
 };
 
 export default connect(mapStateToProps, 
-    {nameChanged, usernameChanged, sexChanged, addGenre}
+    {nameChanged, usernameChanged, sexChanged, addGenre, saveChanges}
     )(ProfileForm);

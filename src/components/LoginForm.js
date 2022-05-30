@@ -4,16 +4,46 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, createUser,signIn } from '../actions';
-import auth from '@react-native-firebase/auth';
-
+import { emailChanged, passwordChanged, createUser,signIn, saveChanges, resetFree, getFreeBooks, searchBook } from '../actions';
 import ProfileButton from "./ProfileButton";
-  
 
 class LoginForm extends Component {
 
-    
+    constructor() {
+        super()
+        this.state = {
+          page: "HomeScreen",
+        }
+      }
 
+
+      componentWillUnmount(){ 
+        console.log('willllll');
+        this.props.resetFree();
+        this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+        this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+        this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+        this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+        this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+        this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+        this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+        this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+        this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+        this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+        this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+        this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+    
+        
+        this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+        this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+
+        this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+    
+      }
     onUsernameChange(text) {
         this.props.emailChanged(text); 
     }
@@ -23,6 +53,30 @@ class LoginForm extends Component {
     }
 
     onSubButtonPress() {
+        // this.props.saveChanges({id:'', name:'', sex:''})
+        this.props.resetFree();
+        this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+        this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+        this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+        this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+        this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+        this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+        this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+        this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+        this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+        this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+        this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+        this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+    
+        
+        this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+        this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+
+        this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
         this.props.signIn({email:this.props.email, password: this.props.password})
         Actions.homePage();
     }
@@ -66,7 +120,9 @@ class LoginForm extends Component {
 
         return (
            <View style={{backgroundColor: '#001120', height:'100%', justifyContent:'space-around'}}>
-              
+              {/* <CustomDrawer></CustomDrawer> */}
+
+
               <View>
                 <View style ={{ paddingHorizontal:50, paddingVertical:20}}>
                         <TextInput
@@ -138,9 +194,10 @@ class LoginForm extends Component {
                                 shadowOffset: { width: 10, height: 5},
                                 shadowRadius: 10,
                                 elevation: 20, }} 
+                            enable = {this.props.email && this.props.password ? false : true}
+                            
                             Name='Submite'
                             onPress={this.onSubButtonPress.bind(this)} />
-                        {/* Actions.homePage() */}
                 </View>
             
                </View>
@@ -175,5 +232,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged, createUser,signIn}
+    {emailChanged, passwordChanged, createUser,signIn, saveChanges, resetFree, getFreeBooks, searchBook}
     )(LoginForm);

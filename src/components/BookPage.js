@@ -14,6 +14,11 @@ import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { FONTS, COLORS, SIZES, images } from '../../constants';
+import {downloadBook} from '../actions'
+
+import { WebView } from 'react-native-webview';
+import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
+import { Actions } from 'react-native-router-flux';
 
 const BookPage = (props) => {
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
@@ -21,38 +26,33 @@ const BookPage = (props) => {
     React.useState(0);
 
   const indicator = new Animated.Value(0);
+  var urll = '';
+  function downloadB() {
+    const store= firebase.storage();
+    // console.log(store)
+    const gsReference = store.ref('Books/'+props.item.trackCensoredName+'.pdf').getDownloadURL().then(url => {
+      // console.log('urlll', url)
+    urll = url;   
+    
+    console.log(urll)
+    Actions.downloadPage({name: props.item.trackCensoredName});
+    // return(
+    // {<WebView
+    //   bounces={false}
+    //   scrollEnabled={false} 
+    //   source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
+    // />}
+    //   )
+    });
+    // console.log(urll)
+    // Actions.aboutPage();
+  }
 
   function renderBookInfoSection() {
+    console.log('prooooooops', props)
     return (
       <View style={{ flex: 1 }}>
-        {/* Navigation header */}
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: SIZES.radius,
-            height: 80,
-            alignItems: 'flex-end',
-          }}>
-          <TouchableOpacity
-            style={{ marginLeft: SIZES.base }}
-            onPress={() => console.log('Back')} //navigation.goBack()
-          >
-            <MaterialIcons name="arrow-back-ios" size={25} color="#FFFFFF" />
-          </TouchableOpacity>
-
-          <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>APP NAME</Text>
-          </View>
-
-          <TouchableOpacity
-            style={{ marginRigth: SIZES.base }}
-            onPress={() => console.log('Click More')}>
-            <Feather name="more-horizontal" size={25} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View> */}
-
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
           {/* Book Cover */}
           <View
             style={{
@@ -213,7 +213,15 @@ const BookPage = (props) => {
         : 1;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.gray1 }}>
+        {}
+        {urll!=''?<Text
+            style={{
+              ...FONTS.h3,
+              color: COLORS.white,
+            }}>
+            {urll}
+          </Text>:null}
         <Text
           style={{
             ...FONTS.h2,
@@ -298,7 +306,6 @@ const BookPage = (props) => {
           onPress={() => console.log('Bookmark')}>
           <Feather name="bookmark" size={25} color="#FFFFFF" />
         </TouchableOpacity>
-
         {/* Read Now */}
         <TouchableOpacity
           style={{
@@ -310,7 +317,7 @@ const BookPage = (props) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => console.log('Read Now')}>
+          onPress={() => downloadB()}>
           <Text
             style={{
               ...FONTS.h3,
@@ -318,13 +325,15 @@ const BookPage = (props) => {
             }}>
             Read Now
           </Text>
+          
         </TouchableOpacity>
+          
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.gray1 }}>
       {/* Book Cover Section */}
       <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 
@@ -345,5 +354,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-  {}
+  {downloadBook}
   )(BookPage);

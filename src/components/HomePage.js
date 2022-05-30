@@ -36,14 +36,18 @@ class HomePage extends Component {
       this.props.searchChanged(text); 
   }
 
+  submitSearch() {
+    this.props.searchBook({media: 'ebook', attribute:'', term:this.props.searchKey, country:'', sort:'', searchKey: '1'});
+    // Actions.searchPage();
+  }
     
 
 
     render = () => {
         // const scrollX = useRef( new Animated.Value(0)).current;
         return (
-          <View style={{backgroundColor: '#001120', justifyContent:'flex-start'}}>
-            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row', justifyContent:'space-between'}}>
+          <View style={{backgroundColor: '#001120', justifyContent:'flex-start', paddingBottom: 100}}>
+            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row', justifyContent:'flex-start'}}>
               <TouchableOpacity 
                 onPress={()=> this.setState({ search: ! this.state.search})}
                 style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
@@ -77,7 +81,7 @@ class HomePage extends Component {
                   //   type='text'
                   maxLength= {30}
                   onChangeText={this.onSearchChange.bind(this)}
-                  onSubmitEditing={() =>  this.props.searchBook({media: 'ebook', attribute:'', term:this.props.searchKey, country:'', sort:'', searchKey: '1'})}
+                  onSubmitEditing={() =>  this.submitSearch()}
                   
                 //   onFocus ={() => this.setState({value : 1 })}
                 />
@@ -101,10 +105,10 @@ class HomePage extends Component {
                 </View>
               }
               <TouchableOpacity 
-                onPress={()=> Actions.profile()}
+                onPress={()=> Actions.aboutPage()}
                 style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
                 >
-                  <Feather name="user" style={{ alignSelf:'flex-end' }} size={25} color="#FFFFFF" />
+                  <Feather name="info" style={{ alignSelf:'flex-end' }} size={25} color="#FFFFFF" />
                 </TouchableOpacity>
             </View>
             {this.state.open== 'audioBook' ? 
