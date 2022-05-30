@@ -228,7 +228,25 @@ const BookPage = props => {
               </Text>
             </View>
           )}
-          {book.genres.includes('Kids') && (
+          {(book.genres.includes('Fiction') ||
+            book.genres.includes('Fiction & Literature')) && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkGreen,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+                Fiction
+              </Text>
+            </View>
+          )}
+          {(book.genres.includes('Kids') ||
+            book.genres.includes('Young Adult')) && (
             <View
               style={{
                 justifyContent: 'center',
@@ -240,7 +258,7 @@ const BookPage = props => {
                 borderRadius: SIZES.radius,
               }}>
               <Text style={{ ...FONTS.body3, color: COLORS.lightRed }}>
-                Kids
+                Young
               </Text>
             </View>
           )}
@@ -257,6 +275,38 @@ const BookPage = props => {
               }}>
               <Text style={{ ...FONTS.body3, color: COLORS.lightBlue }}>
                 Fantasy
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Historical') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkYellow,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+                Historical
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Personal Finance') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkYellow,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+                Personal Finance
               </Text>
             </View>
           )}

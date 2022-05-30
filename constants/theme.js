@@ -26,6 +26,8 @@ export const COLORS = {
   lightBlue: '#424BAF',
   darkGreen: '#213432',
   lightGreen: '#31Ad66',
+  darkYellow: '#3F4328',
+  lightYellow: '#D8DC2A'
 };
 
 export const SIZES = {
