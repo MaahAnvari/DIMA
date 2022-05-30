@@ -46,8 +46,6 @@ class ProfileForm extends Component {
           placeholderG:'Genre'
         //   items: [{...}, ...]
         };
-    
-        // this.setValue = this.setValue.bind(this);
       }
     
 
@@ -125,12 +123,12 @@ class ProfileForm extends Component {
           })
           this.props.addGenre(item);
           }} >
-            <View style={{flexDirection: 'row', alignItems:'center', marginTop:20}}>
+            <View style={{flexDirection: 'row', alignItems:'center', alignItems:'center'}}>
                 <Text style={{color:'#fff', margin: 10, }}>
                 {item}
                 </Text>
                 {console.log(item)}
-                <Feather name="delete"size={15} color="#FFFFFF" />
+                <Feather name="arrow-left-circle"size={15} color="#FFFFFF" />
             </View>
         </TouchableHighlight>
       );
@@ -148,7 +146,7 @@ class ProfileForm extends Component {
                
             </View>
                
-               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>this.props.name</Text>
+               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>{this.props.username}</Text>
                <Text style={{ alignSelf:'center', color:'#7C7F81', fontFamily:'Ornalia'}}> {this.props.username} </Text>
                <View style ={{ paddingHorizontal:10, paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
 
