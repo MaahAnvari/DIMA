@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
+import firestore from '@react-native-firebase/firestore';
 
 import { connect } from 'react-redux';
 const { width, height } = Dimensions.get('window');
@@ -30,6 +31,7 @@ const LineDivider = () => {
 
 const BookPage = props => {
   const book = props.item;
+  const [BookId, setBookId] = React.useState(0);
 
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
@@ -38,6 +40,29 @@ const BookPage = props => {
   const indicator = new Animated.Value(0);
 
   const [likeBook, setLikeBook] = React.useState(false);
+
+  //Add Books
+  async function addBooks() {
+    const doc = await firestore().collection('LikeBooks').doc();
+
+    setBookId(doc.id);
+    doc.set({
+      BookName: book.trackCensoredName,
+      BookAuthor: book.artistName,
+    });
+    alert('Book Added !');
+  }
+
+  //Delete Books
+  async function DeleteBooks(id) {
+    await firestore()
+      .collection('LikeBooks')
+      .doc(id)
+      .delete()
+      .then(() => {
+        alert('Book Deleted !');
+      });
+  }
 
   function renderBookInfoSection() {
     return (
@@ -342,6 +367,9 @@ const BookPage = props => {
           }}
           onPress={() => {
             setLikeBook(!likeBook);
+            {
+              likeBook ? DeleteBooks(BookId) : addBooks();
+            }
             console.log('Like');
           }}>
           <Icon
