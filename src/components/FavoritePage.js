@@ -1,22 +1,64 @@
-import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+
 import { COLORS } from '../../constants';
+import firestore from '@react-native-firebase/firestore';
+import {
+  responsiveFontSize,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 
-import List from './List';
+export default class FavoritePage extends Component {
+  state = {
+    Books: [],
+  };
 
-//TODO: MODIFY HOMEPAGE AND SEARCH PAGE LIKE MAIN
-//TODO: MODIFY ROUTER LIKE APP
-const FavoritePage = props => {
-  const favoriteBooks = props;
-  return (
-    <SafeAreaView style={styles.root}>
-      {favoriteBooks.length === 0 && <Text>Cart is empty</Text>}
-      <List searchPhrase={''} data={favoriteBooks} setClicked={false} />
-    </SafeAreaView>
-  );
-};
+  async componentDidMount() {
+    await firestore()
+      .collection('LikeBooks')
+      .onSnapshot(data => this.setState({ Books: data.docs }));
+  }
 
-export default FavoritePage;
+  render() {
+    return (
+      <View style={styles.root}>
+        {this.state.Books.map((item, key) => {
+          return (
+            <TouchableWithoutFeedback
+              key={key}
+              onPress={() => {
+                alert(item._data.BookName);
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: responsiveWidth(2),
+                }}>
+                <View style={{ marginLeft: responsiveWidth(2) }}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#FFFF',
+                      fontSize: responsiveFontSize(2.2),
+                    }}>
+                    {item._data.BookName}
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#FFFF',
+                      fontSize: responsiveFontSize(1.4),
+                    }}>
+                    # {item._data.BookAuthor}
+                  </Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   root: {
