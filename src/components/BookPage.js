@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -31,37 +31,89 @@ const LineDivider = () => {
 
 const BookPage = props => {
   const book = props.item;
-  const [BookId, setBookId] = React.useState(0);
+  const [books, setBooks] = useState(null);
+  const [BId, setBId] = useState(null);
+  const [likeBook, setLikeBook] = useState(false);
 
-  const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
-  const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
-    React.useState(0);
+  const [scrollViewWholeHeight, setScrollViewWholeHeight] = useState(1);
+  const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = useState(0);
 
   const indicator = new Animated.Value(0);
 
-  const [likeBook, setLikeBook] = React.useState(false);
+  const fetchLike = async () => {
+    try {
+      const list = [];
+
+      await firestore()
+        .collection('LikeBooks')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const { BookName, BookAuthor } = doc.data();
+            list.push({ id: doc.id, BookName, BookAuthor });
+
+            if (book.trackCensoredName == BookName) {
+              setBId(doc.id);
+              setLikeBook(true);
+            } else {
+              setLikeBook(false);
+            }
+          });
+        });
+
+      setBooks(list);
+
+      console.log('Books: ', books);
+      console.log(likeBook);
+      console.log(books.length);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchLike();
+  });
+
+  /*async function existBook() {
+    books.forEach(element => {
+      if (book.trackCensoredName == element.BookName) {
+        DeleteBooks(element.id);
+        setLikeBook(false);
+      } else {
+        setLikeBook(true);
+        AddBooks();
+      }
+    });
+  }*/
 
   //Add Books
-  async function addBooks() {
-    const doc = await firestore().collection('LikeBooks').doc();
-
-    setBookId(doc.id);
-    doc.set({
-      BookName: book.trackCensoredName,
-      BookAuthor: book.artistName,
-    });
-    alert('Book Added !');
+  async function AddBooks() {
+    firestore()
+      .collection('LikeBooks')
+      .add({
+        BookName: book.trackCensoredName,
+        BookAuthor: book.artistName,
+      })
+      .then(() => {
+        alert('Book Added !');
+      })
+      .catch(e => {
+        console.log('Something went wrong with added book to firestore.', e);
+      });
   }
 
   //Delete Books
   async function DeleteBooks(id) {
-    await firestore()
+    firestore()
       .collection('LikeBooks')
       .doc(id)
       .delete()
       .then(() => {
         alert('Book Deleted !');
-      });
+        setLikeBook(false);
+      })
+      .catch(e => console.log('Error deleting book.', e));
   }
 
   function renderBookInfoSection() {
@@ -147,7 +199,7 @@ const BookPage = props => {
         <View
           style={{ flex: 1.8, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ ...FONTS.h2, color: COLORS.white }}>
-            {book.trackCensoredName}
+            {book.trackCensoredName.substr(0, 32)}
           </Text>
           <Text style={{ ...FONTS.body3, color: COLORS.white }}>
             {book.artistName}
@@ -416,9 +468,9 @@ const BookPage = props => {
             justifyContent: 'center',
           }}
           onPress={() => {
-            setLikeBook(!likeBook);
+            //setLikeBook(!likeBook);
             {
-              likeBook ? DeleteBooks(BookId) : addBooks();
+              likeBook ? DeleteBooks(BId) : AddBooks();
             }
             console.log('Like');
           }}>
