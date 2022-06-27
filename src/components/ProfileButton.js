@@ -4,11 +4,13 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 function ProfileButton(props) {
+  console.log('buttttt', props)
   return (
     <TouchableOpacity
       onPress={props.onPress}
       style={[styles.button, props.style]}
       activeOpacity={0.5}
+      disabled = {props.enable}
       // onPress={() => navigation.navigate("Profile", { name: "Jane" })}
     >
       {/* <Image

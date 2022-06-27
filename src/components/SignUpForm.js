@@ -2,20 +2,32 @@ import React, { Component, useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
-// import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged } from '../actions';
+import { sexChanged, saveChanges, emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged } from '../actions';
 import auth from '@react-native-firebase/auth';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 import ProfileButton from "./ProfileButton";
   
 
 class SignUpForm extends Component {
 
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+          openS: false,
+          placeholderS:'Sex',
+        };
     
+        // this.setValue = this.setValue.bind(this);
+      }
 
     onUsernameChange(text) {
         this.props.emailChanged(text); 
+    }
+
+    onNameChange(text) {
+        this.props.nameChanged(text); 
     }
 
     onPasswordChange(text) {
@@ -25,52 +37,92 @@ class SignUpForm extends Component {
     onConfirmPasswordChange(text) {
         this.props.confirmpasswordChanged(text);
     }
-
+    onSexChange(item) {
+        console.log(item)
+        this.setState({
+            placeholderS: item.label
+        })
+        this.props.sexChanged(item.value);
+    }
     onSubButtonPress() {
-        this.props.createUser({email:this.props.email, password: this.props.password, cpassword: this.props.cpassword})
+
+        this.props.resetFree();
+        this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+        this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+        this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+        this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+        this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+        this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+        this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+        this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+        this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+        this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+        this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+        this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+    
+        
+        this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+        this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+
+        this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+        this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+        
+        
+        this.props.createUser({name: this.props.name, email:this.props.email, sex: this.props.sex, password: this.props.password, cpassword: this.props.cpassword})
         Actions.homePage();
     }
 
-    renderError() {
-        // if (this.props.error) {
-        //     return (
-        //         <View style={{ backgroundColor: 'white' }}>
-        //             <Text style={styles.errorTextStyle} >
-        //                 {this.props.error}
-        //             </Text>
-        //         </View>
-        //     );
-        // }
-    }
-
-
-    renderRegisterButton() {
-        // if (this.props.loading) {
-        //     return <Spinner size="large" />;
-        // }
-        // return (
-        //     <Button onPress={this.onRegisterButtonPress.bind(this)} >
-        //         Register
-        //     </Button>
-        // );
-    }
+    setOpenSex() {
+        this.setState({
+          openS: !this.state.openS
+        });
+        console.log('opeeeen',this.state.openS)
+      } 
 
     render() {
-        // const [initializing, setInitializing] = useState(true);
-        // const [user, setUser] = useState();
-        // function onAuthStateChanged(user) {
-        //     setUser(user);
-        //     if (initializing) setInitializing(false);
-        // }
-        
-        // useEffect(() => {
-        //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        //     return subscriber; // unsubscribe on unmount
-        // }, []);
 
         return (
            <View style={{backgroundColor: '#001120', height:'100%',  justifyContent:'space-around'}}>
                <View>
+               <View style ={{ paddingHorizontal:50, paddingVertical:20, flexDirection:'row'}}>
+                        <TextInput
+                        clear
+                        value={this.props.name}
+                        placeholder="name ..."
+                        placeholderTextColor={'#fff'}
+                        style={{ padding:10,borderWidth:1, width: 200, fontFamily:'Ornalia', fontSize:20, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(178,33,33,0.5)',borderColor:'#000',  shadowColor: '#3D1214',shadowOpacity: 0.26,shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20,}}
+                        last= 'true'
+                        type='text'
+                        maxLength= {30}
+                        onChangeText={this.onNameChange.bind(this)}
+                        //   onFocus ={() => this.setState({value : 1 })}
+                        />
+                        <DropDownPicker
+                            style={{width:100}}
+                            open={this.state.openS} 
+                            labelStyle={{fontWeight: "bold"}}
+                            theme="DARK"
+                            dropDownContainerStyle={{ width:150 }}
+                            value={this.props.sex}
+                            placeholder={this.props.sex}
+                            loading={true}
+                            listMode='SCROLLVIEW'
+                            items={[
+                                {label: '-', value: 'Nothing'},
+                                {label: 'Female', value: 'Female'},
+                                {label: 'Male', value: 'Male'},
+                                ]}
+                            setOpen={() => this.setOpenSex()}
+                            onSelectItem={(item) => {this.onSexChange(item)  }}
+                            // setValue={this.setValue()}
+                            // setItems={(value)=> console.log('iteeem',value)}
+                            activityIndicatorColor="red"
+                            activityIndicatorSize={30}
+                        />
+                </View>
                 <View style ={{ paddingHorizontal:50, paddingVertical:20}}>
                         <TextInput
                         clear
@@ -85,7 +137,7 @@ class SignUpForm extends Component {
                             fontSize:20,
                             borderRadius:12, 
                             justifyContent:'center', alignItems:'center',
-                            backgroundColor:'#A0131A',
+                            backgroundColor:'rgba(178,33,33,0.5)',
                             borderColor:'#000', 
                             shadowColor: '#3D1214',
                             shadowOpacity: 0.26,
@@ -99,6 +151,7 @@ class SignUpForm extends Component {
                         //   onFocus ={() => this.setState({value : 1 })}
                         />
                 </View>
+                
                 <View style ={{ paddingHorizontal:50, paddingVertical:1}}>
                         <TextInput
                         clear
@@ -115,7 +168,7 @@ class SignUpForm extends Component {
                             fontFamily:'Ornalia',
                             fontSize:20,
                             justifyContent:'center', alignItems:'center',
-                            backgroundColor:'#A0131A',
+                            backgroundColor:'rgba(178,33,33,0.5)',
                             borderColor:'#000', 
                             shadowColor: '#3D1214',
                             shadowOpacity: 0.26,
@@ -147,7 +200,7 @@ class SignUpForm extends Component {
                             fontSize:20,
                             borderRadius:12, 
                             justifyContent:'center', alignItems:'center',
-                            backgroundColor:'#A0131A',
+                            backgroundColor:'rgba(178,33,33,0.5)',
                             borderColor:'#000', 
                             shadowColor: '#3D1214',
                             shadowOpacity: 0.26,
@@ -165,7 +218,7 @@ class SignUpForm extends Component {
                 </View>
                 <View style={{ paddingTop:40, paddingRight:20, alignItems:'flex-end'}}>
                         <ProfileButton 
-                            style={{backgroundColor:'#EE1520',
+                            style={{backgroundColor:'rgba(178,33,33,0.9)',
                                 borderColor:'#000', 
                                 borderRadius:15, 
                                 shadowColor: '#3D1214',
@@ -174,6 +227,7 @@ class SignUpForm extends Component {
                                 shadowRadius: 10,
                                 elevation: 20, }} 
                             Name='Submite'
+                            enable = {this.props.name && this.props.email && this.props.password && this.props.cpassword ? false : true}
                             onPress={this.onSubButtonPress.bind(this)} />
                         {/* Actions.homePage() */}
                 </View>
@@ -202,11 +256,12 @@ const styles = {
 
 const mapStateToProps = (state) => {
     console.log('state',state.auth)
-    const { email, password, error, cpassword } = state.auth;
+    const { email, password, error, cpassword, sex, name } = state.auth;
 
-    return { email, password, error, cpassword };
+
+    return { email, password, error, cpassword, name, sex };
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged}
+    {emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged, saveChanges, sexChanged}
     )(SignUpForm);

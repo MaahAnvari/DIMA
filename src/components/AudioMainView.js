@@ -40,9 +40,9 @@ class AudioMainView extends Component {
 
   componentWillUnmount(){ 
     console.log('will Audioooo');
-    this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-    this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
-    this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+    // this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+    // this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+    // this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
   }
       
     renderItem = ({ item }) => (
