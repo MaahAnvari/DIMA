@@ -15,6 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import { connect } from 'react-redux';
 const { width, height } = Dimensions.get('window');
 import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
+import AudioPlayer from './AudioPlayer';
 
 const LineDivider = () => {
   return (
@@ -131,7 +132,7 @@ const BookPage = props => {
             backgroundColor: COLORS.secondary,
           }}></View>
 
-        {/* Navigation header */}
+        {/* Navigation header 
         <View
           style={{
             flexDirection: 'row',
@@ -169,6 +170,7 @@ const BookPage = props => {
             />
           </TouchableOpacity>
         </View>
+        */}
 
         {/* Book Cover */}
         <View
@@ -370,6 +372,7 @@ const BookPage = props => {
 
     return (
       <View style={{ flex: 1 }}>
+        <AudioPlayer />
         <Text
           style={{
             ...FONTS.h2,
