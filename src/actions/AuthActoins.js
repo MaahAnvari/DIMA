@@ -56,6 +56,7 @@ export const createUser = ({email, password, cpassword, name, sex}) => {
                         type: CREATE_USER,
                         payload: documentSnapshot.docs[0]
                     });
+                    Actions.homePage();
                   });
                 
                 // dispatch( {
@@ -64,33 +65,33 @@ export const createUser = ({email, password, cpassword, name, sex}) => {
                 // });
             })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
-                dispatch({
-                    type: USER_EMAIL_EXIST,
-                    payload: 'error'
-                });
-                }
+                // if (error.code === 'auth/email-already-in-use') {
+                // console.log('That email address is already in use!');
+                // dispatch({
+                //     type: ERROR,
+                //     payload: 'That email address is already in use!'
+                // });
+                // }
         
-                if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
-                    dispatch({
-                        type: INVALID_EMAIL,
-                        payload: error.code
-                    }) ;
-                }
-                if (error.code === 'auth/weak-password') {
-                console.log('weak-password');
-                    dispatch({
-                        type: WEAK_PASSWORD,
-                        payload: error.code
-                    }) ;
-                }
+                // if (error.code === 'auth/invalid-email') {
+                // console.log('That email address is invalid!');
+                //     dispatch({
+                //         type: ERROR,
+                //         payload: 'That email address is invalid!'
+                //     }) ;
+                // }
+                // if (error.code === 'auth/weak-password') {
+                // console.log('weak-password');
+                //     dispatch({
+                //         type: ERROR,
+                //         payload: 'weak-password'
+                //     }) ;
+                // }
                 
             console.error(error);
             dispatch({
                 type: ERROR,
-                payload: 'error'
+                payload: error.code
             }) ;
         
             });
@@ -118,6 +119,7 @@ export const signIn = ({email, password}) => {
                         type: SIGNIN_USER,
                         payload: documentSnapshot.docs[0]
                     });
+                    Actions.homePage();
                   });      
             })
             .catch(error => {
@@ -130,7 +132,7 @@ export const signIn = ({email, password}) => {
         }
         dispatch({
             type: ERROR,
-            payload: 'error'
+            payload: 'Waiting for credentioals'
         });
         
     }

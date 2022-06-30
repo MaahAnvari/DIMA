@@ -10,7 +10,8 @@ import {
     SIGNIN_USER,
     CONFIRM_PASSWORD_CHANGED,
     UPDATE_USER_DATA,
-    GENRE_CHANGED
+    GENRE_CHANGED,
+    ERROR
 
 } from '../actions/types';
 
@@ -64,6 +65,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, genre: mid}
     
             }
+        case ERROR:
+            return { ...state, error: action.payload}
         default:
             return state;
     }

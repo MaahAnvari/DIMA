@@ -4,10 +4,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, searchBook } from '../actions';
 import BouncingList from './BouncingList';
-
+import { Actions } from 'react-native-router-flux';
 
   const Item = (item) => (
-      <TouchableHighlight onPress= {() => console.log('on press item', item.item)} >
+      <TouchableHighlight onPress= {() => Actions.bookPage(item)} >
         <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', marginTop:20}}>
             <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <Image style={{height:ITEM_SIZE*0.4, width: ITEM_SIZE*0.4, borderRadius:20, paddingLeft:10}}
@@ -20,6 +20,25 @@ import BouncingList from './BouncingList';
             </View>
             <View style={{ borderRadius:20,backgroundColor:'#B90020', height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.4, justifyContent:'center'}}>
                 <Text style={{color:'#fff', alignSelf:'center'}}>{item.item.collectionPrice} $</Text>
+            </View>
+        </View>
+      </TouchableHighlight>
+    
+  );
+  const FreeItem = (item) => (
+      <TouchableHighlight onPress= {() => Actions.bookPage(item)} >
+        <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', marginTop:20}}>
+            <View style={{flexDirection: 'row', alignItems:'center'}}>
+                <Image style={{height:ITEM_SIZE*0.4, width: ITEM_SIZE*0.4, borderRadius:20, paddingLeft:10}}
+                    source={{ uri: item.item.artworkUrl100 }}
+                ></Image>
+                <View >
+                    <Text style={{fontWeight:'800', color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.artistName}</Text>
+                    <Text style={{fontWeight:'200',color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.collectionName}</Text>
+                </View>
+            </View>
+            <View style={{ borderRadius:20,backgroundColor:'#B90020', height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.4, justifyContent:'center'}}>
+                <Text style={{color:'#fff', alignSelf:'center'}}>Free</Text>
             </View>
         </View>
       </TouchableHighlight>
@@ -48,6 +67,10 @@ class AudioMainView extends Component {
     renderItem = ({ item }) => (
         // console.log('hellllo')
         <Item item={item} />
+      );
+    renderFreeItem = ({ item }) => (
+        // console.log('hellllo')
+        <FreeItem item={item} />
       );
     
     renderError() {
@@ -89,7 +112,7 @@ class AudioMainView extends Component {
                 <ScrollView style={{paddingTop: 20, marginBottom:10}}>
                     <FlatList
                         data={this.props.free}
-                        renderItem={this.renderItem}
+                        renderItem={this.renderFreeItem}
                         // horizontal={true}
                         keyExtractor={item => console.log()}
                         showsHorizontalScrollIndicator={true}

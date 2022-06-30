@@ -8,6 +8,7 @@ import { saveChanges, nameChanged, usernameChanged, sexChanged, addGenre } from 
 
 import Feather from 'react-native-vector-icons/Feather';
 import ProfileButton from './ProfileButton';
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
   
 
 const { width, height } = Dimensions.get('window');
@@ -43,7 +44,8 @@ class ProfileForm extends Component {
           openS: false,
           value: null,
           placeholderS:'Sex',
-          placeholderG:'Genre'
+          placeholderG:'Genre',
+          visible: false,
         //   items: [{...}, ...]
         };
       }
@@ -76,8 +78,9 @@ class ProfileForm extends Component {
     
     onSubButtonPress() {
         console.log('idddd', this.props.id)
-      this.props.saveChanges({name: this.props.name, sex:this.props.sex, id: this.props.id, genre: this.props.genre })
-      Actions.homePage();
+        this.setState({visible: true})
+      // this.props.saveChanges({name: this.props.name, sex:this.props.sex, id: this.props.id, genre: this.props.genre })
+      // Actions.homePage();
     }
 
     renderError() {
@@ -136,6 +139,35 @@ class ProfileForm extends Component {
     render() {
         return (
            <ScrollView style={{backgroundColor: '#001120', height:'100%', paddingBottom:100}}>
+            <Dialog
+              visible={this.state.visible}
+              // dialogStyle = {{height:200, width: 100, fontSize:20 }}
+              footer={
+                <DialogFooter>
+                  <DialogButton
+                      text="CANCEL"
+                      textStyle = {{fontSize: 10}}
+                      onPress={() => { this.setState({visible: false}) }}
+                    />
+                  
+                  <DialogButton
+                  textStyle = {{fontSize: 10}}
+                    text="OK"
+                    onPress={() => {
+                       this.props.saveChanges({name: this.props.name, sex:this.props.sex, id: this.props.id, genre: this.props.genre })
+                       Actions.homePage();
+                       this.setState({visible: false})
+                    }}
+                  />
+                </DialogFooter>
+              }
+            >
+              <DialogContent style={{justifyContent: 'center', alignItems: 'center'}}>
+
+                  <Text>Are you sure you want to save changes?</Text>
+                
+              </DialogContent>
+            </Dialog>
              <View style={{backgroundColor: 'rgba(178,33,33,0.3)', borderBottomLeftRadius:20, borderBottomRightRadius:20, height:ITEM_SIZE*0.8, width: '100%', paddingVertical: -20}}></View>
 
              <View style={{
@@ -146,7 +178,7 @@ class ProfileForm extends Component {
                
             </View>
                
-               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>{this.props.username}</Text>
+               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>@{this.props.name}</Text>
                <Text style={{ alignSelf:'center', color:'#7C7F81', fontFamily:'Ornalia'}}> {this.props.username} </Text>
                <View style ={{ paddingHorizontal:10, paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
 

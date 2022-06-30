@@ -14,11 +14,21 @@ import SignUpForm from './components/SignUpForm';
 import { COLORS } from '../constants';
 import TabIcon from './components/TabIcon';
 import DownloadPage from './components/DownloadPage';
+import StartupPage from './components/StartupPage';
 
 const RouterComponent = () => {
     return (
         <Router>
              <Scene key="root"  navigationBarStyle={{backgroundColor: '#001120'}}>
+                <Scene
+                    key="startup" 
+                    component={StartupPage} 
+                    title="PONDER " 
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
+                    // hideNavBar
+                    // navBar={CustomNavBar}
+                    //  initial 
+                />
                 <Scene
                     key="login" 
                     component={LoginForm} 
@@ -85,7 +95,7 @@ const RouterComponent = () => {
                         //hideNavBar={true}
                         component={HomePage}
 
-                        //initial
+                        // initial
                     />
                     {/* <Scene
                         key="searchPage"

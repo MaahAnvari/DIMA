@@ -3,10 +3,11 @@ import { View, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { sexChanged, saveChanges, emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged } from '../actions';
+import { sexChanged, saveChanges, emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged, resetFree, getFreeBooks, searchBook } from '../actions';
 import auth from '@react-native-firebase/auth';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ProfileButton from "./ProfileButton";
+import Feather from 'react-native-vector-icons/Feather';
   
 
 class SignUpForm extends Component {
@@ -22,6 +23,19 @@ class SignUpForm extends Component {
         // this.setValue = this.setValue.bind(this);
       }
 
+      renderError() {
+        console.log('ooooomad too render errorrr')
+          if (this.props.error) {
+              return (
+                  <View style={{ flexDirection:'row', justifyContent:'center', alignItems: 'center', fontFamily:'Ornalia',padding: 20}}>
+                       <Feather name="alert-triangle" style={{ alignSelf:'flex-end' }} size={25} color="yellow" />
+                      <Text style={{color:'yellow', paddingLeft: 20}} >
+                          {this.props.error} !!!
+                      </Text>
+                  </View>
+              );
+          }
+      }
     onUsernameChange(text) {
         this.props.emailChanged(text); 
     }
@@ -45,6 +59,9 @@ class SignUpForm extends Component {
         this.props.sexChanged(item.value);
     }
     onSubButtonPress() {
+        console.log('on submit preeeee:', this.props.error);
+        this.props.createUser({name: this.props.name, email:this.props.email, sex: this.props.sex, password: this.props.password, cpassword: this.props.cpassword})
+        if ( this.props.error == '' ){    
 
         this.props.resetFree();
         this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
@@ -71,8 +88,9 @@ class SignUpForm extends Component {
         this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
         
         
-        this.props.createUser({name: this.props.name, email:this.props.email, sex: this.props.sex, password: this.props.password, cpassword: this.props.cpassword})
-        Actions.homePage();
+        
+        // Actions.homePage();
+        }
     }
 
     setOpenSex() {
@@ -216,6 +234,10 @@ class SignUpForm extends Component {
                         //   onFocus ={() => this.setState({value : 1 })}
                         />
                 </View>
+                
+                <View>
+                  {this.renderError()}
+                </View>
                 <View style={{ paddingTop:40, paddingRight:20, alignItems:'flex-end'}}>
                         <ProfileButton 
                             style={{backgroundColor:'rgba(178,33,33,0.9)',
@@ -263,5 +285,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-    {emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged, saveChanges, sexChanged}
+    {emailChanged, passwordChanged, createUser,signIn, confirmpasswordChanged, nameChanged, saveChanges, sexChanged, resetFree, getFreeBooks, searchBook}
     )(SignUpForm);
