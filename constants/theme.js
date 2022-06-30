@@ -8,7 +8,7 @@ export const COLORS = {
 
   button: '#EE1520',
   searchBar: '#D4D5D6',
-  searchBarItems: '#282C35',
+  searchItems: '#282C35',
 
   // colors
   black: '#1E1B26',
@@ -27,7 +27,7 @@ export const COLORS = {
   darkGreen: '#213432',
   lightGreen: '#31Ad66',
   darkYellow: '#3F4328',
-  lightYellow: '#D8DC2A'
+  lightYellow: '#D8DC2A',
 };
 
 export const SIZES = {

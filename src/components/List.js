@@ -1,60 +1,87 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  SafeAreaView,
+  TouchableHighlight,
+  Dimensions,
+} from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+
 import { COLORS } from '../../constants';
 
+import BookPage from './BookPage';
+
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ name, details }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
-    <Text style={styles.details}>{details}</Text>
-  </View>
+const Item = item => (
+  <TouchableHighlight
+    style={styles.item}
+    onPress={() => Actions.bookPage(item)}>
+    <Image
+      style={{
+        height: ITEM_SIZE * 0.6,
+        width: ITEM_SIZE * 0.4,
+        borderRadius: 20,
+      }}
+      source={{
+        uri: item.item.artworkUrl100,
+      }}
+    />
+  </TouchableHighlight>
 );
 
 // the filter
-const List = props => {
-  const { searchPhrase, setClicked, data } = props;
+class List extends Component {
+  showDetails = ({ item }) => {
+    <BookPage item={item} />;
+  };
 
-  const renderItem = ({ item }) => {
+  renderItem = ({ item }) => {
     // when no input, show all
-    if (searchPhrase === '') {
-      return <Item name={item.name} details={item.details} />;
+    if (this.props.serachKey === '') {
+      return <Item item={item} />;
     }
     // filter of the name
     if (
-      item.name
+      item.item.trackCensoredName
         .toUpperCase()
-        .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ''))
+        .includes(this.props.serachKey.toUpperCase().trim().replace(/\s/g, ''))
     ) {
-      return <Item name={item.name} details={item.details} />;
+      return <Item item={item} />;
     }
-    // filter of the description
+    // filter of the artist name
     if (
-      item.details
+      item.item.artistName
         .toUpperCase()
-        .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ''))
+        .includes(this.props.serachKey.toUpperCase().trim().replace(/\s/g, ''))
     ) {
-      return <Item name={item.name} details={item.details} />;
+      return <Item item={item} />;
     }
   };
 
-  return (
-    <SafeAreaView style={styles.list__container}>
-      <View
-        onStartShouldSetResponder={() => {
-          setClicked(false);
-        }}>
-        <FlatList
-          //numColumns={2}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
+  render = () => {
+    return (
+      <SafeAreaView style={styles.list__container}>
+        <View>
+          <FlatList
+            data={this.props.top10} //TO DO change
+            renderItem={this.renderItem}
+            numColumns={2}
+            keyExtractor={item => console.log()}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  };
+}
 
-export default List;
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 
 const styles = StyleSheet.create({
   list__container: {
@@ -79,3 +106,23 @@ const styles = StyleSheet.create({
     color: COLORS.orange,
   },
 });
+
+const mapStateToProps = state => {
+  console.log('state search', state.ebook.search);
+  const { email, password, error } = state.auth;
+  const { genre, top10, search, country, newB, serachKey } = state.ebook;
+
+  return {
+    email,
+    password,
+    error,
+    top10,
+    search,
+    genre,
+    country,
+    newB,
+    serachKey,
+  };
+};
+
+export default connect(mapStateToProps, {})(List);
