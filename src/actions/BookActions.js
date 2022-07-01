@@ -15,10 +15,13 @@ import {
     GET_FREE_AUDIOBOOK,
     GET_SEARCH_EBOOK,
     ERROR, RESET,
-    SELECT_BOOK
+    SELECT_BOOK,
+    GET_EBOOK_DOWNLOAD_LINK
     
 } from './types';
 
+
+import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
 import axios from 'axios';
 
 export const searchChanged = (text) => {
@@ -150,16 +153,17 @@ export const getFreeBooks = ({media, term}) => {
     }
 }
 
-import { WebView } from 'react-native-webview';
-import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
 
 // const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
 
 
 
 export const downloadBook = ({name}) => {
+
+
     const store= firebase.storage();
     console.log(store)
+    
     const gsReference = store.ref('Books/'+name+'.pdf').getDownloadURL().then(url => {
     console.log('urlllll',url);
     });
@@ -174,4 +178,24 @@ export const resetFree = () => {
         type: RESET,
         payload: 'reset'
     };
+}
+
+export const getPdfLink = (item) => {
+
+    const store= firebase.storage();
+    // console.log(store)
+    return (dispatch) =>{
+    const gsReference = store.ref('Books/'+item.trackCensoredName+'.pdf').getDownloadURL().then(url => {
+
+    console.log('urlllllllll',url)
+    dispatch({
+        type: GET_EBOOK_DOWNLOAD_LINK,
+        payload: url
+    });
+})
+}
+    return{
+        url: ERROR,
+        payload: 'Error'
+    }
 }

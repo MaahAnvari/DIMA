@@ -3,21 +3,10 @@ import { View, Text, ImageBackground,Image, FlatList, ScrollView, TouchableHighl
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { searchBook, getFreeBooks, resetFree, selectBook } from '../actions';
+import { searchBook, getFreeBooks, resetFree, selectBook, getPdfLink, } from '../actions';
 import BookPage from './BookPage';
 import BouncingList from './BouncingList';
 
-  // const Item = (item) => (
-  //   <TouchableHighlight style={styles.item} onPress= {() => Actions.bookPage(item)}>
-  //     <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
-  //         source={{
-  //           uri: item.item.artworkUrl100,
-  //         }}
-  //       ></Image>
-  //   </TouchableHighlight>
-  // );
-  
-    
 class EbookMainView extends Component {
 
   constructor(props) {
@@ -41,7 +30,7 @@ class EbookMainView extends Component {
   renderItem = ({ item }) => (
     <TouchableHighlight style={styles.item} onPress= {() => {
       this.props.selectBook(item.trackCensoredName)
-      Actions.bookPage({item, free: true})
+      Actions.bookPage({item, free: false, url:''})
       }}>
       <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
           source={{
@@ -51,10 +40,15 @@ class EbookMainView extends Component {
     </TouchableHighlight>
   );
   renderFreeItem = ({ item }) => (
+    
     <TouchableHighlight style={styles.item} onPress= {() => {
       this.props.selectBook(item.trackCensoredName)
-      Actions.bookPage({item, free: false})
+      item.url = this.props.url;
+      this.props.getPdfLink(item)
+      console.log('iteeeem', item )
+      Actions.bookPage({item, free: true, url:this.props.url})
       }}>
+        
       <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
           source={{
             uri: item.artworkUrl100,
@@ -62,33 +56,16 @@ class EbookMainView extends Component {
         ></Image>
     </TouchableHighlight>
   );
-    
-  renderError() {
-        // if (this.props.error) {
-        //     return (
-        //         <View style={{ backgroundColor: 'white' }}>
-        //             <Text style={styles.errorTextStyle} >
-        //                 {this.props.error}
-        //             </Text>
-        //         </View>
-        //     );
-        // }
-  }
-
-
-    
-
-
-    render = () => {
+  render = () => {
         return (
             <ScrollView style={{backgroundColor: '#001120', marginTop: 10}}>
             <View>
-                <Text style={{ paddingBottom:10, color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Popular Now</Text>
+                <Text style={{ paddingBottom:10, color:'#fff', fontSize: ITEM_SIZE*0.15, fontWeight:'300', fontFamily:'Abduco'}}>Popular Now</Text>
                 <BouncingList data={this.props.newB}/>
               </View>
 
               <View >
-                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>New Books</Text>
+                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.15}}>New Books</Text>
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE*0.8, paddingTop: 20 }}>
                   <FlatList
                     data={this.props.top10}
@@ -101,7 +78,7 @@ class EbookMainView extends Component {
               </View>
 
               <View >
-                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Free Books</Text>
+                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.15}}>Free Books</Text>
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE*0.8, paddingTop: 20 }}>
                   <FlatList
                     data={this.props.free}
@@ -120,7 +97,7 @@ class EbookMainView extends Component {
               </View>
 
               <View>
-                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Trending Books</Text>
+                <Text style={{color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.15}}>Trending Books</Text>
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE, paddingTop: 20}}>
                   <FlatList
                     data={this.props.genre}
@@ -133,7 +110,7 @@ class EbookMainView extends Component {
               </View>
 
               <View>
-                <Text style={{color:'#fff',fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Italian Books</Text>
+                <Text style={{color:'#fff',fontSize:30, fontWeight:'300', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.15}}>Italian Books</Text>
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE, paddingTop: 20}}>
                   <FlatList
                     data={this.props.country}
@@ -179,11 +156,11 @@ const styles = {
 const mapStateToProps = (state) => {
     console.log('state',state)
     const { email, password, error } = state.auth;
-    const { genre, top10, search, country, newB, free } = state.ebook;
+    const { genre, top10, search, country, newB, free, url } = state.ebook;
 
     return { email, password, error, top10, search, genre, country, newB, free };
 };
 
 export default connect(mapStateToProps, 
-    {searchBook, getFreeBooks, resetFree, selectBook}
+    {searchBook, getFreeBooks, resetFree, selectBook, getPdfLink}
     )(EbookMainView);

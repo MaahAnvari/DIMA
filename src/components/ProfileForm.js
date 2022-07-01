@@ -146,12 +146,12 @@ class ProfileForm extends Component {
                 <DialogFooter>
                   <DialogButton
                       text="CANCEL"
-                      textStyle = {{fontSize: 10}}
+                      textStyle = {{fontSize: ITEM_SIZE*0.03}}
                       onPress={() => { this.setState({visible: false}) }}
                     />
                   
                   <DialogButton
-                  textStyle = {{fontSize: 10}}
+                  textStyle = {{fontSize: ITEM_SIZE*0.03}}
                     text="OK"
                     onPress={() => {
                        this.props.saveChanges({name: this.props.name, sex:this.props.sex, id: this.props.id, genre: this.props.genre })
@@ -164,7 +164,7 @@ class ProfileForm extends Component {
             >
               <DialogContent style={{justifyContent: 'center', alignItems: 'center'}}>
 
-                  <Text>Are you sure you want to save changes?</Text>
+                  <Text style={{fontSize: ITEM_SIZE*0.05, alignSelf:'center', paddingTop:20}}>Are you sure you want to save changes?</Text>
                 
               </DialogContent>
             </Dialog>
@@ -178,19 +178,32 @@ class ProfileForm extends Component {
                
             </View>
                
-               <Text style={{color:'#fff',fontSize:30, alignSelf:'center', marginTop: 5, marginBottom:10}}>@{this.props.name}</Text>
-               <Text style={{ alignSelf:'center', color:'#7C7F81', fontFamily:'Ornalia'}}> {this.props.username} </Text>
-               <View style ={{ paddingHorizontal:10, paddingVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
-
+               <Text style={{color:'#fff',fontSize: ITEM_SIZE*0.09, alignSelf:'center', marginTop: 5, marginBottom:10}}>@{this.props.name}</Text>
+               <Text style={{ alignSelf:'center', color:'#7C7F81', fontFamily:'Ornalia', fontSize: ITEM_SIZE*0.03}}> {this.props.username} </Text>
+               <View style ={{ paddingHorizontal:ITEM_SIZE*0.06, paddingVertical:20, flexDirection:'column', justifyContent:'space-between'}}>
+               <TextInput
+                    clear
+                    value={this.props.name}
+                    // placeholder="write your name ..."
+                    placeholderTextColor={'#fff'}
+                    style={{fontSize: ITEM_SIZE*0.04,marginBottom:ITEM_SIZE*0.03, paddingLeft:10, paddingRight:ITEM_SIZE*0.2, color:'#fff' , width: ITEM_SIZE*0.5, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor: 'rgba(178,33,33,0.43)'}}
+                        last= 'true'
+                    //   type='text'
+                    maxLength= {30}
+                    onChangeText={this.onNameChange.bind(this)}
+                    //   onFocus ={() => this.setState({value : 1 })}
+                    />
                     <DropDownPicker
-                      style={{width:ITEM_SIZE*0.5}}
+                      style={{width:ITEM_SIZE*0.4, marginHorizontal:ITEM_SIZE*0.03}}
                       open={this.state.openS} 
                       labelStyle={{
-                          fontWeight: "bold"
+                          fontWeight: "bold",
+                          fontSize: ITEM_SIZE*0.09,
+                          
                         }}
                         theme="DARK"
                         dropDownContainerStyle={{
-                          width:ITEM_SIZE
+                          width:ITEM_SIZE*0.5
                         }}
                       value={this.state.value}
                       placeholder={this.props.sex}
@@ -210,23 +223,12 @@ class ProfileForm extends Component {
                       activityIndicatorColor="red"
                       activityIndicatorSize={30}
                 />
-                <TextInput
-                    clear
-                    value={this.props.name}
-                    // placeholder="write your name ..."
-                    placeholderTextColor={'#fff'}
-                    style={{marginLeft:-ITEM_SIZE, paddingLeft:10, color:'#fff' , width: ITEM_SIZE*0.5, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor: 'rgba(178,33,33,0.43)'}}
-                        last= 'true'
-                    //   type='text'
-                    maxLength= {30}
-                    onChangeText={this.onNameChange.bind(this)}
-                    //   onFocus ={() => this.setState({value : 1 })}
-                    />
+               
                </View>
                <View style={{padding:10, }}>
                 
                </View>
-               <View style={{padding:10, flexDirection: 'row', justifyContent:'space-between' }}>
+               <View style={{padding:10, flexDirection: 'row', justifyContent:'space-between',  marginHorizontal:ITEM_SIZE*0.06 }}>
                  {/* <Text style={{ color:'#fff', marginBottom:10, fontFamily:'Ornalia'}}> I am Interested in : </Text> */}
                  <View 
                   style={{

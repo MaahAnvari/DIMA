@@ -1,14 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
-import { View, Text, Modal, Alert, StyleSheet, colors } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import React, { Component } from 'react';
+import { View, Text,StyleSheet, colors, Image, ImageBackground } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, createUser,signIn, saveChanges, resetFree, getFreeBooks, searchBook } from '../actions';
-import ProfileButton from "./ProfileButton";
-import Feather from 'react-native-vector-icons/Feather';
-// import Video from 'react-native-video';
-import video from '../../assets/Video/Startupvideo.mp4';
+
 class StartupPage extends Component {
 
     constructor() {
@@ -20,38 +16,27 @@ class StartupPage extends Component {
         }
       }
 
-      videoBuffer = isBuffer => {
-        console.log(isBuffer);
-        //here you could set the isBuffer value to the state and then do something with it
-        //such as show a loading icon
-      };
-    onSubButtonPress() {
-    
-    }
 
-    renderRegisterButton() {
-        // if (this.props.loading) {
-        //     return <Spinner size="large" />;
-        // }
-        // return (
-        //     <Button onPress={this.onRegisterButtonPress.bind(this)} >
-        //         Register
-        //     </Button>
-        // );
-    }
 
     
     render() {
 
         return (
-            <View>
-                {/* <Video  
-                    source={video}                  // the video file
-                    paused={false}                  // make it start    
-                    style={{ width: "100%", height: "50%" }}  // any style you want
-                    repeat={true}                   // make it a loop
-                /> */}
-            </View>
+          // <View style={{alignContent:'center',}}>
+          <ImageBackground
+            style ={{width: "100%", height:"100%", justifyContent:'flex-end', alignItems:'center'}}
+            source={require('../../assets/Video/StartupVideo.gif')}
+          >
+            <TouchableOpacity
+          style={{height:'25%', width: '100%', backgroundColor:'#A0131A', borderRadius:20, alignItems:'center', justifyContent:'center',}}
+            onPress={() => {
+              Actions.login();
+            }}>
+              <Text style={{ color:'white',justifyContent:'center', alignSelf:'center', fontFamily:'Ornalia', fontSize:20, marginHorizontal:20}}> Welcome To Ponder </Text>
+          </TouchableOpacity>
+          </ImageBackground>
+          
+        // </View>
         //     <Video
         //     //for playing local videos
         //     //    source={

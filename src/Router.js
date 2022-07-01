@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import HomePage from './components/HomePage';
 import LoginForm from './components/LoginForm';
@@ -16,6 +16,10 @@ import TabIcon from './components/TabIcon';
 import DownloadPage from './components/DownloadPage';
 import StartupPage from './components/StartupPage';
 
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
+
+
 const RouterComponent = () => {
     return (
         <Router>
@@ -24,25 +28,25 @@ const RouterComponent = () => {
                     key="startup" 
                     component={StartupPage} 
                     title="PONDER " 
-                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
-                    // hideNavBar
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco', fontSize: ITEM_SIZE*0.1}}
+                    hideNavBar
                     // navBar={CustomNavBar}
-                    //  initial 
+                     initial 
                 />
                 <Scene
                     key="login" 
                     component={LoginForm} 
                     title="Please Login " 
-                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
                     // hideNavBar
                     // navBar={CustomNavBar}
-                     initial 
+                    //  initial 
                 />
                 <Scene
                     key="aboutPage" 
                     component={AboutPage} 
                     title="About Us" 
-                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
                     // hideNavBar
                     // navBar={CustomNavBar}
                     //  initial 
@@ -50,9 +54,9 @@ const RouterComponent = () => {
                 <Scene
                     key="downloadPage" 
                     component={DownloadPage} 
-                    title="Start Downloading " 
-                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
-                    // hideNavBar
+                    title="Start Downloading ..." 
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
+                    hideNavBar
                     // navBar={CustomNavBar}
                     //  initial 
                 />
@@ -60,7 +64,7 @@ const RouterComponent = () => {
                     key="signup" 
                     component={SignUpForm} 
                     title="Please Register " 
-                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco'}}
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
                     // hideNavBar
                     // navBar={CustomNavBar}
                     //  initial 
@@ -88,7 +92,7 @@ const RouterComponent = () => {
                         alignSelf: 'center',
                         color: '#fff',
                         fontFamily: 'Abduco',
-                        fontSize: 30,
+                        fontSize: ITEM_SIZE*0.1
                         }}
                         iconName="home"
                         icon={TabIcon}
@@ -123,7 +127,7 @@ const RouterComponent = () => {
                         titleStyle={{
                         alignSelf: 'center',
                         color: '#fff',
-                        fontFamily: 'Abduco',
+                        fontFamily: 'Abduco',fontSize: ITEM_SIZE*0.1
                         }}
                         iconName="user"
                         icon={TabIcon}
@@ -133,20 +137,7 @@ const RouterComponent = () => {
                         //initial
                     />
                     </Scene>
-                    {/* <Scene
-                    key="aboutPage"
-                    component={AboutPage}
-                    title="ABOUT"
-                    titleStyle={{ paddingLeft: 120, color: '#fff', fontFamily: 'Abduco' }}
-                    // key="deviceList"
-                    // component={DeviceList}
-                    // title="Active Device"
-                    // rightTitle="Add"
-                    // onRight={() => Actions.createDevice()}
-                    // titleStyle={{ paddingLeft: 75 }}
 
-                    //initial
-                    /> */}
                     <Scene
                     key="bookPage"
                     component={BookPage}
@@ -155,19 +146,10 @@ const RouterComponent = () => {
                         alignSelf: 'center',
                         color: '#fff',
                         fontFamily: 'Abduco',
+                        fontSize: ITEM_SIZE*0.1
                     }}
                     renderBackButton={() => BackButton}
-                    //hideNavBar={true}
-                    // key="deviceList"
-                    // component={DeviceList}
-                    // title="Active Device"
-                    // rightTitle="Add"
-                    // leftTile='back'
-                    // onRight={() => Actions.createDevice()}
                     onLeft={() => Actions.pop()}
-                    // titleStyle={{ paddingLeft: 75 }}
-
-                    // initial
                     />
                 </Scene>
         </Router>

@@ -20,19 +20,7 @@ class HomePage extends Component {
     };
   }
       
-    renderError() {
-        // if (this.props.error) {
-        //     return (
-        //         <View style={{ backgroundColor: 'white' }}>
-        //             <Text style={styles.errorTextStyle} >
-        //                 {this.props.error}
-        //             </Text>
-        //         </View>
-        //     );
-        // }
-    }
-
-    onSearchChange(text) {
+  onSearchChange(text) {
       this.props.searchChanged(text); 
   }
 
@@ -46,13 +34,13 @@ class HomePage extends Component {
     render = () => {
         // const scrollX = useRef( new Animated.Value(0)).current;
         return (
-          <View style={{backgroundColor: '#001120', justifyContent:'flex-start', paddingBottom: 100}}>
-            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row', justifyContent:'flex-start'}}>
+          <View style={{backgroundColor: '#001120', justifyContent:'flex-start', paddingBottom: 100, alignItems:'center'}}>
+            <View style={{backgroundColor:'#0C1E2F',borderWidth:1, height:ITEM_SIZE*0.25, flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
               <TouchableOpacity 
                 onPress={()=> this.setState({ search: ! this.state.search})}
-                style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
+                style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45, justifyContent:'center'}}
                 >
-                  <Feather name="search" style={{transform: [ { scaleX: -1 },{ scaleY: 1 }] }} size={25} color="#FFFFFF" />
+                  <Feather name="search" style={{transform: [ { scaleX: -1 },{ scaleY: 1 }] }} size={ITEM_SIZE*0.1} color="#FFFFFF" />
                 </TouchableOpacity>
                
                {this.state.search ?  
@@ -64,7 +52,7 @@ class HomePage extends Component {
                   style={{
                       paddingLeft:20, 
                       borderWidth:1, 
-                      width: 200, 
+                      width: ITEM_SIZE, 
                       fontFamily:'Ornalia',
                       fontSize:20,
                       borderRadius:30, 
@@ -92,7 +80,7 @@ class HomePage extends Component {
                     style={{marginTop:2, justifyContent:'center', borderRadius:20, borderWidth:(this.state.open== 'eBook' ? 1 : 0), borderColor:'red' ,height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.5, color:'#000'}}
                     onPress={() => this.setState({open: 'eBook'})}
                     >
-                    <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'AntDesign'}}>Ebook</Text>
+                    <Text style={{color:'#fff',  alignSelf:'center', fontWeight:'300', fontFamily: 'AntDesign', fontSize:ITEM_SIZE*0.07}}>Ebook</Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
                   style={{marginTop:2, justifyContent:'center', borderRadius:20, borderWidth:(this.state.open== 'audioBook' ? 1 : 0), borderColor:'red' ,height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.5, color:'#000'}}
@@ -100,15 +88,15 @@ class HomePage extends Component {
                     onPress={() => this.setState({open: 'audioBook'})}
                   
                   >
-                    <Text style={{color:'#fff', padding: 10, alignSelf:'center', fontWeight:'300'}}>audio</Text>
+                    <Text style={{color:'#fff', padding: 10, alignSelf:'center', fontWeight:'300', fontSize:ITEM_SIZE*0.07}}>audio</Text>
                   </TouchableOpacity>
                 </View>
               }
               <TouchableOpacity 
                 onPress={()=> Actions.aboutPage()}
-                style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45}}
+                style={{ paddingRight:ITEM_SIZE*0.25, marginTop:ITEM_SIZE*0.05, height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.45, justifyContent:'center'}}
                 >
-                  <Feather name="info" style={{ alignSelf:'flex-end' }} size={25} color="#FFFFFF" />
+                  <Feather name="info" style={{ alignSelf:'flex-end' }} size={ITEM_SIZE*0.1} color="#FFFFFF" />
                 </TouchableOpacity>
             </View>
             {this.state.open== 'audioBook' ? 

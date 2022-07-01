@@ -27,6 +27,8 @@ export const GET_NEW_EBOOK = 'get_new_ebook';
 export const FAILED_SEARCH_EBOOK = 'failed_search_ebook';
 export const GET_FREE_EBOOK = 'get_free_ebook';
 export const SELECT_BOOK = 'select_book';
+export const GET_EBOOK_DOWNLOAD_LINK = 'get_ebook_download_link';
+export const GET_ABOOK_DOWNLOAD_LINK = 'get_abook_download_link';
 
 export const GET_TOP_TEN_AUDIOBOOK = 'get_top_ten_audiobook';
 export const GET_GENRE_AUDIOBOOK = 'get_genre_audiobook';

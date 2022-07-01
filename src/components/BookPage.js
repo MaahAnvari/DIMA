@@ -22,12 +22,13 @@ import { Actions } from 'react-native-router-flux';
 
 const BookPage = (props) => {
 
+
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
     React.useState(0);
 
   const indicator = new Animated.Value(0);
-  var urll = '';
+  var urll = null;
   function downloadB() {
     const store= firebase.storage();
     // console.log(store)
@@ -36,7 +37,7 @@ const BookPage = (props) => {
     urll = url;   
     
     console.log(urll)
-    Actions.downloadPage({name: props.item.trackCensoredName});
+    // Actions.downloadPage({name: props.item.trackCensoredName});
     // return(
     // {<WebView
     //   bounces={false}
@@ -50,20 +51,20 @@ const BookPage = (props) => {
   }
 
   function renderBookInfoSection() {
-    console.log('prooooooops', props)
+    downloadB();
     return (
       <View style={{ flex: 1 }}>
-        {props.free ? 
+        {/* {props.free ? 
           <WebView
           bounces={false}
           scrollEnabled={false} 
-          source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
+          source={{ uri: urll }}
         />
-         : console.log('didnot download')}
+         : console.log('didnot download')} */}
             <View style={{ flex: 1, flexDirection: 'row' }}>
           {/* Book Cover */}
 
-          
+          {console.log('uuuuuuuuu', props.item)}
           <View
             style={{
               flex: 1,
@@ -325,7 +326,7 @@ const BookPage = (props) => {
         </TouchableOpacity>
         {/* Read Now */}
         <TouchableOpacity
-          style={{
+          style={{ 
             flex: 1,
             backgroundColor: COLORS.primary,
             marginHorizontal: SIZES.base,
@@ -335,23 +336,16 @@ const BookPage = (props) => {
             justifyContent: 'center',
           }}
           onPress={() => 
-            // console.log('presssss')
-            <View><Text style={{color:'red', fontSize:30}}>helooooooo</Text></View>
-            // <WebView
-            //   bounces={false}
-            //   scrollEnabled={false} 
-            //   source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
-            // />
-          // downloadB()
+            Actions.downloadPage({url: urll})
           }>
-          {/* <Text
+          <Text
             style={{
               ...FONTS.h3,
               color: COLORS.white,
             }}>
             Read Now
           </Text>
-           */}
+          
         </TouchableOpacity>
           
       </View>

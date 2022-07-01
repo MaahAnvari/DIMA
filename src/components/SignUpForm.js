@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -9,6 +9,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import ProfileButton from "./ProfileButton";
 import Feather from 'react-native-vector-icons/Feather';
   
+
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 
 class SignUpForm extends Component {
 
@@ -86,9 +89,7 @@ class SignUpForm extends Component {
         this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
         this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
         this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
-        
-        
-        
+
         // Actions.homePage();
         }
     }
@@ -111,7 +112,7 @@ class SignUpForm extends Component {
                         value={this.props.name}
                         placeholder="name ..."
                         placeholderTextColor={'#fff'}
-                        style={{ padding:10,borderWidth:1, width: 200, fontFamily:'Ornalia', fontSize:20, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(178,33,33,0.5)',borderColor:'#000',  shadowColor: '#3D1214',shadowOpacity: 0.26,shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20,}}
+                        style={{ padding:10,borderWidth:1, width: ITEM_SIZE*0.95, fontFamily:'Ornalia', fontSize:20, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(178,33,33,0.5)',borderColor:'#000',  shadowColor: '#3D1214',shadowOpacity: 0.26,shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20,}}
                         last= 'true'
                         type='text'
                         maxLength= {30}
@@ -119,11 +120,11 @@ class SignUpForm extends Component {
                         //   onFocus ={() => this.setState({value : 1 })}
                         />
                         <DropDownPicker
-                            style={{width:100}}
+                            style={{width:ITEM_SIZE*0.5}}
                             open={this.state.openS} 
                             labelStyle={{fontWeight: "bold"}}
                             theme="DARK"
-                            dropDownContainerStyle={{ width:150 }}
+                            dropDownContainerStyle={{ width:ITEM_SIZE*0.5 }}
                             value={this.props.sex}
                             placeholder={this.props.sex}
                             loading={true}
@@ -150,7 +151,7 @@ class SignUpForm extends Component {
                         style={{
                             padding:10, 
                             borderWidth:1, 
-                            width: 300, 
+                            width: ITEM_SIZE*1.45, 
                             fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 
@@ -181,7 +182,7 @@ class SignUpForm extends Component {
                         {{
                             padding:10, 
                             borderWidth:1, 
-                            width: 300, 
+                            width: ITEM_SIZE*1.45, 
                             borderRadius:12, 
                             fontFamily:'Ornalia',
                             fontSize:20,
@@ -213,7 +214,7 @@ class SignUpForm extends Component {
                         {{
                             padding:10, 
                             borderWidth:1, 
-                            width: 300, 
+                            width: ITEM_SIZE*1.45, 
                             fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 

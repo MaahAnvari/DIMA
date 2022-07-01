@@ -34,24 +34,7 @@ class DownloadPage extends Component {
         // this.setValue = this.setValue.bind(this);
       }
       componentWillUnmount() {
-        // console.log('downloaaaad:', this.props.selectedBook)
-        // const store= firebase.storage();
-        // const gsReference = store.ref('Books/'+this.props.selectedBook+'.pdf').getDownloadURL().then(url => {
-        // console.log('urlllllll', url)  
-        // this.setState({uri: url})
-        
-        // console.log(this.state)
-        // // {<WebView
-        // //     // bounces={false}
-        // //     // scrollEnabled={false} 
-        // //     source={{ uri: url }}
-        // // />}
-        // {<Text style={{ fontSize:30, color: 'red'}}>
-        //     {url}
-        // </Text>}
-        
-        // Actions.pop();
-        // });
+
       }
       
       
@@ -83,25 +66,39 @@ class DownloadPage extends Component {
     render() {
         // this.renderDownloadLink()
         return (
-           <View style={{backgroundColor: '#001120', height:'100%', padding:20}}>
-               <Text> DownloadPage </Text>
-               {/* <WebView
+           <View style={{backgroundColor: '#FFF', height:'100%', paddingVertical:ITEM_SIZE*0.1, paddingHorizontal: ITEM_SIZE*0.1}}>
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+              <Text style={{color:'#001120', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.09}}> Your download will be started authomaticaly</Text>
+            </View>
+               <WebView
                     bounces={false}
                     scrollEnabled={false} 
-                    source={{ uri: this.state.url }}
-                /> */}
-                <TouchableOpacity onPress={item => {
-                    console.log('weeeeb', this.state)
-                    this.renderDownloadLink();
-
-                }}>
-                       <Text style={{ fontFamily:'Ornalia',fontSize:30,color: '#A0131A', borderBottomColor:'#A0131A', borderBottomWidth:1}}> Donload now</Text>
-                </TouchableOpacity>
-               
-           </View>
+                    // style={{height:10, width:9}}
+                    source={{ uri: this.props.url }}
+                />
+             {/* { Actions.pop()} */}
+             
+             <View style={{justifyContent:'center', alignItems:'center'}}>
+            <TouchableOpacity
+              style={{
+                width: ITEM_SIZE*0.4,
+                height:ITEM_SIZE*0.2,
+                backgroundColor: '#A0131A',
+                // marginLeft: ITEM_SIZE*0.1,
+                marginVertical: ITEM_SIZE*0.55,
+                borderRadius: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={() => Actions.pop()}>
+              <Text style={{ color: '#FFF', fontSize: ITEM_SIZE*0.04}}>Back</Text>
+            </TouchableOpacity>
+              </View>
+            </View> 
         );
     }
 }
+
 
 
 const mapStateToProps = (state, props) => {

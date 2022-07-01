@@ -8,7 +8,8 @@ import {
     GET_SEARCH,
     GET_FREE_EBOOK,
     RESET,
-    SELECT_BOOK
+    SELECT_BOOK,
+    GET_EBOOK_DOWNLOAD_LINK
 } from '../actions/types';
 
 const INITIAL_STATE = { 
@@ -22,15 +23,18 @@ const INITIAL_STATE = {
     searchKey:'',
     free:[],
     selectedBook:'',
+    url:''
 };
 
 export default (state = INITIAL_STATE, action) => {
-    // console.log('Book r', action,);
+    console.log('Book r', action,);
     // console.log('Book rrrr', state.free);
     
     switch (action.type) {
         case GET_GENRE_EBOOK:
             return { ...state, genre: action.payload.results }; 
+        case GET_EBOOK_DOWNLOAD_LINK:
+            return { ...state, url: action.payload }; 
         case GET_SEARCH_EBOOK:
             return { ...state, search: action.payload.results }; 
         case GET_TOP_TEN_EBOOK:

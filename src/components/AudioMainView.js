@@ -14,12 +14,12 @@ import { Actions } from 'react-native-router-flux';
                     source={{ uri: item.item.artworkUrl100 }}
                 ></Image>
                 <View >
-                    <Text style={{fontWeight:'800', color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.artistName}</Text>
-                    <Text style={{fontWeight:'200',color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.collectionName}</Text>
+                    <Text style={{fontWeight:'800', color:'#fff', paddingLeft:5, width:ITEM_SIZE, fontSize: ITEM_SIZE*0.07}}>{item.item.artistName}</Text>
+                    <Text style={{fontWeight:'200',color:'#fff', paddingLeft:5, width:ITEM_SIZE, fontSize: ITEM_SIZE*0.06}}>{item.item.collectionName}</Text>
                 </View>
             </View>
             <View style={{ borderRadius:20,backgroundColor:'#B90020', height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.4, justifyContent:'center'}}>
-                <Text style={{color:'#fff', alignSelf:'center'}}>{item.item.collectionPrice} $</Text>
+                <Text style={{color:'#fff', alignSelf:'center', fontSize: ITEM_SIZE*0.07}}>{item.item.collectionPrice} $</Text>
             </View>
         </View>
       </TouchableHighlight>
@@ -33,12 +33,12 @@ import { Actions } from 'react-native-router-flux';
                     source={{ uri: item.item.artworkUrl100 }}
                 ></Image>
                 <View >
-                    <Text style={{fontWeight:'800', color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.artistName}</Text>
-                    <Text style={{fontWeight:'200',color:'#fff', paddingLeft:5, width:ITEM_SIZE}}>{item.item.collectionName}</Text>
+                    <Text style={{fontWeight:'800', color:'#fff', paddingLeft:5, width:ITEM_SIZE, fontSize: ITEM_SIZE*0.07}}>{item.item.artistName}</Text>
+                    <Text style={{fontWeight:'200',color:'#fff', paddingLeft:5, width:ITEM_SIZE, fontSize: ITEM_SIZE*0.06}}>{item.item.collectionName}</Text>
                 </View>
             </View>
             <View style={{ borderRadius:20,backgroundColor:'#B90020', height:ITEM_SIZE*0.2, width:ITEM_SIZE*0.4, justifyContent:'center'}}>
-                <Text style={{color:'#fff', alignSelf:'center'}}>Free</Text>
+                <Text style={{color:'#fff', alignSelf:'center', fontSize: ITEM_SIZE*0.07}}>Free</Text>
             </View>
         </View>
       </TouchableHighlight>
@@ -57,14 +57,7 @@ class AudioMainView extends Component {
     };
   }
 
-  componentWillUnmount(){ 
-    console.log('will Audioooo');
-    // this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-    // this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
-    // this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
-  }
-      
-    renderItem = ({ item }) => (
+     renderItem = ({ item }) => (
         // console.log('hellllo')
         <Item item={item} />
       );
@@ -73,23 +66,11 @@ class AudioMainView extends Component {
         <FreeItem item={item} />
       );
     
-    renderError() {
-        // if (this.props.error) {
-        //     return (
-        //         <View style={{ backgroundColor: 'white' }}>
-        //             <Text style={styles.errorTextStyle} >
-        //                 {this.props.error}
-        //             </Text>
-        //         </View>
-        //     );
-        // }
-    }
-
     render = () => {
         return (
             <ScrollView style={{backgroundColor: '#001120', marginTop: 10}}>
             <View>
-                <Text style={{paddingBottom:10, color:'#fff', fontSize:30, fontWeight:'300', fontFamily:'Abduco'}}>Popular Now</Text>
+                <Text style={{paddingBottom:10, color:'#fff', fontSize: ITEM_SIZE*0.1, fontWeight:'300', fontFamily:'Abduco'}}>Popular Now</Text>
                 <BouncingList data={this.props.top10}/>
             </View>
 
@@ -97,12 +78,12 @@ class AudioMainView extends Component {
                 <TouchableOpacity 
                     onPress= {() => this.setState({ tab: 'free'})}
                     style={{justifyContent:'center', alignItems:'center', backgroundColor:(this.state.tab== 'free' ? '#B90020' : 'gray'), borderRadius: 15, height:50, width:ITEM_SIZE*0.7}}>
-                    <Text style={{fontSize:20, fontWeight:'300', fontFamily:'Abduco',  color: (this.state.tab== 'free' ? '#fff': '#B90020')}}>Free</Text>
+                    <Text style={{fontSize: ITEM_SIZE*0.1, fontWeight:'300', fontFamily:'Abduco',  color: (this.state.tab== 'free' ? '#fff': '#B90020')}}>Free</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress= {() => this.setState({ tab: 'purchase'})}
                     style={{justifyContent:'center', alignItems:'center', backgroundColor:(this.state.tab== 'purchase' ? '#B90020' : 'gray'), borderRadius: 15,height:50, width:ITEM_SIZE*0.7}}>
-                  <Text style={{fontSize:20, fontWeight:'300', fontFamily:'Abduco', color: (this.state.tab== 'purchase' ? '#fff': '#B90020')}}>Purchase</Text>
+                  <Text style={{fontSize: ITEM_SIZE*0.1, fontWeight:'300', fontFamily:'Abduco', color: (this.state.tab== 'purchase' ? '#fff': '#B90020')}}>Purchase</Text>
                 </TouchableOpacity>
             </View>
 
@@ -133,30 +114,6 @@ class AudioMainView extends Component {
                 </ScrollView>
             </View>
              }
-            {/* <View style={{paddingBottom:60 }}>
-                <ScrollView style={{paddingTop: 20, marginBottom:10}}>
-                    <FlatList
-                        data={this.props.genre}
-                        renderItem={this.renderItem}
-                        // horizontal={true}
-                        keyExtractor={item => console.log()}
-                        showsHorizontalScrollIndicator={true}
-                    />
-                </ScrollView>
-            </View> */}
-
-            {/* <View style={{paddingBottom:60, }}>
-                <Text style={{color:'#fff', fontSize:20}}>Italian Books</Text>
-                <ScrollView horizontal={true}    style={{height:ITEM_SIZE*1.65, paddingTop: 20, marginBottom:10}}>
-                  <FlatList
-                    data={this.props.country}
-                    renderItem={this.renderItem}
-                    horizontal={true}
-                    keyExtractor={item => console.log()}
-                    showsHorizontalScrollIndicator={true}
-                  />
-                </ScrollView>
-              </View> */}
             </ScrollView>
  
         );
@@ -184,7 +141,7 @@ const styles = {
     }
     },
     title: {
-        fontSize: 20,
+        fontSize: ITEM_SIZE*0.1,
     },
   };
 

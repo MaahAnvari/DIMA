@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { View, Text, Modal } from 'react-native';
+import { View, Text, Modal,Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
@@ -10,6 +10,9 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 
+
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 
 class LoginForm extends Component {
 
@@ -23,30 +26,6 @@ class LoginForm extends Component {
 
 
       componentWillUnmount(){ 
-        // console.log('willllll');
-        // this.props.resetFree();
-        // this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
-        // this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
-    
-        
-        // this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-        // this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
-        // this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
-        // this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
-
-        // this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-        // this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
-        // this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
     
       }
     onUsernameChange(text) {
@@ -104,59 +83,11 @@ class LoginForm extends Component {
     }
 
 
-    renderRegisterButton() {
-        // if (this.props.loading) {
-        //     return <Spinner size="large" />;
-        // }
-        // return (
-        //     <Button onPress={this.onRegisterButtonPress.bind(this)} >
-        //         Register
-        //     </Button>
-        // );
-    }
-
     
     render() {
-        // const [initializing, setInitializing] = useState(true);
-        // const [user, setUser] = useState();
-        // function onAuthStateChanged(user) {
-        //     setUser(user);
-        //     if (initializing) setInitializing(false);
-        // }
-        
-        // useEffect(() => {
-        //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        //     return subscriber; // unsubscribe on unmount
-        // }, []);
-
 
         return (
            <View style={{backgroundColor: '#001120', height:'100%', justifyContent:'space-around'}}>
-           {/* <Dialog
-              visible={this.state.visible}
-              // dialogStyle = {{height:200, width: 100, fontSize:20 }}
-              footer={
-                <DialogFooter>
-                  <DialogButton
-                      text="CANCEL"
-                      textStyle = {{fontSize: 10}}
-                      onPress={() => {}}
-                    />
-                  
-                  <DialogButton
-                  textStyle = {{fontSize: 10}}
-                    text="OK"
-                    onPress={() => { this.setState({visible: false})}}
-                  />
-                </DialogFooter>
-              }
-            >
-              <DialogContent style={{justifyContent: 'center', alignItems: 'center'}}>
-
-                  <Text>Username / Password Error!</Text>
-                
-              </DialogContent>
-            </Dialog> */}
               <View>
                 <View style ={{ paddingHorizontal:50, paddingVertical:20}}>
                         <TextInput
@@ -167,7 +98,7 @@ class LoginForm extends Component {
                         style={{
                             padding:10, 
                             borderWidth:1, 
-                            width: 300, 
+                            width: ITEM_SIZE*1.45, 
                             fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 
@@ -180,10 +111,8 @@ class LoginForm extends Component {
                             shadowRadius: 10,
                             elevation: 20,}}
                         last= 'true'
-                        //   type='text'
                         maxLength= {30}
                         onChangeText={this.onUsernameChange.bind(this)}
-                        //   onFocus ={() => this.setState({value : 1 })}
                         />
                 </View>
                 <View style ={{ paddingHorizontal:50, paddingVertical:1}}>
@@ -197,7 +126,7 @@ class LoginForm extends Component {
                         {{
                             padding:10, 
                             borderWidth:1, 
-                            width: 300, 
+                            width: ITEM_SIZE*1.45, 
                             fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 
