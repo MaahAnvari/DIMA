@@ -45,7 +45,7 @@ export const searchBook = ({media, entity, attribute, term, sort, country, searc
             ('sort='+sort+'&')+ 
             ('country='+country+'&')+ 
             // ('entity='+entity+'&')+ 
-            ('limit='+'10')
+            ('limit='+'25')
     return (dispatch) =>{
     fetch('https://itunes.apple.com/search'+ param)
         .then((response) => response.json())

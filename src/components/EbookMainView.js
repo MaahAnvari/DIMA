@@ -7,15 +7,15 @@ import { searchBook, getFreeBooks, resetFree, selectBook } from '../actions';
 import BookPage from './BookPage';
 import BouncingList from './BouncingList';
 
-  const Item = (item) => (
-    <TouchableHighlight style={styles.item} onPress= {() => Actions.bookPage(item)}>
-      <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
-          source={{
-            uri: item.item.artworkUrl100,
-          }}
-        ></Image>
-    </TouchableHighlight>
-  );
+  // const Item = (item) => (
+  //   <TouchableHighlight style={styles.item} onPress= {() => Actions.bookPage(item)}>
+  //     <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
+  //         source={{
+  //           uri: item.item.artworkUrl100,
+  //         }}
+  //       ></Image>
+  //   </TouchableHighlight>
+  // );
   
     
 class EbookMainView extends Component {
@@ -30,42 +30,30 @@ class EbookMainView extends Component {
   }
 
   componentWillUnmount(){ 
-    // console.log('willllll');
-    // this.props.resetFree();
-    // this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
-    // this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
-
-    
-    // this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-    // this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
-    // this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
-    // this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
-
-    // this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-    // this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
-    // this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
   
   }
       
   showDetails = ({item}) => {
     {this.props.selectBook(item.trackCensoredName)}
-    Actions.bookPage({item})
+    Actions.bookPage({item, free: true})
     // <BookPage item={item} />
   }
   renderItem = ({ item }) => (
     <TouchableHighlight style={styles.item} onPress= {() => {
       this.props.selectBook(item.trackCensoredName)
-      Actions.bookPage({item})
+      Actions.bookPage({item, free: true})
+      }}>
+      <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
+          source={{
+            uri: item.artworkUrl100,
+          }}
+        ></Image>
+    </TouchableHighlight>
+  );
+  renderFreeItem = ({ item }) => (
+    <TouchableHighlight style={styles.item} onPress= {() => {
+      this.props.selectBook(item.trackCensoredName)
+      Actions.bookPage({item, free: false})
       }}>
       <Image style={{height:ITEM_SIZE*0.6, width: ITEM_SIZE*0.4, borderRadius:20}}
           source={{
@@ -117,7 +105,7 @@ class EbookMainView extends Component {
                 <ScrollView horizontal={true}    style={{height:ITEM_SIZE*0.8, paddingTop: 20 }}>
                   <FlatList
                     data={this.props.free}
-                    renderItem={this.renderItem}
+                    renderItem={this.renderFreeItem}
                     horizontal={true}
                     keyExtractor={item => console.log()}
                     showsHorizontalScrollIndicator={true}
