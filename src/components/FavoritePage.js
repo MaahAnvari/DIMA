@@ -18,19 +18,24 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
-const Item = ({ item }) => {
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+
+const Item = item => {
+  //this.state.Books.forEach(data => {
+  //if (item.item.trackCensoredName == data.BookName) {
   return (
     <View style={styles.listItem}>
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => Actions.bookPage(item)}>
-        <View style={styles.image}>
+        <View>
           <Image
             style={{
-              height: ITEM_SIZE * 0.3,
-              width: ITEM_SIZE * 0.2,
-              borderRadius: 10,
-              marginRight: 10,
+              height: ITEM_SIZE * 1.2,
+              width: ITEM_SIZE * 0.8,
+              borderRadius: 20,
+              margin: 10,
             }}
             source={{
               uri: item.item.artworkUrl100,
@@ -41,8 +46,10 @@ const Item = ({ item }) => {
     </View>
   );
 };
+//  });
+//};
 
-export default class FavoritePage extends Component {
+class FavoritePage extends Component {
   state = {
     Books: [],
   };
@@ -52,14 +59,7 @@ export default class FavoritePage extends Component {
   };
 
   renderItem = ({ item }) => {
-    {
-      /*this.state.Books.forEach(data => {
-      for (var i = 0; i < item.item.trackCensoredName.length; i++) {
-        if (item.item.trackCensoredName[i].match(data.BookName))
-          return <Item item={item} />;
-      }
-    }); */
-    }
+    //if (this.state.Books.includes(item.trackCensoredName))
     return <Item item={item} />;
   };
 
@@ -95,8 +95,8 @@ export default class FavoritePage extends Component {
     return (
       <SafeAreaView style={styles.root}>
         <FlatList
-          data={this.props.top10}
-          keyExtractor={item => item.key}
+          data={this.props.top10} //mix - .filter(this.state.Books.BookName)
+          //keyExtractor={item => item.key}
           numColumns={2}
           renderItem={this.renderItem}
           showsVerticalScrollIndicator={false}
@@ -108,6 +108,9 @@ export default class FavoritePage extends Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
+
 const styles = StyleSheet.create({
   root: {
     justifyContent: 'center',
@@ -115,21 +118,40 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   listEmpty: {
-    height: Dimensions.get('window').height,
+    height: height,
     alignItems: 'center',
     justifyContent: 'center',
   },
   listItem: {
-    height: 200,
-    width: Dimensions.get('window').width / 2 - 16,
-    backgroundColor: 'white',
-    margin: 8,
-    borderRadius: 10,
-  },
-  image: {
-    height: 150,
-    margin: 5,
-    borderRadius: 10,
-    backgroundColor: COLORS.white,
+    alignItems: 'center',
+    borderRadius: 12,
+    opacity: 0.8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
   },
 });
+
+const mapStateToProps = state => {
+  console.log('state search', state.ebook.search);
+  const { email, password, error } = state.auth;
+  const { genre, top10, search, country, newB, searchKey } = state.ebook;
+
+  return {
+    email,
+    password,
+    error,
+    top10,
+    search,
+    genre,
+    country,
+    newB,
+    searchKey,
+  };
+};
+
+export default connect(mapStateToProps, {})(FavoritePage);

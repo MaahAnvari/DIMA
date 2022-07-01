@@ -113,7 +113,7 @@ class SearchPage extends Component {
         {console.log('Searchhhhhh', this.props)}
 
         <FlatList
-          data={this.props.top10} //TO DO change
+          data={this.props.top10} //TO DO search
           keyExtractor={item => item.key}
           contentContainerStyle={{ padding: 10 }} //paddingTop: StatusBar.currentHeight || 42
           renderItem={this.renderItem}
