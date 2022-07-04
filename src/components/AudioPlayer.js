@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,83 +8,82 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Slider from 'react-native-slider';
-import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+import TrackPlayer, {
+  State,
+  usePlaybackState,
+  useProgress,
+} from 'react-native-track-player';
+
+import { Icon, Icons, COLORS } from '../../constants';
 import PlayButton from './PlayButton.js';
 
 function AudioPlayer() {
-  const [isAlreadyPlay, setIsAlreadyPlay] = useState(false);
-  const [duration, setDuration] = useState('00:00:00');
-  const [timeElapsed, setTimeElapsed] = useState('00:00:00');
-  const [percent, setPercent] = useState(0);
-  const [inprogress, setInprogress] = useState(false);
-  const [audioRecorderPlayer] = useState(new AudioRecorderPlayer());
+  const playbackState = usePlaybackState();
+  const progress = useProgress();
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const [path, setPath] = useState('');
-
-  const changeTime = async seconds => {
-    // 50 / duration
-    let seekTime = (seconds / 100) * duration;
-    setTimeElapsed(seekTime);
-    audioRecorderPlayer.seekToPlayer(seekTime);
+  const track = {
+    url: require('../../assets/music/music.mp3'),
+    title: 'MUSIC',
+    duration: 350,
   };
 
-  const onStartPress = async e => {
-    setIsAlreadyPlay(true);
-    setInprogress(true);
-    setPath('./assets/music');
-    audioRecorderPlayer.startPlayer(path);
-    audioRecorderPlayer.setVolume(1.0);
+  const setUpPlayer = async () => {
+    await TrackPlayer.setupPlayer();
 
-    audioRecorderPlayer.addPlayBackListener(async e => {
-      if (e.current_position === e.duration) {
-        audioRecorderPlayer.stopPlayer();
+    await TrackPlayer.add(track);
+  };
+
+  const togglePlayback = async playbackState => {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+
+    if (currentTrack != null) {
+      if (playbackState == State.Paused) {
+        setIsPlaying(true);
+        await TrackPlayer.play();
+      } else {
+        setIsPlaying(false);
+        await TrackPlayer.pause();
       }
-      let percent = Math.round(
-        (Math.floor(e.current_position) / Math.floor(e.duration)) * 100,
-      );
-      setTimeElapsed(e.current_position);
-      setPercent(percent);
-      setDuration(e.duration);
-    });
+    }
   };
 
-  const onPausePress = async e => {
-    setIsAlreadyPlay(false);
-    audioRecorderPlayer.pausePlayer();
-  };
+  useEffect(() => {
+    setUpPlayer();
+  });
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <PlayButton
+          function={() => {
+            togglePlayback(playbackState);
+          }}
+          state={playbackState == State.Playing ? 'pause' : 'play'}
+        />
+      </View>
       <View style={styles.seekBar}>
         <Slider
+          value={progress.position}
           minimumValue={0}
-          maximumValue={100}
+          maximumValue={progress.duration}
           trackStyle={styles.track}
           thumbStyle={styles.thumb}
-          value={percent}
           minimumTrackTintColor="#93A8B3"
-          onValueChange={seconds => changeTime(seconds)}
+          onSlidingComplete={async value => {
+            await TrackPlayer.seekTo(value);
+          }}
         />
         <View style={styles.inprogress}>
           <Text style={[styles.textLight, styles.timeStamp]}>
-            {!inprogress
-              ? timeElapsed
-              : audioRecorderPlayer.mmssss(Math.floor(timeElapsed))}
+            {new Date(progress.position * 1000).toISOString().substring(14, 5)}
           </Text>
           <Text style={[styles.textLight, styles.timeStamp]}>
-            {!inprogress
-              ? duration
-              : audioRecorderPlayer.mmssss(Math.floor(duration))}
+            {new Date((progress.duration - progress.position) * 1000)
+              .toISOString()
+              .substring(14, 5)}
           </Text>
         </View>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        {!isAlreadyPlay ? (
-          <PlayButton function={() => onStartPress()} state="play" />
-        ) : (
-          <PlayButton function={() => onPausePress()} state="pause" />
-        )}
       </View>
     </SafeAreaView>
   );
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#EAEAEC',
+    backgroundColor: COLORS.primary,
   },
   textLight: {
     color: '#B6B7BF',
@@ -119,7 +118,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
   },
-  seekBar: { margin: 32 },
+  seekBar: {
+    flex: 1,
+    marginLeft: 16,
+    marginBottom: 42,
+    marginTop: 22,
+    marginRight: 32,
+  },
   inprogress: {
     marginTop: -12,
     flexDirection: 'row',
