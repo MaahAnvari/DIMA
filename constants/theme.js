@@ -9,6 +9,8 @@ export const COLORS = {
   button: '#EE1520',
   searchBar: '#D4D5D6',
   searchItems: '#282C35',
+  audioPlayer: '#222831',
+  thumbSlider: '#FFD369',
 
   // colors
   black: '#1E1B26',
