@@ -9,10 +9,13 @@ import {
     GET_NEW_EBOOK,
     GET_GENRE_AUDIOBOOK,
     GET_TOP_TEN_AUDIOBOOK,
+    GET_FREE_EBOOK,
     GET_COUNTRY_AUDIOBOOK,
     GET_NEW_AUDIOBOOK,
     GET_FREE_AUDIOBOOK,
     GET_SEARCH_EBOOK,
+    ERROR, RESET,
+    SELECT_BOOK
     
 } from './types';
 
@@ -24,25 +27,17 @@ export const searchChanged = (text) => {
         payload: text
     };
 };
+export const selectBook = (text) => {
+    console.log('seleeeeeeeeeeeect')
+    return {
+        type: SELECT_BOOK,
+        payload: text
+    };
+};
 
 export const searchBook = ({media, entity, attribute, term, sort, country, searchKey}) => {//{entity, term, limit, attribute}
     console.log('hello books')
-    // axios({
-    //     method: 'get',
-    //     url: 'https://itunes.apple.com/lookup?id=909253'
-    //   }).then((response) => {
-    //     console.log(response);
-    //   });
-    const requestOptions = {
-        method: 'GET',
-        // headers: { 
-        //    'Content-Type': 'application/json',
-        //    'accept': 'application/json',
-        //    'Authorization': 'Bearer '+ access,
-        //    'User-Agent': 'Mobile'
-        // },
-    };
-    console.log('search in genre')
+
     const param = '?'+
             ('media='+media+'&')+
             ('attribute='+attribute+'&')+
@@ -50,7 +45,7 @@ export const searchBook = ({media, entity, attribute, term, sort, country, searc
             ('sort='+sort+'&')+ 
             ('country='+country+'&')+ 
             // ('entity='+entity+'&')+ 
-            ('limit='+'10')
+            ('limit='+'25')
     return (dispatch) =>{
     fetch('https://itunes.apple.com/search'+ param)
         .then((response) => response.json())
@@ -61,6 +56,7 @@ export const searchBook = ({media, entity, attribute, term, sort, country, searc
                         type: GET_SEARCH_EBOOK,
                         payload: results
                     })
+                    Actions.searchPage();
                 }
                 else if(media == 'ebook') {
                     if(attribute == 'genreIndex'){
@@ -113,9 +109,69 @@ export const searchBook = ({media, entity, attribute, term, sort, country, searc
                         })
                     }
                 }
-            console.log('rrrr',attribute, term, country,'m', results)})
+            })
             .catch((error) => console.error('error',error));
             
             
     }
+}
+
+export const getFreeBooks = ({media, term}) => {
+
+    const param = '?'+
+            ('media='+media+'&')+
+            // ('attribute='+attribute+'&')+
+            ('term='+term+'&')+ 
+            // ('sort='+sort+'&')+ 
+            // ('country='+country+'&')+ 
+            // ('entity='+entity+'&')+ 
+            ('limit='+'10')
+    return (dispatch) =>{
+    fetch('https://itunes.apple.com/search'+ param)
+        .then((response) => response.json())
+            .then((results)=> {
+                if(media == 'ebook') {
+                        dispatch({ 
+                            type: GET_FREE_EBOOK,
+                            payload: results
+                        })
+                    
+                } if( media == 'audiobook') {
+                        dispatch({ 
+                            type: GET_FREE_AUDIOBOOK,
+                            payload: results
+                        })
+                    
+                }
+            console.log('rrrr',term,'m', results)})
+            .catch((error) => console.error('error',error));
+            
+            
+    }
+}
+
+import { WebView } from 'react-native-webview';
+import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
+
+// const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
+
+
+
+export const downloadBook = ({name}) => {
+    const store= firebase.storage();
+    console.log(store)
+    const gsReference = store.ref('Books/'+name+'.pdf').getDownloadURL().then(url => {
+    console.log('urlllll',url);
+    });
+    return {
+        type: ERROR,
+        payload: name
+    };
+}
+
+export const resetFree = () => {
+    return {
+        type: RESET,
+        payload: 'reset'
+    };
 }

@@ -9,6 +9,7 @@ function ProfileButton(props) {
       onPress={props.onPress}
       style={[styles.button, props.style]}
       activeOpacity={0.5}
+      disabled = {props.enable}
       // onPress={() => navigation.navigate("Profile", { name: "Jane" })}
     >
       {/* <Image

@@ -21,7 +21,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-    console.log('Book r', action);
+    // console.log('Book r', action);
     switch (action.type) {
         case GET_GENRE_AUDIOBOOK:
             return { ...state, genre: action.payload.results }; 
