@@ -9,6 +9,10 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
+import {
+  responsiveFontSize,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 import HTMLView from 'react-native-htmlview';
 import firestore from '@react-native-firebase/firestore';
 
@@ -180,7 +184,7 @@ const BookPage = props => {
             resizeMode="contain"
             style={{
               flex: 1,
-              width: 150,
+              width: responsiveWidth(150),
               height: 'auto',
             }}
           />
