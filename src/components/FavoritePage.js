@@ -11,7 +11,7 @@ import {
   Animatable,
 } from 'react-native';
 
-import { COLORS } from '../../constants';
+import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import {
   responsiveFontSize,
@@ -22,8 +22,6 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 const Item = item => {
-  //this.state.Books.forEach(data => {
-  //if (item.item.trackCensoredName == data.BookName) {
   return (
     <View style={styles.listItem}>
       <TouchableOpacity
@@ -46,8 +44,6 @@ const Item = item => {
     </View>
   );
 };
-//  });
-//};
 
 class FavoritePage extends Component {
   state = {
@@ -59,8 +55,17 @@ class FavoritePage extends Component {
   };
 
   renderItem = ({ item }) => {
-    //if (this.state.Books.includes(item.trackCensoredName))
-    return <Item item={item} />;
+    console.log('TITLE', item.trackCensoredName);
+    this.state.Books.forEach(data => {
+      console.log('BOOK NAME', data._data.BookName);
+      console.log(
+        '---->',
+        item.trackCensoredName.includes(data._data.BookName),
+      );
+      if (item.trackCensoredName.includes(data._data.BookName)) {
+        return <Item item={item} />;
+      }
+    });
   };
 
   /*
@@ -95,7 +100,7 @@ class FavoritePage extends Component {
     return (
       <SafeAreaView style={styles.root}>
         <FlatList
-          data={this.props.top10} //mix - .filter(this.state.Books.BookName)
+          data={this.props.top10} //mix
           //keyExtractor={item => item.key}
           numColumns={2}
           renderItem={this.renderItem}
@@ -113,6 +118,7 @@ const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primary,
@@ -133,6 +139,20 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 20,
+  },
+  playButtonContainer: {
+    backgroundColor: '#FFF',
+    borderColor: 'rgba(93, 63, 106, 0.2)',
+    borderWidth: 5,
+    width: 70,
+    height: 70,
+    borderRadius: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    shadowColor: '#5D3F6A',
+    shadowRadius: 15,
+    shadowOpacity: 0.5,
   },
 });
 
