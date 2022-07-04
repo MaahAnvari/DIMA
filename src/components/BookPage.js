@@ -15,10 +15,18 @@ import {
 } from 'react-native-responsive-dimensions';
 import HTMLView from 'react-native-htmlview';
 import firestore from '@react-native-firebase/firestore';
-
+import { WebView } from 'react-native-webview';
+import storage, {
+  firebase,
+  getStorage,
+  ref,
+} from '@react-native-firebase/storage';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 const { width, height } = Dimensions.get('window');
+
 import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
+import { downloadBook } from '../actions';
 import AudioPlayer from './AudioPlayer';
 
 const LineDivider = () => {
@@ -43,6 +51,30 @@ const BookPage = props => {
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = useState(0);
 
   const indicator = new Animated.Value(0);
+  var urll = '';
+  function downloadB() {
+    const store = firebase.storage();
+    // console.log(store)
+    const gsReference = store
+      .ref('Books/' + props.item.trackCensoredName + '.pdf')
+      .getDownloadURL()
+      .then(url => {
+        // console.log('urlll', url)
+        urll = url;
+
+        console.log(urll);
+        Actions.downloadPage({ name: props.item.trackCensoredName });
+        // return(
+        // {<WebView
+        //   bounces={false}
+        //   scrollEnabled={false}
+        //   source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
+        // />}
+        //   )
+      });
+    // console.log(urll)
+    // Actions.aboutPage();
+  }
 
   const fetchLike = async () => {
     try {
@@ -111,8 +143,20 @@ const BookPage = props => {
   }
 
   function renderBookInfoSection() {
+    console.log('prooooooops', props);
     return (
       <View style={{ flex: 1 }}>
+        {props.free ? (
+          <WebView
+            bounces={false}
+            scrollEnabled={false}
+            source={{
+              uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7',
+            }}
+          />
+        ) : (
+          console.log('didnot download')
+        )}
         <ImageBackground
           source={{ uri: book.artworkUrl100 }}
           resizeMode="cover"
@@ -375,8 +419,17 @@ const BookPage = props => {
         : 1;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.gray1 }}>
         <AudioPlayer />
+        {urll != '' ? (
+          <Text
+            style={{
+              ...FONTS.h3,
+              color: COLORS.white,
+            }}>
+            {urll}
+          </Text>
+        ) : null}
         <Text
           style={{
             ...FONTS.h2,
@@ -437,7 +490,10 @@ const BookPage = props => {
                 ...FONTS.body2,
                 color: COLORS.lightGray,
               }}>
-              {book.description}
+              {props.item.description.replace(
+                /[`~0-9!@#$%^&*_|+\-=?'"<>\{\}\[\]\\\/]/gi,
+                '',
+              )}
             </Text>
             {/*<HTMLView
               value={book.description}
@@ -475,7 +531,6 @@ const BookPage = props => {
             color="#FFFFFF"
           />
         </TouchableOpacity>
-
         {/* Read Now */}
         <TouchableOpacity
           style={{
@@ -487,14 +542,28 @@ const BookPage = props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => console.log('Read Now')}>
-          <Text
+          onPress={
+            () => (
+              // console.log('presssss')
+              <View>
+                <Text style={{ color: 'red', fontSize: 30 }}>helooooooo</Text>
+              </View>
+            )
+            // <WebView
+            //   bounces={false}
+            //   scrollEnabled={false}
+            //   source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
+            // />
+            // downloadB()
+          }>
+          {/* <Text
             style={{
               ...FONTS.h3,
               color: COLORS.white,
             }}>
             Read Now
           </Text>
+           */}
         </TouchableOpacity>
       </View>
     );
@@ -521,4 +590,4 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps, {})(BookPage);
+export default connect(mapStateToProps, { downloadBook })(BookPage);

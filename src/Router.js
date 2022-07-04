@@ -1,21 +1,24 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-
-import { Router, Scene } from 'react-native-router-flux';
-
+import { Scene, Router, Actions } from 'react-native-router-flux';
+import HomePage from './components/HomePage';
 import LoginForm from './components/LoginForm';
 import CustomNavBar from './components/CustomNavBar';
 import HomePage from './components/HomePage';
 import SearchPage from './components/SearchPage';
 import FavoritePage from './components/FavoritePage';
 import ProfileForm from './components/ProfileForm';
+import CustomNavBar from './components/CustomNavBar';
+import SearchPage from './components/SearchPage';
+import FavoritePage from './components/FavoritePage';
 import AboutPage from './components/AboutPage';
 import BookPage from './components/BookPage';
 import SignUpForm from './components/SignUpForm';
 
-import TabIcon from './components/TabIcon';
-import BackButton from './components/BackButton';
 import { COLORS } from '../constants';
+import TabIcon from './components/TabIcon';
+import DownloadPage from './components/DownloadPage';
+import StartupPage from './components/StartupPage';
 
 const RouterComponent = () => {
   return (
@@ -24,6 +27,19 @@ const RouterComponent = () => {
         key="root"
         navigationBarStyle={{ backgroundColor: COLORS.primary }}>
         <Scene key="auth" headerMode={'none'}>
+          <Scene
+            key="startup"
+            component={StartupPage}
+            title="PONDER "
+            titleStyle={{
+              alignSelf: 'center',
+              color: '#fff',
+              fontFamily: 'Abduco',
+            }}
+            // hideNavBar
+            // navBar={CustomNavBar}
+            //  initial
+          />
           <Scene
             key="login"
             component={LoginForm}
@@ -73,7 +89,7 @@ const RouterComponent = () => {
 
             //initial
           />
-          <Scene
+          {/*<Scene
             key="searchPage"
             title="Search"
             iconName="search"
@@ -82,7 +98,7 @@ const RouterComponent = () => {
             component={SearchPage}
 
             //initial
-          />
+          />*/}
           <Scene
             key="favoritePage"
             title="Favorite"
@@ -112,15 +128,36 @@ const RouterComponent = () => {
         <Scene
           key="aboutPage"
           component={AboutPage}
-          title="ABOUT"
-          titleStyle={{ paddingLeft: 120, color: '#fff', fontFamily: 'Abduco' }}
-          // key="deviceList"
-          // component={DeviceList}
-          // title="Active Device"
-          // rightTitle="Add"
-          // onRight={() => Actions.createDevice()}
-          // titleStyle={{ paddingLeft: 75 }}
-
+          title="About Us"
+          titleStyle={{
+            alignSelf: 'center',
+            color: '#fff',
+            fontFamily: 'Abduco',
+          }}
+          // hideNavBar
+          // navBar={CustomNavBar}
+          //  initial
+        />
+        <Scene
+          key="downloadPage"
+          component={DownloadPage}
+          title="Start Downloading "
+          titleStyle={{
+            alignSelf: 'center',
+            color: '#fff',
+            fontFamily: 'Abduco',
+          }}
+          // hideNavBar
+          // navBar={CustomNavBar}
+          //  initial
+        />
+        <Scene
+          key="searchPage"
+          title="Search"
+          iconName="search"
+          icon={TabIcon}
+          hideNavBar={true}
+          component={SearchPage}
           //initial
         />
         <Scene
@@ -133,7 +170,7 @@ const RouterComponent = () => {
             fontFamily: 'Abduco',
           }}
           renderBackButton={() => BackButton}
-          hideNavBar={true}
+          //hideNavBar={true}
           // key="deviceList"
           // component={DeviceList}
           // title="Active Device"
