@@ -13,37 +13,26 @@ import TrackPlayer, {
   usePlaybackState,
   useProgress,
 } from 'react-native-track-player';
+//import Slider from '@react-native-community/slider';
 
 import { Icon, Icons, COLORS } from '../../constants';
 import PlayButton from './PlayButton.js';
 
-const track = {
-  url: require('../../assets/music/music.mp3'),
-  title: 'My Title',
-  artist: 'Tommaso',
-  id: 1,
-};
-
 const trackPlayerInit = async () => {
-  await TrackPlayer.setupPlayer();
-
-  await TrackPlayer.add(track);
+  try {
+    await TrackPlayer.setupPlayer();
+    await TrackPlayer.add({
+      url: require('../../assets/music/music.mp3'),
+      title: 'My Title',
+      album: 'My Album',
+      artist: 'Tommaso',
+      id: 1,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   return true;
-};
-
-const togglePlayback = async playbackState => {
-  const currentTrack = await TrackPlayer.getCurrentTrack();
-
-  if (currentTrack != null) {
-    if (playbackState == State.Paused) {
-      setIsPlaying(true);
-      await TrackPlayer.play();
-    } else {
-      setIsPlaying(false);
-      await TrackPlayer.pause();
-    }
-  }
 };
 
 const AudioPlayer = () => {
@@ -60,12 +49,24 @@ const AudioPlayer = () => {
     startPlayer();
   }, []);
 
+  const onButtonPressed = async playbackState => {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+
+    if (currentTrack != null) {
+      if (playbackState == State.Paused) {
+        await TrackPlayer.play();
+      } else {
+        await TrackPlayer.pause();
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.buttonContainer}>
         <PlayButton
           function={() => {
-            togglePlayback(playbackState);
+            onButtonPressed(playbackState);
           }}
           state={playbackState == State.Playing ? 'pause' : 'play'}
           disabled={!isTrackPlayerInit}
@@ -88,9 +89,7 @@ const AudioPlayer = () => {
             {new Date(progress.position * 1000).toISOString().substring(14, 5)}
           </Text>
           <Text style={[styles.textLight, styles.timeStamp]}>
-            {new Date((progress.duration - progress.position) * 1000)
-              .toISOString()
-              .substring(14, 5)}
+            {new Date(progress.duration * 1000).toISOString().substring(14, 5)}
           </Text>
         </View>
       </View>
