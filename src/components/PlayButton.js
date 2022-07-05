@@ -6,7 +6,8 @@ export default function PlayButton(props) {
   return (
     <TouchableOpacity
       style={styles.playButtonContainer}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+      disabled={props.disabled}>
       <Icon
         type={Icons.FontAwesome}
         name={props.state}

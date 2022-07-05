@@ -17,40 +17,48 @@ import TrackPlayer, {
 import { Icon, Icons, COLORS } from '../../constants';
 import PlayButton from './PlayButton.js';
 
-function AudioPlayer() {
+const track = {
+  url: require('../../assets/music/music.mp3'),
+  title: 'My Title',
+  artist: 'Tommaso',
+  id: 1,
+};
+
+const trackPlayerInit = async () => {
+  await TrackPlayer.setupPlayer();
+
+  await TrackPlayer.add(track);
+
+  return true;
+};
+
+const togglePlayback = async playbackState => {
+  const currentTrack = await TrackPlayer.getCurrentTrack();
+
+  if (currentTrack != null) {
+    if (playbackState == State.Paused) {
+      setIsPlaying(true);
+      await TrackPlayer.play();
+    } else {
+      setIsPlaying(false);
+      await TrackPlayer.pause();
+    }
+  }
+};
+
+const AudioPlayer = () => {
+  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
+
   const playbackState = usePlaybackState();
   const progress = useProgress();
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const track = {
-    url: require('../../assets/music/music.mp3'),
-    title: 'MUSIC',
-    duration: 350,
-  };
-
-  const setUpPlayer = async () => {
-    await TrackPlayer.setupPlayer();
-
-    await TrackPlayer.add(track);
-  };
-
-  const togglePlayback = async playbackState => {
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-
-    if (currentTrack != null) {
-      if (playbackState == State.Paused) {
-        setIsPlaying(true);
-        await TrackPlayer.play();
-      } else {
-        setIsPlaying(false);
-        await TrackPlayer.pause();
-      }
-    }
-  };
 
   useEffect(() => {
-    setUpPlayer();
-  });
+    const startPlayer = async () => {
+      let isInit = await trackPlayerInit();
+      setIsTrackPlayerInit(isInit);
+    };
+    startPlayer();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -60,6 +68,7 @@ function AudioPlayer() {
             togglePlayback(playbackState);
           }}
           state={playbackState == State.Playing ? 'pause' : 'play'}
+          disabled={!isTrackPlayerInit}
         />
       </View>
       <View style={styles.seekBar}>
@@ -87,7 +96,7 @@ function AudioPlayer() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

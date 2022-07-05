@@ -128,6 +128,7 @@ const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primary,
