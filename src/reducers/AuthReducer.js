@@ -11,7 +11,8 @@ import {
     CONFIRM_PASSWORD_CHANGED,
     UPDATE_USER_DATA,
     GENRE_CHANGED,
-    ERROR
+    ERROR,
+    UPDATE_FAVORITE_BOOK,
 
 } from '../actions/types';
 
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
     name:'',
     sex:'',
     genre:['Romance'],
+    favorites:[],
 };
 
 var mid = [];
@@ -41,9 +43,12 @@ export default (state = INITIAL_STATE, action) => {
         case CREATE_USER: 
             return { ...state, user: action.payload, name: action.payload._data.name, id: action.payload.id, sex: action.payload._data.sex, genre: [], error:'' }; 
         case SIGNIN_USER: 
-            return { ...state, user: action.payload, name: action.payload._data.name, id: action.payload.id, sex: action.payload._data.sex, genre: action.payload._data.genre, error:'' }; 
+            return { ...state, user: action.payload, name: action.payload._data.name, id: action.payload.id, sex: action.payload._data.sex, genre: action.payload._data.genre, favorites: action.payload._data.favorites, error:'' }; 
         case UPDATE_USER_DATA: 
             return { ...state, username: '@'+ action.payload.name, id: action.payload.id, error:'' }; 
+        
+        case UPDATE_FAVORITE_BOOK:
+            return { ...state, favorites: action.payload}
         case SEX_CHANGED: 
             return { ...state, sex: action.payload };
         case NAME_CHANGED: 

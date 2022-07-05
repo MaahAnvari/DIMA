@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,205 +7,310 @@ import {
   Image,
   ScrollView,
   Animated,
+  Dimensions,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { connect } from 'react-redux';
-import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
-import { FONTS, COLORS, SIZES, images } from '../../constants';
-import {downloadBook} from '../actions'
-
-import { WebView } from 'react-native-webview';
+import HTMLView from 'react-native-htmlview';
+import firestore from '@react-native-firebase/firestore';
 import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
+
 import { Actions } from 'react-native-router-flux';
+import {downloadBook, deleteFavoriteBook, updateFavoriteBooks} from '../actions'
 
-const BookPage = (props) => {
+import { connect } from 'react-redux';
+const { width, height } = Dimensions.get('window');
+import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
+// import AudioPlayer from './AudioPlayer';
 
 
-  const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
-  const [scrollViewVisibleHeight, setScrollViewVisibleHeight] =
-    React.useState(0);
+
+const LineDivider = () => {
+  return (
+    <View style={{ width: 1, paddingVertical: 5 }}>
+      <View
+        style={{
+          flex: 1,
+          borderLeftColor: COLORS.lightGray2,
+          borderLeftWidth: 1,
+        }}></View>
+    </View>
+  );
+};
+
+const BookPage = props => {
+
+  var urll = null;
+function downloadB() {
+  const store= firebase.storage();
+  // console.log(store)
+  const gsReference = store.ref('Books/'+props.item.trackCensoredName+'.pdf').getDownloadURL().then(url => {
+    // console.log('urlll', url)
+  urll = url;   
+  
+  // console.log(urll)
+  });
+}
+
+  const book = props.item;
+  const [BId, setBId] = useState(null);
+  const [FfavId, setFfav] = useState(true);
+  const [likeBook, setLikeBook] = useState(false);
+
+  const [scrollViewWholeHeight, setScrollViewWholeHeight] = useState(1);
+  const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = useState(0);
 
   const indicator = new Animated.Value(0);
-  var urll = null;
-  function downloadB() {
-    const store= firebase.storage();
-    // console.log(store)
-    const gsReference = store.ref('Books/'+props.item.trackCensoredName+'.pdf').getDownloadURL().then(url => {
-      // console.log('urlll', url)
-    urll = url;   
+
+  function fetchLike() {
+
+    const searchIndex = props.favorites.findIndex((b) => b.trackCensoredName == book.trackCensoredName);
+    if (searchIndex != -1) {
+      // setBId(doc.id);
+      setLikeBook(true);
+    }
+    setFfav(false)
+
+  };
+// );
+
+  //Add Books
+  async function AddBooks() {
+    var fav = props.favorites;
+    fav.push(book)
     
-    console.log(urll)
-    // Actions.downloadPage({name: props.item.trackCensoredName});
-    // return(
-    // {<WebView
-    //   bounces={false}
-    //   scrollEnabled={false} 
-    //   source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
-    // />}
-    //   )
-    });
-    // console.log(urll)
-    // Actions.aboutPage();
+    props.deleteFavoriteBook(fav)
+    alert('Book Added !');
+    setLikeBook(true);
+    // console.log('adddddddddddddddddddd', fav)
+    props.updateFavoriteBooks({id: props.id, favorites: fav})
   }
 
+  //Delete Books
+  async function DeleteBooks() {
+    var fav = props.favorites;
+    var myIndex = props.favorites.findIndex((b) => b.trackCensoredName == book.trackCensoredName)
+    
+    if (myIndex != -1) {
+        fav.splice(myIndex, 1);
+    }
+    console.log('faaaaaaav',fav)
+    props.deleteFavoriteBook(fav)
+    alert('Book Deleted !');
+    setLikeBook(false);
+    props.updateFavoriteBooks({id: props.id, favorites: fav})
+    
+  }
+
+ 
+
   function renderBookInfoSection() {
+    FfavId ?  fetchLike() : null;
     downloadB();
     return (
       <View style={{ flex: 1 }}>
-        {/* {props.free ? 
-          <WebView
-          bounces={false}
-          scrollEnabled={false} 
-          source={{ uri: urll }}
+        <ImageBackground
+          source={{ uri: book.artworkUrl100 }}
+          resizeMode="cover"
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          }}
         />
-         : console.log('didnot download')} */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-          {/* Book Cover */}
 
-          {console.log('uuuuuuuuu', props.item)}
+        {/* Color Overlay */}
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundColor: COLORS.secondary,
+          }}></View>
+
+        {/* Book Cover */}
+        <View
+          style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: 'center' }}>
+          <Image
+            source={{ uri: book.artworkUrl100 }}
+            resizeMode="contain"
+            style={{
+              flex: 1,
+              width: 150,
+              height: 'auto',
+            }}
+          />
+        </View>
+
+        {/* Book Name and Author */}
+        <View
+          style={{ flex: 1.8, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ ...FONTS.h2, color: COLORS.white }}>
+            {book.trackCensoredName.substr(0, 32)}
+          </Text>
+          <Text style={{ ...FONTS.body3, color: COLORS.white }}>
+            {book.artistName}
+          </Text>
+        </View>
+
+        {/* Book Info */}
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: 20,
+            margin: SIZES.padding,
+            borderRadius: SIZES.radius,
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          }}>
+          {/*Rating */}
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              {book.averageUserRating}
+            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Rating</Text>
+          </View>
+
+          <LineDivider />
+
+          {/* Price */}
           <View
             style={{
               flex: 1,
-              marginLeft: SIZES.padding,
-              marginRight: SIZES.padding,
-              marginVertical: SIZES.base,
-              borderRadius: SIZES.radius,
+              paddingHorizontal: SIZES.radius,
               alignItems: 'center',
             }}>
-            <Image
-              source={{uri: props.item.artworkUrl100}}
-              resizeMode="contain"
-              style={{
-                flex: 1,
-                height:250, width:150
-              }}
-            />
+            {book.price == 0 ? (
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>FREE</Text>
+            ) : (
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+                {book.price} $
+              </Text>
+            )}
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Price</Text>
           </View>
 
-          {/* Book Info */}
-          <View
-            style={{
-              flex: 1,
-            }}>
+          <LineDivider />
+
+          {/* Published */}
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              {book.releaseDate.substr(0, 4)}
+            </Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>
+              Published
+            </Text>
+          </View>
+        </View>
+
+        {/* Genre */}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginTop: SIZES.base,
+            marginBottom: SIZES.base,
+          }}>
+          {book.genres.includes('Mysteries & Thrillers') && (
             <View
               style={{
-                flex: 2,
-              }}></View>
-            {/* Book Name */}
-            <View
-              style={{
-                flex: 1,
-                marginBottom: SIZES.padding2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkGreen,
+                height: 40,
+                borderRadius: SIZES.radius,
               }}>
-              <Text
-                style={{
-                  ...FONTS.h2,
-                  color: COLORS.white,
-                }}>
-                {props.item.trackCensoredName}
+              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+                Mysteries & Thrillers
               </Text>
             </View>
-
-            {/* Author */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>AUTHOR</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.artistName}
-                </Text>
-              </View>
-            </View>
-
-            {/* Language */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-                  Avg. Rating
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.averageUserRating}
-                </Text>
-              </View>
-            </View>
-
-            {/* Published */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>
-                  PUBLISHED
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.releaseDate}
-                </Text>
-              </View>
-            </View>
-
-            {/* Type */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>TYPE</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.genres}
-                </Text>
-              </View>
-            </View>
-
-            {/* Price */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.h3, color: COLORS.white }}>PRICE</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{ ...FONTS.body3, color: COLORS.orange }}>
-                {props.item.price} $
-                </Text>
-              </View>
-            </View>
+          )}
+          {(book.genres.includes('Fiction') ||
+            book.genres.includes('Fiction & Literature')) && (
             <View
               style={{
-                flex: 4,
-              }}></View>
-          </View>
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkGreen,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+                Fiction
+              </Text>
+            </View>
+          )}
+          {(book.genres.includes('Kids') ||
+            book.genres.includes('Young Adult')) && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkRed,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightRed }}>
+                Young
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Fantasy') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkBlue,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightBlue }}>
+                Fantasy
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Historical') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkYellow,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+                Historical
+              </Text>
+            </View>
+          )}
+          {book.genres.includes('Personal Finance') && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: SIZES.base,
+                marginRight: SIZES.base,
+                backgroundColor: COLORS.darkYellow,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}>
+              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+                Personal Finance
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -224,20 +329,14 @@ const BookPage = (props) => {
         : 1;
 
     return (
-      <View style={{ flex: 1, backgroundColor: COLORS.gray1 }}>
-        {}
-        {urll!=''?<Text
-            style={{
-              ...FONTS.h3,
-              color: COLORS.white,
-            }}>
-            {urll}
-          </Text>:null}
+      <View style={{ flex: 1 }}>
+        {/* <AudioPlayer /> */}
         <Text
           style={{
             ...FONTS.h2,
             color: COLORS.white,
             marginLeft: SIZES.padding,
+            marginTop: SIZES.padding,
             marginBottom: SIZES.padding,
           }}>
           Description
@@ -292,8 +391,12 @@ const BookPage = (props) => {
                 ...FONTS.body2,
                 color: COLORS.lightGray,
               }}>
-              {props.item.description.replace(/[`~0-9!@#$%^&*_|+\-=?'"<>\{\}\[\]\\\/]/gi, '')}
+              {book.description.replace(/[`~0-9!@#$%^&*_|+\-=?'"<>\{\}\[\]\\\/]/gi, '')}
             </Text>
+            {/*<HTMLView
+              value={book.description}
+              stylesheet={{ color: COLORS.white }}
+            />*/}
           </ScrollView>
         </View>
       </View>
@@ -303,32 +406,40 @@ const BookPage = (props) => {
   function renderBottomButton() {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        {/* Bookmark */}
-        {/* {this.props.free ? 
-          <WebView
-          bounces={false}
-          scrollEnabled={false} 
-          source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bookstore-24caa.appspot.com/o/Books%2FHeart%20of%20Darkness.pdf?alt=media&token=3e7ab2ce-9065-4883-a7c2-7205ef69b2e7' }}
-        />
-         : null} */}
-        <TouchableOpacity
-          style={{
-            width: 60,
-            backgroundColor: COLORS.secondary,
-            marginLeft: SIZES.padding,
-            marginVertical: SIZES.base,
-            borderRadius: SIZES.radius,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={() => console.log('Bookmark')}>
-          <Feather name="bookmark" size={25} color="#FFFFFF" />
-        </TouchableOpacity>
+        {/* Like */}
+        {props.free ? null : 
+            <TouchableOpacity
+            style={{
+              width: 60,
+              backgroundColor: COLORS.secondary,
+              marginLeft: SIZES.padding,
+              marginVertical: SIZES.base,
+              borderRadius: SIZES.radius,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              {
+                likeBook ? DeleteBooks() : AddBooks()
+              }
+            }}>
+
+            
+            <Icon
+              type={Icons.AntDesign}
+              name={likeBook ? 'heart' : 'hearto'}
+              size={25}
+              color="#FFFFFF"
+            />
+          </TouchableOpacity>             
+        }
+        
+
         {/* Read Now */}
         <TouchableOpacity
-          style={{ 
+          style={{
             flex: 1,
-            backgroundColor: COLORS.primary,
+            backgroundColor: COLORS.button,
             marginHorizontal: SIZES.base,
             marginVertical: SIZES.base,
             borderRadius: SIZES.radius,
@@ -336,8 +447,7 @@ const BookPage = (props) => {
             justifyContent: 'center',
           }}
           onPress={() => 
-            Actions.downloadPage({url: urll})
-          }>
+            Actions.downloadPage({url: urll})}>
           <Text
             style={{
               ...FONTS.h3,
@@ -345,15 +455,13 @@ const BookPage = (props) => {
             }}>
             Read Now
           </Text>
-          
         </TouchableOpacity>
-          
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.gray1 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.primary }}>
       {/* Book Cover Section */}
       <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 
@@ -368,11 +476,11 @@ const BookPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log('state',state)
-  return {};
+const mapStateToProps = state => {
+  console.log('state', state);
+  const { email, password, error, id, favorites } = state.auth;
+  // const { } = state.ebook;
+  return {email, password, error, id, favorites};
 };
 
-export default connect(mapStateToProps, 
-  {downloadBook}
-  )(BookPage);
+export default connect(mapStateToProps, { downloadBook, deleteFavoriteBook, updateFavoriteBooks})(BookPage);

@@ -40,29 +40,29 @@ class LoginForm extends Component {
         console.log('on submit preeeee:', this.props.error)
         this.props.signIn({email:this.props.email, password: this.props.password})
         if ( this.props.error == '' ){    
-          this.props.resetFree();
-          this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
-          this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
-          this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
-          this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
-          this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
-          this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
-          this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
-          this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
-          this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
-          this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
-          this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
-          this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+        //   this.props.resetFree();
+        //   this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+        //   this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
       
           
-          this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-          this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
-          this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
-          this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
+        //   this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        //   this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+        //   this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+        //   this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});  
 
-          this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
-          this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
-          this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+        //   this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+        //   this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+        //   this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
           
         // Actions.homePage();
         }

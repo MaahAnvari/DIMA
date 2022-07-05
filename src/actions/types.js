@@ -41,3 +41,4 @@ export const FAILED_SEARCH_AUDIOBOOK = 'failed_search_audiobook';
 export const ERROR = 'error';
 export const RESET = 'reset';
 
+export const UPDATE_FAVORITE_BOOK = 'update_favorite_book';

@@ -9,7 +9,8 @@ import {
     GET_FREE_EBOOK,
     RESET,
     SELECT_BOOK,
-    GET_EBOOK_DOWNLOAD_LINK
+    GET_EBOOK_DOWNLOAD_LINK,
+    UPDATE_FAVORITE_BOOK
 } from '../actions/types';
 
 const INITIAL_STATE = { 
@@ -23,7 +24,8 @@ const INITIAL_STATE = {
     searchKey:'',
     free:[],
     selectedBook:'',
-    url:''
+    url:'', 
+    // favorites:[],
 };
 
 export default (state = INITIAL_STATE, action) => {

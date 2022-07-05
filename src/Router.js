@@ -80,11 +80,12 @@ const RouterComponent = () => {
                     />
                 <Scene
                 // initial
-                key="tabBar"
-                tabs
-                hideNavBar={true}
-                tabBarStyle={styles.tabBar}
-                default="Main">
+                    key="tabBar"
+                    tabs
+                    hideNavBar={true}
+                    tabBarStyle={styles.tabBar}
+                    default="Main"
+                >
                     <Scene
                         key="homePage"
                         title="PONDER"
@@ -96,10 +97,25 @@ const RouterComponent = () => {
                         }}
                         iconName="home"
                         icon={TabIcon}
-                        //hideNavBar={true}
+                        // hideNavBar={true}
                         component={HomePage}
 
                         // initial
+                    />
+                    <Scene
+                        key="favoritePage"
+                        title="favorite"
+                        titleStyle={{
+                        alignSelf: 'center',
+                        color: '#fff',
+                        fontFamily: 'Abduco',fontSize: ITEM_SIZE*0.1
+                        }}
+                        iconName="heart"
+                        icon={TabIcon}
+                        hideNavBar={true}
+                        component={FavoritePage}
+
+                        //initial
                     />
                     {/* <Scene
                         key="searchPage"
@@ -111,16 +127,16 @@ const RouterComponent = () => {
 
                         //initial
                     /> */}
-                    <Scene
+                    {/* <Scene
                         key="favoritePage"
                         title="Favorite"
                         iconName="heart"
                         icon={TabIcon}
                         hideNavBar={true}
-                        component={FavoritePage}
+                        component={SearchPage}
 
                         //initial
-                    />
+                    /> */}
                     <Scene
                         key="profilePage"
                         title="Profile"
@@ -131,11 +147,27 @@ const RouterComponent = () => {
                         }}
                         iconName="user"
                         icon={TabIcon}
-                        hideNavBar={true}
+                        // hideNavBar={true}
                         component={ProfileForm}
 
                         //initial
                     />
+                    {/* <Scene
+                        key="searchPage"
+                        title="Profile"
+                        titleStyle={{
+                        alignSelf: 'center',
+                        color: '#fff',
+                        fontFamily: 'Abduco',fontSize: ITEM_SIZE*0.1
+                        }}
+                        iconName="heart"
+                        icon={TabIcon}
+                        // hideNavBar={true}
+                        component={ProfileForm}
+
+                        //initial
+                    /> */}
+                    
                     </Scene>
 
                     <Scene
@@ -149,6 +181,7 @@ const RouterComponent = () => {
                         fontSize: ITEM_SIZE*0.1
                     }}
                     renderBackButton={() => BackButton}
+                    hideNavBar
                     onLeft={() => Actions.pop()}
                     />
                 </Scene>

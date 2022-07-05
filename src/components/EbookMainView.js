@@ -3,7 +3,7 @@ import { View, Text, ImageBackground,Image, FlatList, ScrollView, TouchableHighl
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { searchBook, getFreeBooks, resetFree, selectBook, getPdfLink, } from '../actions';
+import { searchBook, getFreeBooks, resetFree, selectBook, getPdfLink, updateFavoriteBooks } from '../actions';
 import BookPage from './BookPage';
 import BouncingList from './BouncingList';
 
@@ -19,6 +19,29 @@ class EbookMainView extends Component {
   }
 
   componentWillUnmount(){ 
+
+    this.props.resetFree();
+          this.props.getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+          this.props.getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+          this.props.getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+          this.props.getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+          this.props.getFreeBooks({media: 'ebook',term: 'great-expectations'});
+          this.props.getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+          this.props.getFreeBooks({media: 'ebook',term: 'frankenstein'});
+          this.props.getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+          this.props.getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+          this.props.getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+          this.props.getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+          this.props.getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+
+          this.props.searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+          this.props.searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+          this.props.searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+          this.props.searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});
+          this.props.searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+          this.props.searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+          this.props.searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+          
   
   }
       
@@ -155,12 +178,12 @@ const styles = {
 
 const mapStateToProps = (state) => {
     console.log('state',state)
-    const { email, password, error } = state.auth;
-    const { genre, top10, search, country, newB, free, url } = state.ebook;
+    const { email, password, error, id } = state.auth;
+    const { genre, top10, search, country, newB, free, url, favorites } = state.ebook;
 
-    return { email, password, error, top10, search, genre, country, newB, free };
+    return { email, password, error, top10, search, genre, country, newB, free, favorites, id };
 };
 
 export default connect(mapStateToProps, 
-    {searchBook, getFreeBooks, resetFree, selectBook, getPdfLink}
+    {searchBook, getFreeBooks, resetFree, selectBook, getPdfLink, updateFavoriteBooks}
     )(EbookMainView);

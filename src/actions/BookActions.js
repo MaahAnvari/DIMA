@@ -16,7 +16,8 @@ import {
     GET_SEARCH_EBOOK,
     ERROR, RESET,
     SELECT_BOOK,
-    GET_EBOOK_DOWNLOAD_LINK
+    GET_EBOOK_DOWNLOAD_LINK,
+    UPDATE_FAVORITE_BOOK
     
 } from './types';
 
@@ -198,4 +199,33 @@ export const getPdfLink = (item) => {
         url: ERROR,
         payload: 'Error'
     }
+}
+
+
+// import firestore from '@react-native-firebase/firestore';
+// import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
+
+import firestore from '@react-native-firebase/firestore';
+export const updateFavoriteBooks = ({id, favorites}) => {
+    console.log('ooooooomad to save booooook change', id, favorites)
+        const document = firestore().collection('Users').doc(id).update({
+            favorites: favorites,
+          })
+          .then(() => {
+            console.log('User updated!');
+          });
+          return {
+            type: UPDATE_FAVORITE_BOOK,
+            payload: favorites
+        };
+    }
+export const deleteFavoriteBook = (favorites) => {
+
+    
+
+    return {
+        type: UPDATE_FAVORITE_BOOK,
+        payload: favorites
+    };
+
 }

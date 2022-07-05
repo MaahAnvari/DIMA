@@ -108,17 +108,20 @@ export const createUser = ({email, password, cpassword, name, sex}) => {
 
 export const signIn = ({email, password}) => {
     return(dispatch) => {
+        console.log(email != '' && password != '', email != '', password != '')
         if(email != '' && password != ''){
+            console.log('ooooooomad to log innnnn')
             const document = firestore().collection('Users').where('email', '==', email).get().then(documentSnapshot => {
               });
             auth().signInWithEmailAndPassword(email, password)
             .then((res) => {
                 const document = firestore().collection('Users').where('email', '==', email).get().then(documentSnapshot => {
-            
+                    console.log('resulttttt', res, documentSnapshot)
                     dispatch( {
                         type: SIGNIN_USER,
                         payload: documentSnapshot.docs[0]
                     });
+                    // callingBookPage();
                     Actions.homePage();
                   });      
             })
@@ -130,10 +133,35 @@ export const signIn = ({email, password}) => {
                 });
             }) 
         }
-        dispatch({
-            type: ERROR,
-            payload: 'Waiting for credentioals'
-        });
+        // dispatch({
+        //     type: ERROR,
+        //     payload: 'Waiting for credentioals'
+        // });
         
     }
+}
+
+export const callingBookPage = () => {
+          resetFree();
+          getFreeBooks({media: 'ebook',term: 'grimms-fairy-tales'});
+          getFreeBooks({media: 'ebook',term: 'heart of darkness'});
+          getFreeBooks({media: 'ebook',term: 'robinson-crusoe'});
+          getFreeBooks({media: 'ebook',term: 'the-great-gatsby'});
+          getFreeBooks({media: 'ebook',term: 'great-expectations'});
+          getFreeBooks({media: 'ebook',term: 'a-christmas-carol'});
+          getFreeBooks({media: 'ebook',term: 'frankenstein'});
+          getFreeBooks({media: 'ebook',term: 'jane-eyre'});
+          getFreeBooks({media: 'ebook',term: 'anna-karenina'});
+          getFreeBooks({media: 'ebook',term: 'tender-is-the-night'});
+          getFreeBooks({media: 'ebook',term: 'pride-and-prejudice'});
+          getFreeBooks({media: 'ebook',term: 'Treasure-Island'});
+
+          searchBook({media: 'ebook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+          searchBook({media: 'ebook', attribute:'', term:'top10', country:'', sort:''});
+          searchBook({media: 'ebook', attribute:'', term:'italy', country:'', sort:''});  
+          searchBook({media: 'ebook', attribute:'', term:'2022', country:'', sort:''});
+          searchBook({media: 'audiobook', entity:'', attribute:'genreIndex', country:'ca', term: 'action', sort:''});
+          searchBook({media: 'audiobook', attribute:'', term:'top10', country:'', sort:''});
+          searchBook({media: 'audiobook', attribute:'', term:'free', country:'', sort:'decending'});  
+          
 }
