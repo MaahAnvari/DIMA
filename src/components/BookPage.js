@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,21 +11,27 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import firestore from '@react-native-firebase/firestore';
-import storage, { firebase, getStorage, ref } from '@react-native-firebase/storage';
+import storage, {
+  firebase,
+  getStorage,
+  ref,
+} from '@react-native-firebase/storage';
 
-import { Actions } from 'react-native-router-flux';
-import {downloadBook, deleteFavoriteBook, updateFavoriteBooks} from '../actions'
+import {Actions} from 'react-native-router-flux';
+import {
+  downloadBook,
+  deleteFavoriteBook,
+  updateFavoriteBooks,
+} from '../actions';
 
-import { connect } from 'react-redux';
-const { width, height } = Dimensions.get('window');
-import { Icon, Icons, FONTS, COLORS, SIZES, images } from '../../constants';
+import {connect} from 'react-redux';
+const {width, height} = Dimensions.get('window');
+import {Icon, Icons, FONTS, COLORS, SIZES, images} from '../../constants';
 // import AudioPlayer from './AudioPlayer';
-
-
 
 const LineDivider = () => {
   return (
-    <View style={{ width: 1, paddingVertical: 5 }}>
+    <View style={{width: 1, paddingVertical: 5}}>
       <View
         style={{
           flex: 1,
@@ -37,18 +43,20 @@ const LineDivider = () => {
 };
 
 const BookPage = props => {
-
   var urll = null;
-function downloadB() {
-  const store= firebase.storage();
-  // console.log(store)
-  const gsReference = store.ref('Books/'+props.item.trackCensoredName+'.pdf').getDownloadURL().then(url => {
-    // console.log('urlll', url)
-  urll = url;   
-  
-  // console.log(urll)
-  });
-}
+  function downloadB() {
+    const store = firebase.storage();
+    // console.log(store)
+    const gsReference = store
+      .ref('Books/' + props.item.trackCensoredName + '.pdf')
+      .getDownloadURL()
+      .then(url => {
+        // console.log('urlll', url)
+        urll = url;
+
+        // console.log(urll)
+      });
+  }
 
   const book = props.item;
   const [BId, setBId] = useState(null);
@@ -61,54 +69,53 @@ function downloadB() {
   const indicator = new Animated.Value(0);
 
   function fetchLike() {
-
-    const searchIndex = props.favorites.findIndex((b) => b.trackCensoredName == book.trackCensoredName);
+    const searchIndex = props.favorites.findIndex(
+      b => b.trackCensoredName == book.trackCensoredName,
+    );
     if (searchIndex != -1) {
       // setBId(doc.id);
       setLikeBook(true);
     }
-    setFfav(false)
-
-  };
-// );
+    setFfav(false);
+  }
+  // );
 
   //Add Books
   async function AddBooks() {
     var fav = props.favorites;
-    fav.push(book)
-    
-    props.deleteFavoriteBook(fav)
+    fav.push(book);
+
+    props.deleteFavoriteBook(fav);
     alert('Book Added !');
     setLikeBook(true);
     // console.log('adddddddddddddddddddd', fav)
-    props.updateFavoriteBooks({id: props.id, favorites: fav})
+    props.updateFavoriteBooks({id: props.id, favorites: fav});
   }
 
   //Delete Books
   async function DeleteBooks() {
     var fav = props.favorites;
-    var myIndex = props.favorites.findIndex((b) => b.trackCensoredName == book.trackCensoredName)
-    
+    var myIndex = props.favorites.findIndex(
+      b => b.trackCensoredName == book.trackCensoredName,
+    );
+
     if (myIndex != -1) {
-        fav.splice(myIndex, 1);
+      fav.splice(myIndex, 1);
     }
-    console.log('faaaaaaav',fav)
-    props.deleteFavoriteBook(fav)
+    console.log('faaaaaaav', fav);
+    props.deleteFavoriteBook(fav);
     alert('Book Deleted !');
     setLikeBook(false);
-    props.updateFavoriteBooks({id: props.id, favorites: fav})
-    
+    props.updateFavoriteBooks({id: props.id, favorites: fav});
   }
 
- 
-
   function renderBookInfoSection() {
-    FfavId ?  fetchLike() : null;
+    FfavId ? fetchLike() : null;
     downloadB();
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <ImageBackground
-          source={{ uri: book.artworkUrl100 }}
+          source={{uri: book.artworkUrl100}}
           resizeMode="cover"
           style={{
             position: 'absolute',
@@ -132,9 +139,9 @@ function downloadB() {
 
         {/* Book Cover */}
         <View
-          style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: 'center' }}>
+          style={{flex: 5, paddingTop: SIZES.padding2, alignItems: 'center'}}>
           <Image
-            source={{ uri: book.artworkUrl100 }}
+            source={{uri: book.artworkUrl100}}
             resizeMode="contain"
             style={{
               flex: 1,
@@ -146,11 +153,11 @@ function downloadB() {
 
         {/* Book Name and Author */}
         <View
-          style={{ flex: 1.8, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ ...FONTS.h2, color: COLORS.white }}>
+          style={{flex: 1.8, alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{...FONTS.h2, color: COLORS.white}}>
             {book.trackCensoredName.substr(0, 32)}
           </Text>
-          <Text style={{ ...FONTS.body3, color: COLORS.white }}>
+          <Text style={{...FONTS.body3, color: COLORS.white}}>
             {book.artistName}
           </Text>
         </View>
@@ -165,11 +172,11 @@ function downloadB() {
             backgroundColor: 'rgba(0,0,0,0.3)',
           }}>
           {/*Rating */}
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{...FONTS.h3, color: COLORS.white}}>
               {book.averageUserRating}
             </Text>
-            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Rating</Text>
+            <Text style={{...FONTS.body4, color: COLORS.white}}>Rating</Text>
           </View>
 
           <LineDivider />
@@ -182,25 +189,23 @@ function downloadB() {
               alignItems: 'center',
             }}>
             {book.price == 0 ? (
-              <Text style={{ ...FONTS.h3, color: COLORS.white }}>FREE</Text>
+              <Text style={{...FONTS.h3, color: COLORS.white}}>FREE</Text>
             ) : (
-              <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+              <Text style={{...FONTS.h3, color: COLORS.white}}>
                 {book.price} $
               </Text>
             )}
-            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Price</Text>
+            <Text style={{...FONTS.body4, color: COLORS.white}}>Price</Text>
           </View>
 
           <LineDivider />
 
           {/* Published */}
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{...FONTS.h3, color: COLORS.white}}>
               {book.releaseDate.substr(0, 4)}
             </Text>
-            <Text style={{ ...FONTS.body4, color: COLORS.white }}>
-              Published
-            </Text>
+            <Text style={{...FONTS.body4, color: COLORS.white}}>Published</Text>
           </View>
         </View>
 
@@ -224,7 +229,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightGreen}}>
                 Mysteries & Thrillers
               </Text>
             </View>
@@ -241,7 +246,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightGreen }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightGreen}}>
                 Fiction
               </Text>
             </View>
@@ -258,7 +263,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightRed }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightRed}}>
                 Young
               </Text>
             </View>
@@ -274,7 +279,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightBlue }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightBlue}}>
                 Fantasy
               </Text>
             </View>
@@ -290,7 +295,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightYellow}}>
                 Historical
               </Text>
             </View>
@@ -306,7 +311,7 @@ function downloadB() {
                 height: 40,
                 borderRadius: SIZES.radius,
               }}>
-              <Text style={{ ...FONTS.body3, color: COLORS.lightYellow }}>
+              <Text style={{...FONTS.body3, color: COLORS.lightYellow}}>
                 Personal Finance
               </Text>
             </View>
@@ -329,7 +334,7 @@ function downloadB() {
         : 1;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         {/* <AudioPlayer /> */}
         <Text
           style={{
@@ -342,10 +347,10 @@ function downloadB() {
           Description
         </Text>
 
-        <View style={{ flex: 1, flexDirection: 'row', padding: SIZES.padding }}>
+        <View style={{flex: 1, flexDirection: 'row', padding: SIZES.padding}}>
           {/* Custom Scrollbar */}
           <View
-            style={{ width: 4, height: '100%', backgroundColor: COLORS.gray1 }}>
+            style={{width: 4, height: '100%', backgroundColor: COLORS.gray1}}>
             <Animated.View
               style={{
                 width: 4,
@@ -369,7 +374,7 @@ function downloadB() {
 
           {/* Description */}
           <ScrollView
-            contentContainerStyle={{ paddingLeft: SIZES.padding2 }}
+            contentContainerStyle={{paddingLeft: SIZES.padding2}}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
             onContentSizeChange={(width, height) => {
@@ -377,21 +382,24 @@ function downloadB() {
             }}
             onLayout={({
               nativeEvent: {
-                layout: { x, y, width, height },
+                layout: {x, y, width, height},
               },
             }) => {
               setScrollViewVisibleHeight(height);
             }}
             onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: indicator } } }],
-              { useNativeDriver: false },
+              [{nativeEvent: {contentOffset: {y: indicator}}}],
+              {useNativeDriver: false},
             )}>
             <Text
               style={{
                 ...FONTS.body2,
                 color: COLORS.lightGray,
               }}>
-              {book.description.replace(/[`~0-9!@#$%^&*_|+\-=?'"<>\{\}\[\]\\\/]/gi, '')}
+              {book.description.replace(
+                /[`~0-9!@#$%^&*_|+\-=?'"<>\{\}\[\]\\\/]/gi,
+                '',
+              )}
             </Text>
             {/*<HTMLView
               value={book.description}
@@ -405,10 +413,11 @@ function downloadB() {
 
   function renderBottomButton() {
     return (
-      <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{flex: 1, flexDirection: 'row'}}>
         {/* Like */}
-        {props.free ? null : 
-            <TouchableOpacity
+        {props.free ? null : (
+          <TouchableOpacity
+            testID="likeButton"
             style={{
               width: 60,
               backgroundColor: COLORS.secondary,
@@ -420,20 +429,17 @@ function downloadB() {
             }}
             onPress={() => {
               {
-                likeBook ? DeleteBooks() : AddBooks()
+                likeBook ? DeleteBooks() : AddBooks();
               }
             }}>
-
-            
             <Icon
               type={Icons.AntDesign}
               name={likeBook ? 'heart' : 'hearto'}
               size={25}
               color="#FFFFFF"
             />
-          </TouchableOpacity>             
-        }
-        
+          </TouchableOpacity>
+        )}
 
         {/* Read Now */}
         <TouchableOpacity
@@ -446,8 +452,7 @@ function downloadB() {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => 
-            Actions.downloadPage({url: urll})}>
+          onPress={() => Actions.downloadPage({url: urll})}>
           <Text
             style={{
               ...FONTS.h3,
@@ -461,26 +466,28 @@ function downloadB() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.primary }}>
+    <View style={{flex: 1, backgroundColor: COLORS.primary}}>
       {/* Book Cover Section */}
-      <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
+      <View style={{flex: 4}}>{renderBookInfoSection()}</View>
 
       {/* Description */}
-      <View style={{ flex: 2 }}>{renderBookDescription()}</View>
+      <View style={{flex: 2}}>{renderBookDescription()}</View>
 
       {/* Buttons */}
-      <View style={{ height: 70, marginBottom: 30 }}>
-        {renderBottomButton()}
-      </View>
+      <View style={{height: 70, marginBottom: 30}}>{renderBottomButton()}</View>
     </View>
   );
 };
 
 const mapStateToProps = state => {
   console.log('state', state);
-  const { email, password, error, id, favorites } = state.auth;
+  const {email, password, error, id, favorites} = state.auth;
   // const { } = state.ebook;
   return {email, password, error, id, favorites};
 };
 
-export default connect(mapStateToProps, { downloadBook, deleteFavoriteBook, updateFavoriteBooks})(BookPage);
+export default connect(mapStateToProps, {
+  downloadBook,
+  deleteFavoriteBook,
+  updateFavoriteBooks,
+})(BookPage);
