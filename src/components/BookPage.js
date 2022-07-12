@@ -155,7 +155,8 @@ const BookPage = props => {
         <View
           style={{flex: 1.8, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{...FONTS.h2, color: COLORS.white}}>
-            {book.trackCensoredName.substr(0, 32)}
+            {book.trackCensoredName}
+            {/* .substr(0, 32) */}
           </Text>
           <Text style={{...FONTS.body3, color: COLORS.white}}>
             {book.artistName}

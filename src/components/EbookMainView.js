@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { searchBook, getFreeBooks, resetFree, selectBook, getPdfLink, updateFavoriteBooks } from '../actions';
-import BookPage from './BookPage';
 import BouncingList from './BouncingList';
 
 class EbookMainView extends Component {
@@ -48,7 +47,6 @@ class EbookMainView extends Component {
   showDetails = ({item}) => {
     {this.props.selectBook(item.trackCensoredName)}
     Actions.bookPage({item, free: true})
-    // <BookPage item={item} />
   }
   renderItem = ({ item }) => (
     <TouchableHighlight style={styles.item} onPress= {() => {

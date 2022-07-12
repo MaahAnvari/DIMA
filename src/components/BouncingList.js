@@ -55,7 +55,15 @@ const BouncingList =(props) => {
           width: 1
       }
       }}>
-        <TouchableOpacity onPress={() => Actions.bookPage({item: item}) }>
+        <TouchableOpacity onPress={() =>{
+          if(item.wrapperType){
+            Actions.abookPage({item:{item}}) 
+          } else if(item.kind){
+            Actions.bookPage({item: item}) 
+          }
+          
+
+        } }>
         <Image style={{height:ITEM_SIZE, width: ITEM_SIZE*0.9, borderRadius:20}}
           source={{
             uri: item.artworkUrl100,

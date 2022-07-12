@@ -7,7 +7,7 @@ import BouncingList from './BouncingList';
 import { Actions } from 'react-native-router-flux';
 
   const Item = (item) => (
-      <TouchableHighlight onPress= {() => Actions.bookPage(item)} >
+      <TouchableHighlight onPress= {() => Actions.abookPage({item})} >
         <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', marginTop:20}}>
             <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <Image style={{height:ITEM_SIZE*0.4, width: ITEM_SIZE*0.4, borderRadius:20, paddingLeft:10}}
@@ -26,7 +26,7 @@ import { Actions } from 'react-native-router-flux';
     
   );
   const FreeItem = (item) => (
-      <TouchableHighlight onPress= {() => Actions.bookPage(item)} >
+      <TouchableHighlight onPress= {() => Actions.abookPage({item})} >
         <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', marginTop:20}}>
             <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <Image style={{height:ITEM_SIZE*0.4, width: ITEM_SIZE*0.4, borderRadius:20, paddingLeft:10}}

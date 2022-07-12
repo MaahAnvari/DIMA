@@ -1,48 +1,44 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, TouchableHighlight, Dimensions, Image } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { COLORS } from '../../constants';
 
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
+
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ name, details }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
-    <Text style={styles.details}>{details}</Text>
-  </View>
+const Item = ({item} ) => (
+  <TouchableHighlight style={styles.item} onPress= {() => {
+    
+    // this.props.selectBook(item.trackCensoredName)
+    Actions.bookPage({item, free: false, url:''})
+    }}>
+      <View style={{flexDirection:'row', alignItems:'center', paddingBottom:10}}>
+    <Image style={{height:ITEM_SIZE*0.8, width: ITEM_SIZE*0.6, borderRadius:20, paddingBottom:10}}
+        source={{
+          uri: item.artworkUrl100,
+        }}
+      ></Image>
+      <Text style={{color:'#fff', paddingHorizontal: 10, width:'60%'}}> {item.trackCensoredName}</Text>
+      </View>
+  </TouchableHighlight>
 );
 
 // the filter
 const List = props => {
-  const { searchPhrase, setClicked, data } = props;
+  const { searchPhrase, data } = props;
 
   const renderItem = ({ item }) => {
     // when no input, show all
-    if (searchPhrase === '') {
-      return <Item name={item.name} details={item.details} />;
-    }
-    // filter of the name
-    if (
-      item.name
-        .toUpperCase()
-        .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ''))
-    ) {
-      return <Item name={item.name} details={item.details} />;
-    }
-    // filter of the description
-    if (
-      item.details
-        .toUpperCase()
-        .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ''))
-    ) {
-      return <Item name={item.name} details={item.details} />;
-    }
+    console.log('iteeeeem:',item )
+    
+    return <Item item={item} />;
   };
 
   return (
     <SafeAreaView style={styles.list__container}>
-      <View
-        onStartShouldSetResponder={() => {
-          setClicked(false);
-        }}>
+      <View>
+        <Text style={{borderRadius:ITEM_SIZE*0.05, marginTop:ITEM_SIZE*0.05, borderWidth:1, borderColor:'#fff', padding:ITEM_SIZE*0.1,  alignSelf:'center', color:'red', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}>Your Result for {props.searchPhrase} </Text>
         <FlatList
           //numColumns={2}
           data={data}
@@ -59,7 +55,7 @@ export default List;
 const styles = StyleSheet.create({
   list__container: {
     margin: 10,
-    height: '85%',
+    height: '100%',
     width: '100%',
   },
   item: {

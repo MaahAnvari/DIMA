@@ -15,6 +15,7 @@ import { COLORS } from '../constants';
 import TabIcon from './components/TabIcon';
 import DownloadPage from './components/DownloadPage';
 import StartupPage from './components/StartupPage';
+import ABookPage from './components/ABookPage';
 
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
@@ -174,6 +175,20 @@ const RouterComponent = () => {
                     key="bookPage"
                     component={BookPage}
                     title="Book"
+                    titleStyle={{
+                        alignSelf: 'center',
+                        color: '#fff',
+                        fontFamily: 'Abduco',
+                        fontSize: ITEM_SIZE*0.1
+                    }}
+                    renderBackButton={() => BackButton}
+                    hideNavBar
+                    onLeft={() => Actions.pop()}
+                    />
+                    <Scene
+                    key="abookPage"
+                    component={ABookPage}
+                    title="ABook"
                     titleStyle={{
                         alignSelf: 'center',
                         color: '#fff',

@@ -43,7 +43,7 @@ class FavoritePage extends Component {
             uri: item.artworkUrl100,
           }}
         ></Image>
-        <Text style={{color:'#fff', paddingHorizontal: 10,}}> {item.trackCensoredName}</Text>
+        <Text style={{color:'#fff', paddingHorizontal: 10,width:'60%'}}> {item.trackCensoredName ? item.trackCensoredName : item.collectionName}</Text>
         </View>
     </TouchableHighlight>
   );

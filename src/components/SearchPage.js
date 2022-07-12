@@ -33,9 +33,9 @@ render() {
         clicked={clicked}
         setClicked={setClicked}
       /> */}
-      {console.log('Searchhhhhh', this.props)}
+      {console.log('Searchhhhhh', this.props.searchKey)}
       <List
-        searchPhrase={this.props.serachKey}
+        searchPhrase={this.props.searchKey}
         data={this.props.search}
         // setClicked={setClicked}
       />
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log('state search',state.ebook.search)
     const { email, password, error } = state.auth;
-    const { genre, top10, search, country, newB, serachKey } = state.ebook;
+    const { genre, top10, search, country, newB, searchKey } = state.ebook;
 
-    return { email, password, error, top10, search, genre, country, newB, serachKey };
+    return { email, password, error, top10, search, genre, country, newB, searchKey };
 
 };
 
