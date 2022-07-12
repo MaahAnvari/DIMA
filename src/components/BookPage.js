@@ -27,7 +27,7 @@ import {
 import {connect} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 import {Icon, Icons, FONTS, COLORS, SIZES, images} from '../../constants';
-import AudioPlayer from './AudioPlayer';
+// import AudioPlayer from './AudioPlayer';
 
 const LineDivider = () => {
   return (
@@ -337,7 +337,7 @@ const BookPage = props => {
     return (
       <View style={{flex: 1}}>
         {/* <AudioPlayer /> */}
-        <AudioPlayer />
+        {/* <AudioPlayer /> */}
         <Text
           style={{
             ...FONTS.h2,

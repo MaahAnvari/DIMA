@@ -16,6 +16,7 @@ import TabIcon from './components/TabIcon';
 import DownloadPage from './components/DownloadPage';
 import StartupPage from './components/StartupPage';
 import ABookPage from './components/ABookPage';
+import AudioPlayView from './components/AudioPlayView';
 
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
@@ -56,6 +57,15 @@ const RouterComponent = () => {
                     key="downloadPage" 
                     component={DownloadPage} 
                     title="Start Downloading ..." 
+                    titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
+                    hideNavBar
+                    // navBar={CustomNavBar}
+                    //  initial 
+                />
+                <Scene
+                    key="audioPage" 
+                    component={AudioPlayView} 
+                    // title="Start Downloading ..." 
                     titleStyle={{ alignSelf:'center', color:'#fff', fontFamily:'Abduco',fontSize: ITEM_SIZE*0.1}}
                     hideNavBar
                     // navBar={CustomNavBar}

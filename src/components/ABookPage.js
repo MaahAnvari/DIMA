@@ -27,7 +27,7 @@ import {
 import {connect} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 import {Icon, Icons, FONTS, COLORS, SIZES, images} from '../../constants';
-// import AudioPlayer from './AudioPlayer';
+import AudioPlayer from './AudioPlayer';
 
 const LineDivider = () => {
   return (
@@ -338,7 +338,7 @@ const ABookPage = props => {
 
     return (
       <View style={{flex: 1}}>
-        {/* <AudioPlayer /> */}
+        {/* <AudioPlayer url={book.previewUrl}/> */}
         <Text
           style={{
             ...FONTS.h2,
@@ -449,7 +449,7 @@ const ABookPage = props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => Actions.downloadPage({url: urll})}>
+          onPress={() => Actions.audioPage({url: book.previewUrl})}>
           <Text
             style={{
               ...FONTS.h3,
