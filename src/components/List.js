@@ -74,28 +74,16 @@ const List = props => {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <Text
-        style={{
-          borderRadius: ITEM_SIZE * 0.05,
-          marginTop: ITEM_SIZE * 0.05,
-          borderWidth: 1,
-          borderColor: '#fff',
-          padding: ITEM_SIZE * 0.1,
-          alignSelf: 'center',
-          color: 'red',
-          fontFamily: 'Abduco',
-          fontSize: ITEM_SIZE * 0.1,
-        }}>
-        Your Result for {props.searchPhrase}{' '}
-      </Text>
-      <FlatList
-        //numColumns={2}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{padding: 10}} //paddingTop: StatusBar.currentHeight || 42
-      />
+    <SafeAreaView style={styles.list__container}>
+      <View>
+        <Text style={styles.title}>Result for: {props.searchPhrase} </Text>
+        <FlatList
+          //numColumns={2}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -103,11 +91,10 @@ const List = props => {
 export default List;
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.primary,
+  list__container: {
+    margin: 10,
+    height: '100%',
+    width: '100%',
   },
   item: {
     margin: 30,
@@ -115,13 +102,16 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgrey',
   },
   title: {
+    borderRadius: ITEM_SIZE * 0.05,
+    marginTop: ITEM_SIZE * 0.05,
+    marginBottom: ITEM_SIZE * 0.1,
+    borderWidth: 1,
+    borderColor: '#fff',
+    padding: ITEM_SIZE * 0.1,
+    alignSelf: 'center',
+    fontSize: ITEM_SIZE * 0.1,
     width: '100%',
-    marginTop: 20,
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginLeft: '10%',
     color: COLORS.orange,
-    marginBottom: 5,
   },
   details: {
     fontSize: 15,
