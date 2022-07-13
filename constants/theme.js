@@ -1,5 +1,5 @@
-import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
+import {Dimensions} from 'react-native';
+const {width, height} = Dimensions.get('window');
 
 export const COLORS = {
   // base colors
@@ -8,7 +8,9 @@ export const COLORS = {
 
   button: '#EE1520',
   searchBar: '#D4D5D6',
-  searchBarItems: '#282C35',
+  searchItems: '#282C35',
+  audioPlayer: '#222831',
+  thumbSlider: '#FFD369',
 
   // colors
   black: '#1E1B26',
@@ -26,6 +28,8 @@ export const COLORS = {
   lightBlue: '#424BAF',
   darkGreen: '#213432',
   lightGreen: '#31Ad66',
+  darkYellow: '#3F4328',
+  lightYellow: '#D8DC2A',
 };
 
 export const SIZES = {
@@ -58,10 +62,10 @@ export const FONTS = {
     fontSize: SIZES.largeTitle,
     lineHeight: 55,
   },
-  h1: { fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 36 },
-  h2: { fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 30 },
-  h3: { fontFamily: 'Roboto-Bold', fontSize: SIZES.h3, lineHeight: 22 },
-  h4: { fontFamily: 'Roboto-Bold', fontSize: SIZES.h4, lineHeight: 22 },
+  h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 36},
+  h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 30},
+  h3: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h3, lineHeight: 22},
+  h4: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h4, lineHeight: 22},
   body1: {
     fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body1,
@@ -84,6 +88,6 @@ export const FONTS = {
   },
 };
 
-const appTheme = { COLORS, SIZES, FONTS };
+const appTheme = {COLORS, SIZES, FONTS};
 
 export default appTheme;
