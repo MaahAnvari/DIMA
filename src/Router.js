@@ -24,7 +24,7 @@ const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.5 : width * 0.52;
 const RouterComponent = () => {
   return (
     <Router>
-      <Scene key="root" navigationBarStyle={{backgroundColor: '#001120'}}>
+      <Scene key="root" navigationBarStyle={{backgroundColor: COLORS.primary}}>
         <Scene
           key="startup"
           component={StartupPage}
