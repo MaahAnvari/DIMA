@@ -16,7 +16,7 @@ describe('Your component', () => {
  });
  it('Has  TextInput', () => {
   const tree2 = renderer.create(<TextInputt/>).toJSON();
-  expect(findElement(tree2, 'email')).toBeDefined();
+  expect(findElement(tree2, '#email')).toBeDefined();
 });
 
 });

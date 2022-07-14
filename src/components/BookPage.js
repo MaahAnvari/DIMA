@@ -27,6 +27,7 @@ import {
 import {connect} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 import {Icon, Icons, FONTS, COLORS, SIZES, images} from '../../constants';
+import BookReadView from './BookReadView';
 // import AudioPlayer from './AudioPlayer';
 
 const LineDivider = () => {
@@ -444,7 +445,7 @@ const BookPage = props => {
         )}
 
         {/* Read Now */}
-        <TouchableOpacity
+        {props.free ? <TouchableOpacity
           style={{
             flex: 1,
             backgroundColor: COLORS.button,
@@ -462,7 +463,29 @@ const BookPage = props => {
             }}>
             Read Now
           </Text>
+        </TouchableOpacity> 
+        :
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            backgroundColor: COLORS.button,
+            marginHorizontal: SIZES.base,
+            marginVertical: SIZES.base,
+            borderRadius: SIZES.radius,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={() => Actions.ebookPage({url: book.trackViewUrl})}>
+          <Text
+            style={{
+              ...FONTS.h3,
+              color: COLORS.white,
+            }}>
+            Read Now
+          </Text>
         </TouchableOpacity>
+        }
+        
       </View>
     );
   }
