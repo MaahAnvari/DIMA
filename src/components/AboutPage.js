@@ -38,7 +38,7 @@ const AboutPage = () => {
       </View>
 
       <View style={{flex: 1.2, alignItems: 'center'}}>
-        <Text style={{...FONTS.body3, color: COLORS.white, paddingHorizontal:10}}>
+        <Text style={{fontSize: ITEM_SIZE*0.06, color: COLORS.white, paddingHorizontal:ITEM_SIZE*0.03}}>
           We are students of Politecnico di Milano in computer science and this
           application is developed for the Design and Implementation of Mobile
           Application course. The purpose of this application is to display a
@@ -56,8 +56,8 @@ const AboutPage = () => {
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: 10,
-              paddingRight: 10,
+              marginTop: ITEM_SIZE*0.01,
+              paddingRight: ITEM_SIZE*0.01,
             }}>
             <Image
               source={require('../../assets/images/Farimah.png')}

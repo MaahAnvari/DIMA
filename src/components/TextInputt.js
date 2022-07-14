@@ -1,24 +1,24 @@
 import * as React from "react";
 
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
+
+onSearchTextChange = input => {
+    console.log(input);
+    // do something awesome
+  };
 
 function TextInputt(props) {
   return (
-    <TouchableOpacity
-    onPress={(props.onPress)}
-      style={[styles.button, props.style]}
-      activeOpacity={0.5}
-      disabled = {props.enable}
-      // onPress={() => navigation.navigate("Profile", { name: "Jane" })}
+    <TextInput
+        placeholder='Email Address'
+         testID='#email'
+         accessibilityLabel='#email'
+         blurOnSubmit={ false }
+        onChangeText={debounce(onSearchTextChange, 800)}
     >
-      {/* <Image
-        source={require("../assets/profile.png")}
-        style={styles.imageIcon}
-      /> */}
-      {/* <View style={styles.separatorLine} /> */}
-      <Text style={styles.text}> {props.Name} </Text>
-    </TouchableOpacity>
+
+    </TextInput>
   );
 }
 

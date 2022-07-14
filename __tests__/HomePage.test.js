@@ -1,14 +1,14 @@
-// import React from 'react';
-// import {render, fireEvent} from '@testing-library/react-native';
+import React from 'react';
+import {render, fireEvent} from '@testing-library/react-native';
 
-// import HomePage from '../src/components/HomePage';
+import HomePage from '../src/components/HomePage';
 
-// describe('Home Page', () => {
-//   it('Go to AboutPage', () => {
-//     const page = render(<HomePage />);
+describe('Home Page', () => {
+  it('Go to AboutPage', () => {
+    const page = render(<HomePage />);
 
-//     const aboutButton = page.getByTestId('aboutButton');
+    const aboutButton = page.getByTestId('aboutButton');
 
-//     fireEvent.press(aboutButton);
-//   });
-// });
+    fireEvent.press(aboutButton);
+  });
+});

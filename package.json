@@ -58,6 +58,9 @@
   },
   "jest": {
     "preset": "@testing-library/react-native",
-    "transformIgnorePatterns": ["/node_modules/(?!d3|d3-array|internmap|delaunator|robust-predicates)"]
+    
+    "transformIgnorePatterns": [
+      "node_modules/(?!@react-native|react-native)"
+    ]
   }
 }
