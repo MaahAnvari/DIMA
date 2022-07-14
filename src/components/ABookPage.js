@@ -440,6 +440,25 @@ const ABookPage = props => {
 
         {/* Read Now */}
         <TouchableOpacity
+            testID="likeButton"
+            style={{
+              width: 60,
+              backgroundColor: COLORS.darkGreen,
+              marginLeft: SIZES.padding,
+              marginVertical: SIZES.base,
+              borderRadius: SIZES.radius,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          onPress={() => Actions.audioPage({url: book.previewUrl})}>
+          <Icon
+              type={Icons.AntDesign}
+              name={'play'}
+              size={25}
+              color="#FFFFFF"
+            />
+        </TouchableOpacity>
+        <TouchableOpacity
           style={{
             flex: 1,
             backgroundColor: COLORS.button,
@@ -449,13 +468,13 @@ const ABookPage = props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => Actions.audioPage({url: book.previewUrl})}>
+          onPress={() => Actions.audioPage({url: book.collectionViewUrl})}>
           <Text
             style={{
               ...FONTS.h3,
               color: COLORS.white,
             }}>
-            Listen Now
+            Buy Now
           </Text>
         </TouchableOpacity>
       </View>

@@ -481,7 +481,7 @@ const BookPage = props => {
               ...FONTS.h3,
               color: COLORS.white,
             }}>
-            Read Now
+            Buy Now
           </Text>
         </TouchableOpacity>
         }
