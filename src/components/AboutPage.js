@@ -23,22 +23,22 @@ const AboutPage = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          //paddingTop: 50,
+          // paddingTop: 10,
         }}>
         <Image
           source={require('../../assets/images/logo.png')}
           resizeMode="contain"
           style={{
-            width: ITEM_SIZE * 1.5,
-            height: ITEM_SIZE * 1.5,
-            borderRadius: ITEM_SIZE * 1.5,
+            width: ITEM_SIZE * 1,
+            height: ITEM_SIZE * 1,
+            borderRadius: ITEM_SIZE * 1,
             borderBottom: 10,
           }}
         />
       </View>
 
       <View style={{flex: 1.2, alignItems: 'center'}}>
-        <Text style={{...FONTS.body3, color: COLORS.white}}>
+        <Text style={{...FONTS.body3, color: COLORS.white, paddingHorizontal:10}}>
           We are students of Politecnico di Milano in computer science and this
           application is developed for the Design and Implementation of Mobile
           Application course. The purpose of this application is to display a
@@ -93,11 +93,11 @@ const AboutPage = () => {
         </View>
       </View>
 
-      <View style={styles.bottom}>
+      {/* <View style={styles.bottom}>
         <Text style={{...FONTS.body4, color: '#777777', paddingRight: 10}}>
           v. 1.0.0
         </Text>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };

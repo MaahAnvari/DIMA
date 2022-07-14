@@ -27,10 +27,9 @@ class SignUpForm extends Component {
       }
 
       renderError() {
-        console.log('ooooomad too render errorrr')
           if (this.props.error) {
               return (
-                  <View style={{ flexDirection:'row', justifyContent:'center', alignItems: 'center', fontFamily:'Ornalia',padding: 20}}>
+                  <View style={{ flexDirection:'row', justifyContent:'center', alignItems: 'center',padding: 20}}>
                        <Feather name="alert-triangle" style={{ alignSelf:'flex-end' }} size={25} color="yellow" />
                       <Text style={{color:'yellow', paddingLeft: 20}} >
                           {this.props.error} !!!
@@ -112,7 +111,7 @@ class SignUpForm extends Component {
                         value={this.props.name}
                         placeholder="name ..."
                         placeholderTextColor={'#fff'}
-                        style={{ padding:10,borderWidth:1, width: ITEM_SIZE*0.95, fontFamily:'Ornalia', fontSize:20, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(178,33,33,0.5)',borderColor:'#000',  shadowColor: '#3D1214',shadowOpacity: 0.26,shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20,}}
+                        style={{ padding:10,borderWidth:1, width: ITEM_SIZE*0.95,  fontSize:20, borderRadius:12, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(178,33,33,0.5)',borderColor:'#000',  shadowColor: '#3D1214',shadowOpacity: 0.26,shadowOffset: { width: 10, height: 5},shadowRadius: 10,elevation: 20,}}
                         last= 'true'
                         type='text'
                         maxLength= {30}
@@ -152,7 +151,6 @@ class SignUpForm extends Component {
                             padding:10, 
                             borderWidth:1, 
                             width: ITEM_SIZE*1.45, 
-                            fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 
                             justifyContent:'center', alignItems:'center',
@@ -184,7 +182,6 @@ class SignUpForm extends Component {
                             borderWidth:1, 
                             width: ITEM_SIZE*1.45, 
                             borderRadius:12, 
-                            fontFamily:'Ornalia',
                             fontSize:20,
                             justifyContent:'center', alignItems:'center',
                             backgroundColor:'rgba(178,33,33,0.5)',
@@ -215,7 +212,6 @@ class SignUpForm extends Component {
                             padding:10, 
                             borderWidth:1, 
                             width: ITEM_SIZE*1.45, 
-                            fontFamily:'Ornalia',
                             fontSize:20,
                             borderRadius:12, 
                             justifyContent:'center', alignItems:'center',

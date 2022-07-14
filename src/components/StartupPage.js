@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text,StyleSheet, colors, Image, ImageBackground } from 'react-native';
+import { View, Text,StyleSheet, colors, Image, ImageBackground, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 // import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+
+
+
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = Platform.OS === 'ios' ? width : width * 0.9;
+
+
+
 
 class StartupPage extends Component {
 
@@ -22,21 +30,22 @@ class StartupPage extends Component {
     render() {
 
         return (
-          // <View style={{alignContent:'center',}}>
-          <ImageBackground
-            style ={{width: "100%", height:"100%", justifyContent:'flex-end', alignItems:'center'}}
-            source={require('../../assets/Video/StartupVideo.gif')}
+          <View style={{height:'100%',alignContent:'center',justifyContent:'space-between', alignItems:'center', backgroundColor:'#000'}}>
+          <Image
+            style ={{marginTop: ITEM_SIZE*0.3,width:ITEM_SIZE, height:ITEM_SIZE, justifyContent:'flex-end', alignItems:'center', justifyContent:'center', alignItems: 'center'}}
+            source={require('../../assets/images/audio-book.png')}
           >
+            </Image>
             <TouchableOpacity
-          style={{height:'25%', width: '100%', backgroundColor:'#A0131A', borderRadius:20, alignItems:'center', justifyContent:'center',}}
+          style={{height:'30%', width: '100%', backgroundColor:'#A0131A', borderRadius:20, alignItems:'center', justifyContent:'center',}}
             onPress={() => {
               Actions.login();
             }}>
               <Text style={{ color:'white',justifyContent:'center', alignSelf:'center', fontFamily:'Ornalia', fontSize:20, marginHorizontal:20}}> Welcome To Ponder </Text>
           </TouchableOpacity>
-          </ImageBackground>
           
-        // </View>
+          
+         </View>
         //     <Video
         //     //for playing local videos
         //     //    source={

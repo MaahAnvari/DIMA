@@ -56,8 +56,13 @@ class FavoritePage extends Component {
         activeOpacity={0.7}
         //style={styles.item}
         onPress={() => {
-          this.props.selectBook(item.trackCensoredName);
-          Actions.bookPage({item, free: false, url: ''});
+          // this.props.selectBook(item.trackCensoredName)
+      // Actions.bookPage({item, free: false, url:''})
+      if(item.wrapperType){
+        Actions.abookPage({item:{item}}) 
+      } else if(item.kind){
+        Actions.bookPage({item: item}) 
+      }
         }}>
         <View>
           <Image
